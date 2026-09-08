@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>วี กรุ๊ป ดีเวลลอปเมนท์ | โซลูชันพลังงานและเคมีภัณฑ์ครบวงจร</title>
+<meta name="description" content="วี กรุ๊ป ดีเวลลอปเมนท์ ผู้ให้บริการครบวงจรด้านพลังงาน เชื้อเพลิง และเคมีภัณฑ์ ครอบคลุมการซื้อขายผลิตภัณฑ์และบริการอุตสาหกรรมเฉพาะทางเพื่อสิ่งแวดล้อม">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pridi:wght@200;300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@0.460.0"></script>
+<style>
+  :root{
+    --background:#F7F5F0;
+    --card:#FFFFFF;
+    --bg-accent:#0F3D2E;
+    --foreground:#16241D;
+    --muted:#6E7B73;
+    --border:#DCD6C8;
+    --primary:#0F3D2E;
+    --secondary:#3F5C4E;
+    --accent:#B08D57;
+    --font-heading:'Pridi', serif;
+    --font-body:'IBM Plex Sans Thai', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body);
+    background:var(--background);
+    color:var(--foreground);
+    line-height:1.8;
+    word-break:break-word;
+    overflow-wrap:break-word;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{
+    font-family:var(--font-heading);
+    font-weight:500;
+    line-height:1.5;
+    color:var(--foreground);
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  section{position:relative;}
+  .container{max-width:1180px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    font-family:var(--font-body);
+    font-size:0.75rem;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    color:var(--accent);
+    font-weight:600;
+    display:inline-block;
+    margin-bottom:1rem;
+  }
+  .rule{
+    border:none;
+    border-top:1px solid var(--accent);
+    width:64px;
+    margin:1.5rem 0;
+  }
+  .rule-full{border:none;border-top:1px solid var(--border);}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:0.5em;
+    padding:0.95em 1.8em;
+    border-radius:2px;
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:0.95rem;
+    min-height:44px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:all .35s ease;
+  }
+  .btn-primary{background:var(--primary);color:#F7F5F0;}
+  .btn-primary:hover{background:var(--secondary);transform:translateY(-2px);}
+  .btn-outline{background:transparent;color:var(--primary);border-color:var(--primary);}
+  .btn-outline:hover{background:var(--primary);color:#F7F5F0;transform:translateY(-2px);}
+  .btn-on-dark{border-color:rgba(247,245,240,.5);color:#F7F5F0;}
+  .btn-on-dark:hover{background:#F7F5F0;color:var(--primary);}
+
+  /* ===== reveal animation ===== */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease-out, transform .7s ease-out;}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+
+  /* ===== HEADER ===== */
+  #siteHeader{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    background:var(--bg-accent);
+    transition:padding .35s ease, box-shadow .35s ease;
+  }
+  #siteHeader .header-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 20px;
+    max-width:100%;
+  }
+  #siteHeader .logo{
+    font-family:var(--font-heading);
+    font-size:clamp(1.05rem,4vw,1.5rem);
+    font-weight:600;
+    color:#F7F5F0;
+    white-space:nowrap;
+    letter-spacing:0.02em;
+    display:flex;
+    align-items:baseline;
+    gap:0.3em;
+    flex-shrink:1;
+    min-width:0;
+  }
+  #siteHeader .logo span{color:var(--accent);font-weight:400;}
+  #siteHeader .head-controls{display:flex;align-items:center;gap:14px;flex-shrink:0;}
+  #siteHeader .lang-sw{
+    display:flex;align-items:center;gap:5px;
+    color:#F7F5F0;font-size:0.78rem;font-weight:600;
+    padding:8px 6px;min-height:44px;min-width:44px;
+    justify-content:center;
+    font-family:var(--font-body);
+  }
+  #siteHeader .nav-toggle{
+    background:none;border:none;color:#F7F5F0;cursor:pointer;
+    width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+  }
+  #siteHeader nav.site-nav{
+    position:fixed;top:0;right:-100%;height:100vh;width:min(78vw,340px);
+    background:var(--primary);
+    display:flex;flex-direction:column;
+    padding:96px 32px 40px;
+    gap:6px;
+    transition:right .4s ease;
+    box-shadow:-10px 0 40px rgba(0,0,0,.25);
+    overflow-y:auto;
+  }
+  #siteHeader nav.site-nav.open{right:0;}
+  #siteHeader nav.site-nav a{
+    color:#F7F5F0;
+    font-family:var(--font-body);
+    font-size:1.02rem;
+    padding:14px 4px;
+    border-bottom:1px solid rgba(247,245,240,.12);
+    min-height:44px;
+    display:flex;align-items:center;
+  }
+  #siteHeader nav.site-nav a.nav-cta{
+    margin-top:20px;
+    border:1px solid var(--accent);
+    color:var(--accent);
+    justify-content:center;
+    border-radius:2px;
+    font-weight:600;
+  }
+  #siteHeader .backdrop{
+    position:fixed;inset:0;background:rgba(15,20,17,.5);
+    opacity:0;pointer-events:none;transition:opacity .4s ease;z-index:999;
+  }
+  #siteHeader .backdrop.open{opacity:1;pointer-events:auto;}
+
+  main{padding-top:74px;}
+
+  @media (min-width:1024px){
+    #siteHeader{
+      width:272px;height:100vh;
+      display:flex;flex-direction:column;
+      box-shadow:2px 0 0 var(--accent);
+    }
+    #siteHeader .header-inner{
+      flex-direction:column;align-items:flex-start;
+      padding:44px 34px 30px;
+      flex-shrink:0;
+    }
+    #siteHeader .logo{font-size:1.7rem;flex-direction:column;align-items:flex-start;gap:0;line-height:1.2;}
+    #siteHeader .nav-toggle{display:none;}
+    #siteHeader nav.site-nav{
+      position:static;height:auto;width:auto;right:auto;
+      background:transparent;box-shadow:none;
+      padding:0 34px 34px;
+      flex:1;
+      display:flex;flex-direction:column;
+      justify-content:flex-start;
+      gap:2px;
+    }
+    #siteHeader nav.site-nav a{
+      border-bottom:none;
+      font-size:0.92rem;
+      padding:10px 0;
+      opacity:.82;
+      transition:opacity .25s ease, padding-left .25s ease;
+    }
+    #siteHeader nav.site-nav a:hover{opacity:1;padding-left:6px;}
+    #siteHeader nav.site-nav a.nav-cta{
+      margin-top:auto;
+      order:99;
+    }
+    #siteHeader .head-controls{
+      padding:0 34px 20px;
+      order:2;
+    }
+    #siteHeader .backdrop{display:none;}
+    main{padding-top:0;margin-left:272px;}
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    background:var(--bg-accent);
+    color:#F7F5F0;
+    padding:56px 0 0;
+    overflow:hidden;
+  }
+  .hero .container{
+    display:flex;flex-direction:column;gap:32px;
+    padding-bottom:0;
+  }
+  .hero-text{padding:0 24px;}
+  .hero-text .eyebrow{color:var(--accent);}
+  .hero h1{
+    font-size:clamp(2.4rem,8.5vw,4.6rem);
+    color:#F7F5F0;
+    font-weight:500;
+    padding-top:0.2em;
+    line-height:1.35;
+  }
+  .hero p.lead{
+    margin-top:1.4rem;
+    max-width:46ch;
+    color:#D9E3DC;
+    font-size:1.08rem;
+  }
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:2.2rem;}
+  .hero-actions .btn{width:100%;}
+  .hero-figure{position:relative;width:100%;height:56vw;max-height:420px;overflow:visible;}
+  .hero-figure img{
+    width:100%;height:100%;object-fit:cover;
+    animation:slowzoom 18s ease-in-out infinite alternate;
+  }
+  @keyframes slowzoom{from{transform:scale(1);}to{transform:scale(1.08);}}
+  .hero-figure .cap{
+    position:absolute;left:0;bottom:-2.2rem;
+    font-size:0.72rem;color:var(--muted);
+    padding:0 24px;
+  }
+  .hero-figure .cap a{color:var(--accent);}
+  @media (min-width:768px){
+    .hero-actions .btn{width:auto;}
+  }
+  @media (min-width:1024px){
+    .hero{padding:0;min-height:100vh;display:flex;align-items:stretch;}
+    .hero .container{
+      max-width:none;padding:0;flex-direction:row;align-items:stretch;
+      display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
+      min-height:100vh;
+    }
+    .hero-text{grid-column:1;align-self:center;padding:0 8% 4rem 6%;}
+    .hero-figure{grid-column:2;height:auto;max-height:none;}
+    .hero-figure .cap{padding:0 0 0 0;left:6%;}
+  }
+
+  /* ===== STATEMENT ===== */
+  .statement{padding:88px 0;background:var(--background);}
+  .statement blockquote{
+    font-family:var(--font-heading);
+    font-size:clamp(1.5rem,4.2vw,2.5rem);
+    font-weight:400;
+    color:var(--primary);
+    line-height:1.6;
+    max-width:20ch;
+    padding-top:0.3em;
+  }
+  .statement cite{
+    display:block;margin-top:2rem;font-style:normal;
+    font-size:0.85rem;color:var(--muted);
+    font-weight:600;text-transform:uppercase;letter-spacing:0.08em;
+  }
+  .stat-row{
+    margin-top:64px;
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:32px;
+  }
+  .stat-item{grid-column:span 1;border-top:1px solid var(--accent);padding-top:16px;}
+  .stat-item .num{font-family:var(--font-heading);font-size:clamp(2.2rem,6vw,3.2rem);color:var(--primary);}
+  .stat-item .lbl{font-size:0.82rem;color:var(--muted);margin-top:4px;}
+  @media (min-width:768px){
+    .stat-row{grid-template-columns:repeat(4,minmax(0,1fr));}
+    .stat-item{grid-column:span 1;}
+  }
+
+  /* ===== OPERATIONS ===== */
+  .operations{background:var(--card);padding:80px 0;}
+  .op-row{
+    display:grid;grid-template-columns:minmax(0,1fr);
+    gap:32px;
+    align-items:center;
+    padding:56px 0;
+  }
+  .op-row:not(:last-child){border-bottom:1px solid var(--border);}
+  .op-row .op-media{grid-column:1;position:relative;}
+  .op-row .op-media img{width:100%;height:280px;object-fit:cover;border-radius:2px;}
+  .op-row .op-content{grid-column:1;}
+  .op-num{font-family:var(--font-heading);font-size:1rem;color:var(--accent);font-weight:600;letter-spacing:0.08em;}
+  .op-content h3{font-size:clamp(1.6rem,4vw,2.3rem);margin-top:0.6rem;padding-top:0.2em;color:var(--primary);}
+  .op-content p{margin-top:1rem;color:var(--foreground);max-width:60ch;}
+  .op-list{margin-top:1.5rem;display:grid;grid-template-columns:minmax(0,1fr);gap:10px;}
+  .op-list li{
+    list-style:none;display:flex;gap:10px;align-items:flex-start;
+    font-size:0.95rem;color:var(--muted);
+  }
+  .op-list li i{color:var(--accent);flex-shrink:0;margin-top:3px;width:16px;height:16px;}
+  .op-cap{font-size:0.72rem;color:var(--muted);margin-top:8px;}
+  .op-cap a{color:var(--accent);}
+  @media (min-width:900px){
+    .op-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;}
+    .op-row .op-media{grid-column:2;}
+    .op-row .op-content{grid-column:1;}
+    .op-row.reverse .op-media{grid-column:1;}
+    .op-row.reverse .op-content{grid-column:2;}
+    .op-row .op-media img{height:420px;}
+  }
+
+  /* ===== EXPERTISE ===== */
+  .expertise{background:var(--bg-accent);color:#F7F5F0;padding:88px 0;}
+  .expertise .eyebrow{color:var(--accent);}
+  .expertise h2{color:#F7F5F0;font-size:clamp(1.9rem,5vw,2.8rem);max-width:16ch;padding-top:0.2em;}
+  .exp-list{margin-top:48px;}
+  .exp-item{
+    display:grid;grid-template-columns:minmax(0,1fr);gap:14px;
+    padding:28px 0;border-top:1px solid rgba(176,141,87,.35);
+  }
+  .exp-item:last-child{border-bottom:1px solid rgba(176,141,87,.35);}
+  .exp-num{grid-column:1;font-family:var(--font-heading);font-size:1.6rem;color:var(--accent);}
+  .exp-title{grid-column:1;font-family:var(--font-heading);font-size:1.3rem;color:#F7F5F0;padding-top:0.15em;}
+  .exp-desc{grid-column:1;color:#CBD6CE;font-size:0.95rem;max-width:60ch;}
+  @media (min-width:768px){
+    .exp-item{grid-template-columns:80px minmax(0,1fr) minmax(0,1.4fr);align-items:start;gap:24px;}
+    .exp-num{grid-column:1;}
+    .exp-title{grid-column:2;}
+    .exp-desc{grid-column:3;}
+  }
+
+  /* ===== NUMBERS ===== */
+  .numbers{background:var(--background);padding:88px 0;}
+  .num-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:40px;margin-top:48px;}
+  .num-item{grid-column:1;text-align:left;}
+  .num-item .figure{font-family:var(--font-heading);font-size:clamp(2.8rem,9vw,4.2rem);color:var(--primary);line-height:1;}
+  .num-item .figure span{color:var(--accent);}
+  .num-item .caption{margin-top:0.6rem;color:var(--muted);font-size:0.9rem;}
+  @media (min-width:768px){
+    .num-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;}
+    .num-item{grid-column:span 1;}
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline{background:var(--card);padding:88px 0;}
+  .tl-track{margin-top:48px;position:relative;padding-left:28px;border-left:1px solid var(--accent);}
+  .tl-item{position:relative;padding-bottom:44px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:'';position:absolute;left:-33px;top:6px;width:9px;height:9px;
+    border-radius:50%;background:var(--accent);
+  }
+  .tl-year{font-family:var(--font-heading);font-size:1.4rem;color:var(--primary);}
+  .tl-desc{margin-top:0.4rem;color:var(--muted);max-width:60ch;font-size:0.95rem;}
+
+  /* ===== GALLERY ===== */
+  .gallery{padding:0;background:var(--bg-accent);}
+  .gallery-grid{display:grid;grid-template-columns:minmax(0,1fr);}
+  .gallery-item{grid-column:1;position:relative;overflow:hidden;height:60vw;max-height:340px;}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+  .gallery-item:hover img{transform:scale(1.06);}
+  .gallery-item .tag{
+    position:absolute;left:16px;bottom:16px;color:#F7F5F0;font-size:0.75rem;
+    letter-spacing:0.08em;text-transform:uppercase;font-weight:600;
+    background:rgba(15,61,46,.55);padding:6px 12px;border-radius:2px;
+  }
+  @media (min-width:768px){
+    .gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+    .gallery-item{grid-column:span 1;height:360px;max-height:none;}
+  }
+
+  /* ===== CERT ===== */
+  .certs{padding:88px 0;background:var(--background);}
+  .cert-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;margin-top:44px;}
+  .cert-card{
+    grid-column:1;background:var(--card);border:1px solid var(--border);
+    padding:32px 28px;border-radius:2px;
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .cert-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(15,61,46,.12);}
+  .cert-card i{color:var(--accent);width:30px;height:30px;}
+  .cert-card h4{margin-top:16px;font-size:1.15rem;color:var(--primary);padding-top:0.15em;}
+  .cert-card p{margin-top:8px;color:var(--muted);font-size:0.9rem;}
+  @media (min-width:768px){
+    .cert-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+    .cert-card{grid-column:span 1;}
+  }
+
+  /* ===== CONTACT ===== */
+  .contact{background:var(--bg-accent);color:#F7F5F0;}
+  .contact-wrap{display:grid;grid-template-columns:minmax(0,1fr);}
+  .contact-info{grid-column:1;padding:80px 24px;}
+  .contact-info h2{color:#F7F5F0;font-size:clamp(2rem,6vw,2.8rem);max-width:14ch;padding-top:0.2em;}
+  .contact-info p{margin-top:1.2rem;color:#CBD6CE;max-width:44ch;}
+  .info-list{margin-top:2.5rem;display:flex;flex-direction:column;gap:20px;}
+  .info-list .row{display:flex;gap:14px;align-items:flex-start;}
+  .info-list i{color:var(--accent);width:20px;height:20px;flex-shrink:0;margin-top:3px;}
+  .info-list .label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);}
+  .info-list .val{color:#F7F5F0;margin-top:2px;}
+  .contact-form{
+    grid-column:1;background:var(--card);color:var(--foreground);
+    padding:56px 24px;
+  }
+  .contact-form h3{color:var(--primary);font-size:1.5rem;padding-top:0.2em;}
+  .field{margin-top:20px;}
+  .field label{display:block;font-size:0.8rem;color:var(--muted);margin-bottom:6px;}
+  .field input,.field textarea{
+    width:100%;padding:0.9em 1em;border:1px solid var(--border);border-radius:2px;
+    background:var(--background);color:var(--foreground);font-family:var(--font-body);font-size:1rem;
+  }
+  .field textarea{min-height:120px;resize:vertical;}
+  .contact-form .btn{margin-top:24px;width:100%;}
+  @media (min-width:900px){
+    .contact-wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+    .contact-info{grid-column:1;padding:96px 6% 96px 8%;}
+    .contact-form{grid-column:2;padding:96px 8% 96px 6%;}
+  }
+
+  /* ===== FOOTER ===== */
+  footer{background:var(--card);padding:56px 0 28px;border-top:1px solid var(--border);}
+  .foot-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:36px;}
+  .foot-col{grid-column:1;}
+  .foot-logo{font-family:var(--font-heading);font-size:1.4rem;color:var(--primary);}
+  .foot-logo span{color:var(--accent);font-weight:400;}
+  .foot-col p{margin-top:12px;color:var(--muted);font-size:0.9rem;max-width:38ch;}
+  .foot-col h5{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:14px;}
+  .foot-links{display:flex;flex-direction:column;gap:10px;}
+  .foot-links a{color:var(--muted);font-size:0.92rem;}
+  .foot-links a:hover{color:var(--primary);}
+  .foot-bottom{
+    margin-top:44px;padding-top:24px;border-top:1px solid var(--border);
+    display:flex;flex-direction:column;gap:14px;
+    font-size:0.78rem;color:var(--muted);
+  }
+  .credits{font-size:0.72rem;color:var(--muted);}
+  .credits a{color:var(--accent);}
+  .deelabs-badge{color:var(--muted);font-size:0.75rem;font-weight:400;}
+  .deelabs-badge:hover{color:var(--primary);}
+  @media (min-width:768px){
+    .foot-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
+    .foot-col{grid-column:span 1;}
+    .foot-bottom{flex-direction:row;justify-content:space-between;align-items:center;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="backdrop" id="navBackdrop"></div>
+  <div class="header-inner">
+    <a href="#home" class="logo">V<span>GROUP</span> DEVELOPMENT</a>
+    <div class="head-controls">
+      <div class="lang-sw"><i data-lucide="globe" width="14" height="14"></i><span class="lang-sw__label">TH</span></div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><i data-lucide="menu" id="navToggleIcon"></i></button>
+    </div>
+  </div>
+  <nav class="site-nav" id="siteNav">
+    <a href="#home" data-lang-th="หน้าแรก" data-lang-en="Home">หน้าแรก</a>
+    <a href="#about" data-lang-th="เกี่ยวกับเรา" data-lang-en="About Us">เกี่ยวกับเรา</a>
+    <a href="#operations" data-lang-th="ธุรกิจหลัก" data-lang-en="Core Business">ธุรกิจหลัก</a>
+    <a href="#expertise" data-lang-th="ความเชี่ยวชาญ" data-lang-en="Expertise">ความเชี่ยวชาญ</a>
+    <a href="#numbers" data-lang-th="ตัวเลขของเรา" data-lang-en="By the Numbers">ตัวเลขของเรา</a>
+    <a href="#contact" data-lang-th="ติดต่อเรา" data-lang-en="Contact">ติดต่อเรา</a>
+    <a href="#contact" class="nav-cta" data-lang-th="ติดต่อฝ่ายขาย" data-lang-en="Talk to Sales">ติดต่อฝ่ายขาย</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-text reveal">
+        <span class="eyebrow">TOTAL ENERGY &amp; CHEMICAL SOLUTIONS</span>
+        <h1 data-lang-th="โซลูชันพลังงานและ<br>เคมีภัณฑ์ครบวงจร" data-lang-en="Total Energy &amp;<br>Chemical Solutions">โซลูชันพลังงานและ<br>เคมีภัณฑ์ครบวงจร</h1>
+        <p class="lead" data-lang-th="วี กรุ๊ป ดีเวลลอปเมนท์ ผู้ให้บริการครบวงจรด้านการซื้อขายผลิตภัณฑ์เชื้อเพลิงและเคมีภัณฑ์ พร้อมบริการอุตสาหกรรมเฉพาะทางและสิ่งแวดล้อม ด้วยมาตรฐานสากลกว่าสองทศวรรษ" data-lang-en="V Group Development is a one-stop provider of fuel and chemical products trading, alongside specialized industrial and environmental services — built on two decades of international standards.">วี กรุ๊ป ดีเวลลอปเมนท์ ผู้ให้บริการครบวงจรด้านการซื้อขายผลิตภัณฑ์เชื้อเพลิงและเคมีภัณฑ์ พร้อมบริการอุตสาหกรรมเฉพาะทางและสิ่งแวดล้อม ด้วยมาตรฐานสากลกว่าสองทศวรรษ</p>
+        <div class="hero-actions">
+          <a href="#operations" class="btn btn-primary" data-lang-th="สำรวจธุรกิจของเรา" data-lang-en="Explore Our Business">สำรวจธุรกิจของเรา</a>
+          <a href="#contact" class="btn btn-outline btn-on-dark" data-lang-th="ติดต่อฝ่ายขาย" data-lang-en="Talk to Sales">ติดต่อฝ่ายขาย</a>
+        </div>
+      </div>
+      <div class="hero-figure reveal">
+        <img src="https://images.unsplash.com/photo-1653352639753-8debcc830014?w=1200&h=1000&fit=crop" alt="a black and white photo of an industrial plant">
+        <div class="cap">Photo by Danny Burke on <a href="https://unsplash.com/@djburkephotography?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Unsplash</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATEMENT / ABOUT -->
+  <section class="statement" id="about">
+    <div class="container">
+      <span class="eyebrow reveal" data-lang-th="เกี่ยวกับเรา" data-lang-en="About V Group">เกี่ยวกับเรา</span>
+      <blockquote class="reveal" data-lang-th="เราเชื่อว่าการจัดการพลังงานและเคมีภัณฑ์ที่ดี คือรากฐานของอุตสาหกรรมที่ยั่งยืนและปลอดภัย" data-lang-en="We believe sound energy and chemical management is the foundation of a safe, sustainable industry.">เราเชื่อว่าการจัดการพลังงานและเคมีภัณฑ์ที่ดี คือรากฐานของอุตสาหกรรมที่ยั่งยืนและปลอดภัย</blockquote>
+      <cite data-lang-th="คณะผู้บริหาร วี กรุ๊ป ดีเวลลอปเมนท์" data-lang-en="Executive Board, V Group Development">คณะผู้บริหาร วี กรุ๊ป ดีเวลลอปเมนท์</cite>
+      <div class="stat-row">
+        <div class="stat-item reveal">
+          <div class="num">20+</div>
+          <div class="lbl" data-lang-th="ปีแห่งประสบการณ์" data-lang-en="Years of Experience">ปีแห่งประสบการณ์</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="num">180+</div>
+          <div class="lbl" data-lang-th="บุคลากรผู้เชี่ยวชาญ" data-lang-en="Specialist Personnel">บุคลากรผู้เชี่ยวชาญ</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="num">12</div>
+          <div class="lbl" data-lang-th="คลังจัดเก็บในเครือข่าย" data-lang-en="Network Storage Terminals">คลังจัดเก็บในเครือข่าย</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="num">3</div>
+          <div class="lbl" data-lang-th="ใบรับรองมาตรฐาน ISO" data-lang-en="ISO Certifications">ใบรับรองมาตรฐาน ISO</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE OPERATIONS -->
+  <section class="operations" id="operations">
+    <div class="container">
+      <span class="eyebrow reveal" data-lang-th="ธุรกิจหลัก" data-lang-en="Core Business">ธุรกิจหลัก</span>
+      <h2 class="reveal" style="font-size:clamp(1.9rem,5vw,2.8rem);max-width:20ch;color:var(--primary);padding-top:0.2em;" data-lang-th="สองเสาหลักของการดำเนินธุรกิจ" data-lang-en="Two Pillars of Our Operation">สองเสาหลักของการดำเนินธุรกิจ</h2>
+
+      <div class="op-row reveal">
+        <div class="op-media">
+          <img src="https://images.unsplash.com/photo-1772376920846-8925e03c3fcf?w=900&h=700&fit=crop" alt="Large industrial storage tanks under a clear blue sky">
+          <div class="op-cap">Photo by Energie-portal.sk on <a href="https://unsplash.com/@energie_portal_sk?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Unsplash</a></div>
+        </div>
+        <div class="op-content">
+          <div class="op-num">01 / 02</div>
+          <h3 data-lang-th="การซื้อขายผลิตภัณฑ์เชื้อเพลิงและเคมีภัณฑ์" data-lang-en="Fuel &amp; Chemical Products Trading">การซื้อขายผลิตภัณฑ์เชื้อเพลิงและเคมีภัณฑ์</h3>
+          <p data-lang-th="จัดหาและจัดจำหน่ายผลิตภัณฑ์ปิโตรเลียมและเคมีภัณฑ์อุตสาหกรรมคุณภาพสูง ครอบคลุมทั้งตลาดในประเทศและภูมิภาคเอเชียตะวันออกเฉียงใต้ ด้วยเครือข่ายซัพพลายเออร์ที่เชื่อถือได้และระบบโลจิสติกส์ที่แม่นยำ" data-lang-en="We source and distribute high-grade petroleum products and industrial chemicals across domestic and Southeast Asian markets, backed by a trusted supplier network and precise logistics.">จัดหาและจัดจำหน่ายผลิตภัณฑ์ปิโตรเลียมและเคมีภัณฑ์อุตสาหกรรมคุณภาพสูง ครอบคลุมทั้งตลาดในประเทศและภูมิภาคเอเชียตะวันออกเฉียงใต้ ด้วยเครือข่ายซัพพลายเออร์ที่เชื่อถือได้และระบบโลจิสติกส์ที่แม่นยำ</p>
+          <ul class="op-list">
+            <li><i data-lucide="check"></i><span data-lang-th="ผลิตภัณฑ์ปิโตรเลียมกลั่นและเชื้อเพลิงอุตสาหกรรม" data-lang-en="Refined petroleum &amp; industrial fuels">ผลิตภัณฑ์ปิโตรเลียมกลั่นและเชื้อเพลิงอุตสาหกรรม</span></li>
+            <li><i data-lucide="check"></i><span data-lang-th="เคมีภัณฑ์อุตสาหกรรมและตัวทำละลาย" data-lang-en="Industrial chemicals &amp; solvents">เคมีภัณฑ์อุตสาหกรรมและตัวทำละลาย</span></li>
+            <li><i data-lucide="check"></i><span data-lang-th="สัญญาจัดส่งปริมาณมากและระยะยาว" data-lang-en="Bulk &amp; term contract supply">สัญญาจัดส่งปริมาณมากและระยะยาว</span></li>
+            <li><i data-lucide="check"></i><span data-lang-th="บริการนำเข้า-ส่งออกและโลจิสติกส์" data-lang-en="Import-export &amp; logistics">บริการนำเข้า-ส่งออกและโลจิสติกส์</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="op-row reverse reveal">
+        <div class="op-media">
+          <img src="https://images.unsplash.com/photo-1620203853151-496c7228306c?w=900&h=700&fit=crop" alt="A complex network of industrial metal pipes and valves in a factory setting">
+          <div class="op-cap">Photo by Ricardo Gomez Angel on <a href="https://unsplash.com/@rgaleriacom?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Unsplash</a></div>
+        </div>
+        <div class="op-content">
+          <div class="op-num">02 / 02</div>
+          <h3 data-lang-th="บริการอุตสาหกรรมเฉพาะทางและสิ่งแวดล้อม" data-lang-en="Specialized Industrial &amp; Environmental Services">บริการอุตสาหกรรมเฉพาะทางและสิ่งแวดล้อม</h3>
+          <p data-lang-th="ให้บริการทางวิศวกรรมและสิ่งแวดล้อมเฉพาะทาง เพื่อสนับสนุนความปลอดภัยและความยั่งยืนในกระบวนการผลิตของลูกค้า ตั้งแต่การบำบัดของเสียไปจนถึงการให้คำปรึกษาด้านกฎระเบียบ" data-lang-en="We deliver specialized engineering and environmental services that support safety and sustainability across our clients' production processes — from waste treatment to regulatory advisory.">ให้บริการทางวิศวกรรมและสิ่งแวดล้อมเฉพาะทาง เพื่อสนับสนุนความปลอดภัยและความยั่งยืนในกระบวนการผลิตของลูกค้า ตั้งแต่การบำบัดของเสียไปจนถึงการให้คำปรึกษาด้านกฎระเบียบ</p>
+          <ul class="op-list">
+            <li><i data-lucide="check"></i><span data-lang-th="ทำความสะอาดและขจัดสิ่งปนเปื้อนในถังเก็บ" data-lang-en="Tank cleaning &amp; decontamination">ทำความสะอาดและขจัดสิ่งปนเปื้อนในถังเก็บ</span></li>
+            <li><i data-lucide="check"></i><span data-lang-th="บำบัดน้ำเสียและของเสียจากกระบวนการผลิต" data-lang-en="Wastewater &amp; effluent treatment">บำบัดน้ำเสียและของเสียจากกระบวนการผลิต</span></li>
+            <li><i data-lucide="check"></i><span data-lang-th="การจัดการของเสียอันตราย" data-lang-en="Hazardous waste management">การจัดการของเสียอันตราย</span></li>
+            <li><i data-lucide="check"></i><span data-lang-th="ที่ปรึกษาด้านการปฏิบัติตามกฎระเบียบ" data-lang-en="Regulatory compliance consulting">ที่ปรึกษาด้านการปฏิบัติตามกฎระเบียบ</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE / PROCESS -->
+  <section class="expertise" id="expertise">
+    <div class="container">
+      <span class="eyebrow reveal">HOW WE OPERATE</span>
+      <h2 class="reveal" data-lang-th="กระบวนการทำงานที่ควบคุมได้ทุกขั้นตอน" data-lang-en="A Process Controlled at Every Stage">กระบวนการทำงานที่ควบคุมได้ทุกขั้นตอน</h2>
+      <div class="exp-list">
+        <div class="exp-item reveal">
+          <div class="exp-num">01</div>
+          <div class="exp-title" data-lang-th="จัดหาแหล่งวัตถุดิบ" data-lang-en="Sourcing">จัดหาแหล่งวัตถุดิบ</div>
+          <div class="exp-desc" data-lang-th="คัดเลือกซัพพลายเออร์ผู้ผลิตชั้นนำที่ผ่านการตรวจสอบมาตรฐานคุณภาพและความปลอดภัยอย่างเข้มงวด" data-lang-en="We vet and select leading manufacturing suppliers through rigorous quality and safety audits.">คัดเลือกซัพพลายเออร์ผู้ผลิตชั้นนำที่ผ่านการตรวจสอบมาตรฐานคุณภาพและความปลอดภัยอย่างเข้มงวด</div>
+        </div>
+        <div class="exp-item reveal">
+          <div class="exp-num">02</div>
+          <div class="exp-title" data-lang-th="จัดเก็บและขนส่ง" data-lang-en="Storage &amp; Logistics">จัดเก็บและขนส่ง</div>
+          <div class="exp-desc" data-lang-th="เครือข่ายคลังจัดเก็บและระบบขนส่งที่ควบคุมอุณหภูมิและความปลอดภัยตลอดห่วงโซ่อุปทาน" data-lang-en="A network of storage terminals and transport systems that maintain temperature and safety control across the supply chain.">เครือข่ายคลังจัดเก็บและระบบขนส่งที่ควบคุมอุณหภูมิและความปลอดภัยตลอดห่วงโซ่อุปทาน</div>
+        </div>
+        <div class="exp-item reveal">
+          <div class="exp-num">03</div>
+          <div class="exp-title" data-lang-th="ตรวจสอบคุณภาพ" data-lang-en="Quality Assurance">ตรวจสอบคุณภาพ</div>
+          <div class="exp-desc" data-lang-th="ห้องปฏิบัติการตรวจสอบคุณภาพผลิตภัณฑ์ทุกล็อตก่อนส่งมอบ เพื่อรับประกันความสม่ำเสมอของมาตรฐาน" data-lang-en="Every batch is tested in-lab before delivery to guarantee consistent product standards.">ห้องปฏิบัติการตรวจสอบคุณภาพผลิตภัณฑ์ทุกล็อตก่อนส่งมอบ เพื่อรับประกันความสม่ำเสมอของมาตรฐาน</div>
+        </div>
+        <div class="exp-item reveal">
+          <div class="exp-num">04</div>
+          <div class="exp-title" data-lang-th="กำกับดูแลและความปลอดภัย" data-lang-en="Compliance &amp; Safety">กำกับดูแลและความปลอดภัย</div>
+          <div class="exp-desc" data-lang-th="ปฏิบัติตามข้อกำหนดด้านสิ่งแวดล้อมและความปลอดภัยสากลอย่างเคร่งครัดในทุกขั้นตอนดำเนินงาน" data-lang-en="Strict adherence to international environmental and safety regulations at every operational step.">ปฏิบัติตามข้อกำหนดด้านสิ่งแวดล้อมและความปลอดภัยสากลอย่างเคร่งครัดในทุกขั้นตอนดำเนินงาน</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <section class="numbers" id="numbers">
+    <div class="container">
+      <span class="eyebrow reveal" data-lang-th="ตัวเลขของเรา" data-lang-en="By the Numbers">ตัวเลขของเรา</span>
+      <h2 class="reveal" style="color:var(--primary);font-size:clamp(1.9rem,5vw,2.8rem);max-width:20ch;padding-top:0.2em;" data-lang-th="ผลลัพธ์ที่วัดได้จากการดำเนินงานจริง" data-lang-en="Results Measured in Real Operations">ผลลัพธ์ที่วัดได้จากการดำเนินงานจริง</h2>
+      <div class="num-grid">
+        <div class="num-item reveal">
+          <div class="figure">2.4<span>M</span></div>
+          <div class="caption" data-lang-th="ตันของผลิตภัณฑ์ที่บริหารจัดการต่อปี" data-lang-en="Tons of product managed per year">ตันของผลิตภัณฑ์ที่บริหารจัดการต่อปี</div>
+        </div>
+        <div class="num-item reveal">
+          <div class="figure">98<span>%</span></div>
+          <div class="caption" data-lang-th="อัตราการส่งมอบตรงเวลา" data-lang-en="On-time delivery rate">อัตราการส่งมอบตรงเวลา</div>
+        </div>
+        <div class="num-item reveal">
+          <div class="figure">6</div>
+          <div class="caption" data-lang-th="ประเทศที่ให้บริการในภูมิภาค" data-lang-en="Countries served in the region">ประเทศที่ให้บริการในภูมิภาค</div>
+        </div>
+        <div class="num-item reveal">
+          <div class="figure">2003</div>
+          <div class="caption" data-lang-th="ปีที่ก่อตั้งบริษัท" data-lang-en="Year the company was founded">ปีที่ก่อตั้งบริษัท</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline">
+    <div class="container">
+      <span class="eyebrow reveal" data-lang-th="เส้นทางของเรา" data-lang-en="Our Journey">เส้นทางของเรา</span>
+      <h2 class="reveal" style="color:var(--primary);font-size:clamp(1.9rem,5vw,2.8rem);max-width:20ch;padding-top:0.2em;" data-lang-th="สองทศวรรษแห่งการเติบโต" data-lang-en="Two Decades of Growth">สองทศวรรษแห่งการเติบโต</h2>
+      <div class="tl-track">
+        <div class="tl-item reveal">
+          <div class="tl-year">2003</div>
+          <div class="tl-desc" data-lang-th="ก่อตั้งบริษัทในกรุงเทพฯ เริ่มต้นจากธุรกิจซื้อขายเชื้อเพลิง" data-lang-en="Founded in Bangkok as a fuel trading house.">ก่อตั้งบริษัทในกรุงเทพฯ เริ่มต้นจากธุรกิจซื้อขายเชื้อเพลิง</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-year">2008</div>
+          <div class="tl-desc" data-lang-th="ขยายธุรกิจสู่การจัดจำหน่ายเคมีภัณฑ์อุตสาหกรรม" data-lang-en="Expanded into industrial chemical distribution.">ขยายธุรกิจสู่การจัดจำหน่ายเคมีภัณฑ์อุตสาหกรรม</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-year">2013</div>
+          <div class="tl-desc" data-lang-th="ได้รับการรับรองมาตรฐาน ISO 9001 และเปิดหน่วยบริการสิ่งแวดล้อม" data-lang-en="Achieved ISO 9001 certification and launched our environmental services division.">ได้รับการรับรองมาตรฐาน ISO 9001 และเปิดหน่วยบริการสิ่งแวดล้อม</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-year">2018</div>
+          <div class="tl-desc" data-lang-th="ขยายเครือข่ายการค้าครอบคลุมภูมิภาคเอเชียตะวันออกเฉียงใต้" data-lang-en="Expanded trade corridors across Southeast Asia.">ขยายเครือข่ายการค้าครอบคลุมภูมิภาคเอเชียตะวันออกเฉียงใต้</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-year">2023</div>
+          <div class="tl-desc" data-lang-th="ครบรอบ 20 ปี ก้าวสู่ผู้ให้บริการโซลูชันพลังงานและเคมีภัณฑ์ครบวงจร" data-lang-en="Celebrated 20 years, becoming a full-service Total Energy &amp; Chemical Solutions provider.">ครบรอบ 20 ปี ก้าวสู่ผู้ให้บริการโซลูชันพลังงานและเคมีภัณฑ์ครบวงจร</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery">
+    <div class="gallery-grid">
+      <div class="gallery-item reveal">
+        <img src="https://images.unsplash.com/photo-1726731782158-fcf6822b6ca4?w=700&h=500&fit=crop" alt="A factory with a lot of red and white pipes">
+        <span class="tag" data-lang-th="โรงงานผลิต" data-lang-en="Production Facility">โรงงานผลิต</span>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="https://images.unsplash.com/photo-1588011930968-eadac80e6a5a?w=700&h=500&fit=crop" alt="Red and white tower under blue sky during night time">
+        <span class="tag" data-lang-th="คลังจัดเก็บ" data-lang-en="Storage Terminal">คลังจัดเก็บ</span>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="https://images.unsplash.com/photo-1582489853490-cd3a53eb4530?w=700&h=500&fit=crop" alt="A white hard hat hanging from a metal hook in a dark industrial factory">
+        <span class="tag" data-lang-th="มาตรฐานความปลอดภัย" data-lang-en="Safety Standards">มาตรฐานความปลอดภัย</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTS -->
+  <section class="certs">
+    <div class="container">
+      <span class="eyebrow reveal" data-lang-th="มาตรฐานและการรับรอง" data-lang-en="Standards &amp; Certifications">มาตรฐานและการรับรอง</span>
+      <h2 class="reveal" style="color:var(--primary);font-size:clamp(1.9rem,5vw,2.8rem);max-width:20ch;padding-top:0.2em;" data-lang-th="ความไว้วางใจที่พิสูจน์ได้ด้วยมาตรฐานสากล" data-lang-en="Trust Proven Through International Standards">ความไว้วางใจที่พิสูจน์ได้ด้วยมาตรฐานสากล</h2>
+      <div class="cert-grid">
+        <div class="cert-card reveal">
+          <i data-lucide="badge-check"></i>
+          <h4>ISO 9001:2015</h4>
+          <p data-lang-th="ระบบบริหารคุณภาพมาตรฐานสากล" data-lang-en="International quality management system.">ระบบบริหารคุณภาพมาตรฐานสากล</p>
+        </div>
+        <div class="cert-card reveal">
+          <i data-lucide="leaf"></i>
+          <h4>ISO 14001:2015</h4>
+          <p data-lang-th="ระบบบริหารจัดการสิ่งแวดล้อม" data-lang-en="Environmental management system.">ระบบบริหารจัดการสิ่งแวดล้อม</p>
+        </div>
+        <div class="cert-card reveal">
+          <i data-lucide="shield-check"></i>
+          <h4>ISO 45001:2018</h4>
+          <p data-lang-th="ระบบบริหารจัดการอาชีวอนามัยและความปลอดภัย" data-lang-en="Occupational health &amp; safety management.">ระบบบริหารจัดการอาชีวอนามัยและความปลอดภัย</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-wrap">
+      <div class="contact-info reveal">
+        <span class="eyebrow" data-lang-th="ติดต่อเรา" data-lang-en="Contact">ติดต่อเรา</span>
+        <h2 data-lang-th="พร้อมพูดคุยเกี่ยวกับความต้องการของคุณ" data-lang-en="Ready to Discuss Your Requirements">พร้อมพูดคุยเกี่ยวกับความต้องการของคุณ</h2>
+        <p data-lang-th="ทีมงานฝ่ายขายและวิศวกรรมของเราพร้อมให้คำปรึกษาเกี่ยวกับการจัดหาผลิตภัณฑ์และบริการอุตสาหกรรมที่เหมาะกับธุรกิจของคุณ" data-lang-en="Our sales and engineering team is ready to advise on product sourcing and industrial services tailored to your business.">ทีมงานฝ่ายขายและวิศวกรรมของเราพร้อมให้คำปรึกษาเกี่ยวกับการจัดหาผลิตภัณฑ์และบริการอุตสาหกรรมที่เหมาะกับธุรกิจของคุณ</p>
+        <div class="info-list">
+          <div class="row">
+            <i data-lucide="map-pin"></i>
+            <div>
+              <div class="label" data-lang-th="สำนักงานใหญ่" data-lang-en="Head Office">สำนักงานใหญ่</div>
+              <div class="val" data-lang-th="เลขที่ 88 อาคารวี กรุ๊ป ถนนสาทร แขวงสีลม เขตบางรัก กรุงเทพฯ 10500" data-lang-en="88 V Group Building, Sathorn Road, Silom, Bang Rak, Bangkok 10500">เลขที่ 88 อาคารวี กรุ๊ป ถนนสาทร แขวงสีลม เขตบางรัก กรุงเทพฯ 10500</div>
+            </div>
+          </div>
+          <div class="row">
+            <i data-lucide="phone"></i>
+            <div>
+              <div class="label" data-lang-th="โทรศัพท์" data-lang-en="Phone">โทรศัพท์</div>
+              <div class="val">+66 (0) 2-234-5678</div>
+            </div>
+          </div>
+          <div class="row">
+            <i data-lucide="mail"></i>
+            <div>
+              <div class="label">Email</div>
+              <div class="val">contact@vgroupdevelopment.co.th</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <h3 data-lang-th="ส่งข้อความถึงเรา" data-lang-en="Send Us a Message">ส่งข้อความถึงเรา</h3>
+        <form onsubmit="event.preventDefault();">
+          <div class="field">
+            <label data-lang-th="ชื่อ-นามสกุล" data-lang-en="Full Name">ชื่อ-นามสกุล</label>
+            <input type="text" required>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" required>
+          </div>
+          <div class="field">
+            <label data-lang-th="บริษัท" data-lang-en="Company">บริษัท</label>
+            <input type="text">
+          </div>
+          <div class="field">
+            <label data-lang-th="ข้อความ" data-lang-en="Message">ข้อความ</label>
+            <textarea required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" data-lang-th="ส่งข้อความ" data-lang-en="Send Message">ส่งข้อความ</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="foot-grid">
+        <div class="foot-col">
+          <div class="foot-logo">V<span>GROUP</span></div>
+          <p data-lang-th="ผู้ให้บริการครบวงจรด้านพลังงาน เชื้อเพลิง และเคมีภัณฑ์" data-lang-en="A one-stop provider in energy, fuel, and chemical management.">ผู้ให้บริการครบวงจรด้านพลังงาน เชื้อเพลิง และเคมีภัณฑ์</p>
+        </div>
+        <div class="foot-col">
+          <h5 data-lang-th="เมนู" data-lang-en="Menu">เมนู</h5>
+          <div class="foot-links">
+            <a href="#about" data-lang-th="เกี่ยวกับเรา" data-lang-en="About Us">เกี่ยวกับเรา</a>
+            <a href="#operations" data-lang-th="ธุรกิจหลัก" data-lang-en="Core Business">ธุรกิจหลัก</a>
+            <a href="#expertise" data-lang-th="ความเชี่ยวชาญ" data-lang-en="Expertise">ความเชี่ยวชาญ</a>
+          </div>
+        </div>
+        <div class="foot-col">
+          <h5 data-lang-th="ธุรกิจ" data-lang-en="Business">ธุรกิจ</h5>
+          <div class="foot-links">
+            <a href="#operations" data-lang-th="การซื้อขายเชื้อเพลิงและเคมีภัณฑ์" data-lang-en="Fuel &amp; Chemical Trading">การซื้อขายเชื้อเพลิงและเคมีภัณฑ์</a>
+            <a href="#operations" data-lang-th="บริการอุตสาหกรรมและสิ่งแวดล้อม" data-lang-en="Industrial &amp; Environmental Services">บริการอุตสาหกรรมและสิ่งแวดล้อม</a>
+          </div>
+        </div>
+        <div class="foot-col">
+          <h5 data-lang-th="ติดต่อ" data-lang-en="Contact">ติดต่อ</h5>
+          <div class="foot-links">
+            <a href="tel:+6622345678">+66 (0) 2-234-5678</a>
+            <a href="mailto:contact@vgroupdevelopment.co.th">contact@vgroupdevelopment.co.th</a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <div>
+          <div data-lang-th="© 2569 บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด สงวนลิขสิทธิ์" data-lang-en="© 2026 V Group Development Co., Ltd. All rights reserved.">© 2569 บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด สงวนลิขสิทธิ์</div>
+          <a class="deelabs-badge" href="https://deelabs.co/?utm_source=client-site&utm_medium=badge" target="_blank" rel="noopener">Powered by DeeLabs</a>
+        </div>
+        <div class="credits">
+          Photos via <a href="https://unsplash.com/?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Unsplash</a>:
+          <a href="https://unsplash.com/@djburkephotography?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Danny Burke</a>,
+          <a href="https://unsplash.com/@energie_portal_sk?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Energie-portal.sk</a>,
+          <a href="https://unsplash.com/@rgaleriacom?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Ricardo Gomez Angel</a>,
+          <a href="https://unsplash.com/@c7arb?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Christian Harb</a>,
+          <a href="https://unsplash.com/@qwitka?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Maksym Kaharlytskyi</a>,
+          <a href="https://unsplash.com/@umityildirim?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Ümit Yıldırım</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  // header scroll shrink
+  var header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 20){ header.classList.add('scrolled'); }
+    else{ header.classList.remove('scrolled'); }
+  });
+
+  // mobile nav toggle
+  var navToggle = document.getElementById('navToggle');
+  var siteNav = document.getElementById('siteNav');
+  var backdrop = document.getElementById('navBackdrop');
+  function closeNav(){
+    siteNav.classList.remove('open');
+    backdrop.classList.remove('open');
+    navToggle.innerHTML = '<i data-lucide="menu"></i>';
+    lucide.createIcons();
+  }
+  navToggle.addEventListener('click', function(){
+    var isOpen = siteNav.classList.toggle('open');
+    backdrop.classList.toggle('open', isOpen);
+    navToggle.innerHTML = isOpen ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
+    lucide.createIcons();
+  });
+  backdrop.addEventListener('click', closeNav);
+  siteNav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeNav);
+  });
+
+  // scroll reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.15});
+  revealEls.forEach(function(el){ io.observe(el); });
+
+  lucide.createIcons();
+</script>
+
+<script>
+(function(){var K='site-lang',L=localStorage.getItem(K)||'th';function S(l){L=l;localStorage.setItem(K,l);document.documentElement.lang=l;document.querySelectorAll('[data-lang-th]').forEach(function(e){var t=e.getAttribute('data-lang-'+l);if(t!==null){if(/[<&]/.test(t)){e.innerHTML=t}else{e.textContent=t}}});var lb=document.querySelector('.lang-sw__label');if(lb){lb.textContent=l.toUpperCase()}}var sw=document.querySelector('.lang-sw');if(sw){sw.addEventListener('click',function(){S(L==='th'?'en':'th')});sw.style.cursor='pointer'}if(L!=='th'){S(L)}})();
+</script>
+
+</body>
+</html>
