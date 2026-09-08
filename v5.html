@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<script>document.documentElement.classList.add("js")</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>V GROUP DEVELOPMENT CO.,LTD. — วี กรุ๊ป ดีเวลลอปเมนท์</title>
+<meta name="description" content="บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด — น้ำมันเชื้อเพลิงทดแทน ประจวบคีรีขันธ์">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   V5 — "DATASHEET"  ·  technical brutalist
+   ink navy / paper / safety orange / steel
+   Kanit 800 + IBM Plex Sans Thai + IBM Plex Mono labels
+   Exposed grid, hairlines, sharp edges. Mobile-first.
+   ============================================================ */
+
+:root{
+  --navy:#0E3826;
+  --paper:#F1F7F3;
+  --orange:#2FBF6E;        /* loud accent: FILLS (paired with deep-green text) */
+  --orange-ink:#15803D;    /* same accent as TEXT on the light paper (contrast-safe) */
+  --steel:#4A7261;
+  --err:#FFB4AB;              /* form validation only */
+  --white:#FFFFFF;
+  --hair:rgba(14,56,38,.16);
+  --hair-strong:rgba(14,56,38,.3);
+  --hair-inv:rgba(241,247,243,.18);
+  --pad:clamp(16px,4vw,44px);
+  --maxw:1400px;
+  --ease:cubic-bezier(.16,.84,.28,1);
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --hdr-h:57px;  /* measured at runtime by JS; this is the fallback */
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--navy);
+  font-family:"IBM Plex Sans Thai",system-ui,-apple-system,sans-serif;
+  font-size:15px; line-height:1.72; font-weight:400;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4{font-family:"Kanit","IBM Plex Sans Thai",system-ui,sans-serif; font-weight:800; line-height:1.02; letter-spacing:-.02em; margin:0; text-transform:uppercase}
+p{margin:0}
+img{max-width:100%; display:block}
+a{color:inherit; text-decoration:none}
+button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
+
+/* ---------- mono metadata label ---------- */
+.mono{font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; font-weight:400}
+.mono-o{color:var(--orange-ink)}
+/* dark surfaces flip the accent back to the bright tone */
+.hero .mono-o,.sec-dark .mono-o,.ftr .mono-o,.drawer .mono-o,.lb .mono-o,.hdr.stuck .mono-o{color:var(--orange)}
+.mono-s{color:var(--steel)}
+
+.wrap{width:100%; max-width:var(--maxw); margin-inline:auto; padding-inline:var(--pad)}
+
+/* ============================================================
+   EXPOSED 12-COLUMN GRID — drawn on the page
+   ============================================================ */
+.gridlines{
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  max-width:var(--maxw); margin-inline:auto; padding-inline:var(--pad);
+  display:grid; grid-template-columns:repeat(4,1fr);
+}
+.gridlines i{border-left:1px solid var(--hair); opacity:0; animation:drawCol .9s var(--ease) forwards}
+.gridlines i:last-child{border-right:1px solid var(--hair)}
+.gridlines i:nth-child(1){animation-delay:.05s}
+.gridlines i:nth-child(2){animation-delay:.12s}
+.gridlines i:nth-child(3){animation-delay:.19s}
+.gridlines i:nth-child(4){animation-delay:.26s}
+.gridlines i:nth-child(n+5){animation-delay:.33s}
+@keyframes drawCol{to{opacity:1}}
+@media (min-width:900px){.gridlines{grid-template-columns:repeat(12,1fr)}}
+@media (prefers-reduced-motion:reduce){.gridlines i{animation:none; opacity:1}}
+
+main,header,footer{position:relative; z-index:2}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.hdr{
+  position:fixed; inset:0 0 auto 0; z-index:90;
+  background:var(--paper); border-bottom:1px solid var(--hair);
+  transition:background .3s, border-color .3s;
+}
+.hdr.stuck{background:var(--navy); border-color:var(--hair-inv); color:var(--paper)}
+.hdr-in{display:flex; align-items:stretch; min-height:56px}
+.hdr.stuck .mono-s{color:rgba(241,247,243,.6)}
+
+.brand{
+  display:flex; align-items:center; gap:11px; margin-right:auto;
+  padding-right:18px; border-right:1px solid var(--hair); min-width:0;
+  transition:border-color .3s;
+}
+.hdr.stuck .brand{border-color:var(--hair-inv)}
+.brand-mark{
+  width:30px; height:30px; flex:none; background:var(--orange); color:var(--navy);
+  display:grid; place-items:center;
+  font-family:"Kanit",sans-serif; font-weight:800; font-size:.95rem; line-height:1;
+}
+.brand-txt{min-width:0; line-height:1.15}
+.brand-name{
+  display:block; font-family:"Kanit",sans-serif; font-weight:600; font-size:.76rem;
+  letter-spacing:.02em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.brand-sub{display:block; font-family:var(--mono); font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--steel)}
+.hdr.stuck .brand-sub{color:rgba(241,247,243,.55)}
+
+.nav{display:none}
+@media (min-width:1060px){
+  .nav{display:flex; align-items:stretch}
+  .nav a{
+    position:relative; display:flex; align-items:center; gap:.5rem;
+    padding:0 16px; border-right:1px solid var(--hair);
+    font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
+    transition:background .28s var(--ease), color .28s var(--ease), border-color .3s;
+  }
+  .hdr.stuck .nav a{border-color:var(--hair-inv)}
+  .nav a b{font-weight:400; color:var(--orange-ink); font-size:.62rem}
+  .hdr.stuck .nav a b{color:var(--orange)}
+  .nav a:first-child{border-left:1px solid var(--hair)}
+  .hdr.stuck .nav a:first-child{border-color:var(--hair-inv)}
+  .nav a:hover{background:var(--orange); color:var(--navy)}
+  .nav a:hover b{color:var(--navy)}
+}
+
+.lang{display:flex; align-items:stretch; flex:none; border-left:1px solid var(--hair); transition:border-color .3s}
+.hdr.stuck .lang{border-color:var(--hair-inv)}
+.lang button{
+  padding:0 14px; font-family:var(--mono); font-size:.68rem; letter-spacing:.12em;
+  color:var(--steel); transition:background .28s var(--ease), color .28s var(--ease);
+}
+.hdr.stuck .lang button{color:rgba(241,247,243,.6)}
+.lang button[aria-pressed="true"]{background:var(--orange); color:var(--navy)}
+.hdr.stuck .lang button[aria-pressed="true"]{color:var(--white)}
+
+.burger{
+  display:grid; place-items:center; width:52px; flex:none;
+  border-left:1px solid var(--hair); transition:border-color .3s, background .28s;
+}
+.hdr.stuck .burger{border-color:var(--hair-inv)}
+.burger span{display:block; width:18px; height:2px; background:currentColor; transition:transform .32s var(--ease), opacity .2s}
+.burger span+span{margin-top:4px}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+@media (min-width:1060px){.burger{display:none}}
+
+.drawer{
+  position:fixed; inset:var(--hdr-h) 0 0 0; z-index:80; background:var(--navy); color:var(--paper);
+  padding:0; display:block; overflow-y:auto;
+  clip-path:inset(0 0 100% 0); transition:clip-path .5s var(--ease);
+}
+.drawer.open{clip-path:inset(0 0 0 0)}
+.drawer a{
+  display:flex; align-items:baseline; gap:16px;
+  padding:20px var(--pad); border-bottom:1px solid var(--hair-inv);
+  font-family:"Kanit",sans-serif; font-weight:600; font-size:1.35rem; text-transform:uppercase;
+  transition:background .28s, padding-left .3s var(--ease);
+}
+.drawer a b{font-family:var(--mono); font-weight:400; font-size:.7rem; color:var(--orange)}
+.drawer a:hover{background:var(--orange); color:var(--navy); padding-left:calc(var(--pad) + 8px)}
+.drawer a:hover b{color:var(--navy)}
+@media (min-width:1060px){.drawer{display:none}}
+
+/* ============================================================
+   MARQUEE TICKER
+   ============================================================ */
+.ticker{
+  position:relative; z-index:3; margin-top:var(--hdr-h);
+  background:var(--orange); color:var(--navy);
+  border-bottom:1px solid var(--navy);
+  overflow:hidden; display:flex;
+}
+.ticker-track{display:flex; flex:none; animation:tick 34s linear infinite; will-change:transform}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes tick{from{transform:translateX(0)} to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ticker-track{animation:none}}
+.ticker-track span{
+  flex:none; padding:8px 22px;
+  font-family:var(--mono); font-size:.66rem; letter-spacing:.2em; text-transform:uppercase;
+  white-space:nowrap; display:flex; align-items:center; gap:22px;
+}
+.ticker-track span::after{content:"◆"; font-size:.5rem; opacity:.6}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative; background:var(--navy); color:var(--paper);
+  border-bottom:1px solid var(--navy); overflow:hidden;
+}
+.hero-bg{position:absolute; inset:0; z-index:0}
+.hero-bg img{width:100%; height:100%; object-fit:cover; opacity:.34; filter:saturate(.6) contrast(1.1)}
+.hero-bg::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(96deg, var(--navy) 6%, rgba(14,56,38,.72) 48%, rgba(14,56,38,.42));
+}
+.hero-in{position:relative; z-index:2; padding-block:clamp(52px,9vw,110px) clamp(40px,6vw,74px)}
+
+.hero-top{
+  display:flex; flex-wrap:wrap; gap:10px 26px; align-items:baseline;
+  padding-bottom:16px; border-bottom:1px solid var(--hair-inv); margin-bottom:clamp(26px,5vw,52px);
+}
+.hero-top .mono-s{color:rgba(241,247,243,.6)}
+
+.hero h1{
+  font-size:clamp(2.6rem,11.4vw,8rem); line-height:.9; letter-spacing:-.038em;
+  max-width:16ch;
+}
+.hero h1 .ln{display:block; overflow:hidden}
+.hero h1 .ln i{
+  display:block; font-style:normal;
+  animation:wipe 1s var(--ease) both;
+}
+.hero h1 .ln:nth-child(1) i{animation-delay:.1s}
+.hero h1 .ln:nth-child(2) i{animation-delay:.24s}
+@keyframes wipe{
+  from{clip-path:inset(0 100% 0 0); transform:translateY(.14em)}
+  to{clip-path:inset(0 0 0 0); transform:none}
+}
+@media (prefers-reduced-motion:reduce){.hero h1 .ln i{animation:none}}
+.hero h1 em{font-style:normal; color:var(--orange)}
+
+.hero-meta{
+  margin-top:clamp(26px,4vw,44px);
+  display:grid; gap:0; border-top:1px solid var(--hair-inv);
+}
+@media (min-width:760px){.hero-meta{grid-template-columns:repeat(3,1fr)}}
+.hm{padding:18px 0; border-bottom:1px solid var(--hair-inv)}
+@media (min-width:760px){
+  .hm{padding:18px 20px; border-bottom:0; border-left:1px solid var(--hair-inv)}
+  .hm:first-child{padding-left:0; border-left:0}
+}
+.hm dt{font-family:var(--mono); font-size:.64rem; letter-spacing:.16em; text-transform:uppercase; color:rgba(241,247,243,.55)}
+.hm dd{margin:8px 0 0; font-family:"Kanit",sans-serif; font-weight:500; font-size:1.02rem; line-height:1.34; text-transform:none}
+.hm dd b{color:var(--orange); font-weight:800}
+
+.hero-cta{display:flex; flex-wrap:wrap; gap:0; margin-top:clamp(26px,4vw,40px); border:1px solid var(--hair-inv); width:fit-content; max-width:100%}
+.btn{
+  display:inline-flex; align-items:center; gap:.7rem;
+  padding:15px 26px;
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+  transition:background .3s var(--ease), color .3s var(--ease);
+}
+.btn svg{width:14px; height:14px; transition:transform .34s var(--ease)}
+.btn:hover svg{transform:translateX(5px)}
+.btn-o{background:var(--orange); color:var(--navy); font-weight:500}
+.btn-o:hover{background:var(--paper); color:var(--navy)}
+.btn-l{border-left:1px solid var(--hair-inv); color:var(--paper)}
+.btn-l:hover{background:var(--paper); color:var(--navy)}
+
+/* ============================================================
+   SECTION SHELL — oversized numerals
+   ============================================================ */
+.sec{border-bottom:1px solid var(--hair); padding-block:clamp(48px,8vw,104px)}
+/* anchored sections must clear the fixed header */
+section[id]{scroll-margin-top:calc(var(--hdr-h) + 26px)}
+.sec-dark{background:var(--navy); color:var(--paper); border-color:var(--hair-inv)}
+.sec-dark .mono-s{color:rgba(241,247,243,.55)}
+
+.sec-head{
+  display:grid; gap:14px; align-items:start;
+  padding-bottom:clamp(26px,4vw,46px); margin-bottom:clamp(26px,4vw,46px);
+  border-bottom:1px solid var(--hair);
+}
+.sec-dark .sec-head{border-color:var(--hair-inv)}
+@media (min-width:880px){.sec-head{grid-template-columns:104px minmax(0,1fr) minmax(0,26ch); gap:30px}}
+.sec-n{
+  font-family:"Kanit",sans-serif; font-weight:800; font-size:clamp(2.6rem,8vw,4.6rem);
+  line-height:.8; letter-spacing:-.05em; color:var(--orange-ink);
+}
+.sec-dark .sec-n{color:var(--orange)}
+.sec-head h2{font-size:clamp(1.75rem,5.6vw,3.5rem); letter-spacing:-.028em; text-wrap:balance}
+.sec-head .lede{color:var(--steel); font-size:.94rem; line-height:1.7}
+.sec-dark .sec-head .lede{color:rgba(241,247,243,.62)}
+
+/* ============================================================
+   CULTURE — invert-on-hover cards
+   ============================================================ */
+.cult-grid{display:grid; gap:0; border:1px solid var(--hair)}
+@media (min-width:820px){.cult-grid{grid-template-columns:1fr 1fr}}
+.sec-dark .cult-grid{border-color:var(--hair-inv)}
+.cult{
+  padding:clamp(24px,4vw,44px); position:relative; overflow:hidden;
+  border-bottom:1px solid var(--hair);
+  transition:background .34s var(--ease), color .34s var(--ease);
+}
+.sec-dark .cult{border-color:var(--hair-inv)}
+@media (min-width:820px){
+  .cult{border-bottom:0; border-right:1px solid var(--hair)}
+  .sec-dark .cult{border-right-color:var(--hair-inv)}
+  .cult:last-child{border-right:0}
+}
+.cult:last-child{border-bottom:0}
+.cult:hover{background:var(--orange); color:var(--navy)}
+.cult:hover .mono-o,.cult:hover .mono-s{color:var(--navy)}
+.cult-id{display:flex; align-items:baseline; gap:12px}
+.cult h3{margin-top:20px; font-size:.8rem; letter-spacing:.16em; font-weight:600}
+.cult .big{
+  margin-top:12px; font-family:"Kanit",sans-serif; font-weight:500;
+  font-size:clamp(1.3rem,4vw,2.05rem); line-height:1.26; letter-spacing:-.02em;
+}
+.cult-rule{margin-top:26px; height:1px; background:currentColor; opacity:.2; transform:scaleX(.2); transform-origin:left; transition:transform .55s var(--ease)}
+.cult:hover .cult-rule{transform:scaleX(1)}
+
+/* ============================================================
+   HISTORY — spec table
+   ============================================================ */
+.spec{width:100%; border-collapse:collapse; border:1px solid var(--hair-inv); font-size:.95rem}
+.spec caption{
+  text-align:left; padding-bottom:12px;
+  font-family:var(--mono); font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:rgba(241,247,243,.55);
+}
+.spec th,.spec td{padding:16px 14px; border-bottom:1px solid var(--hair-inv); vertical-align:top; text-align:left}
+.spec thead th{
+  font-family:var(--mono); font-size:.62rem; letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(241,247,243,.5); font-weight:400; padding-block:11px;
+  background:rgba(241,247,243,.04);
+}
+.spec tbody tr{transition:background .3s var(--ease)}
+.spec tbody tr:hover{background:rgba(47,191,110,.14)}
+.spec tbody tr:hover .yr{color:var(--orange)}
+.spec .yr{
+  font-family:"Kanit",sans-serif; font-weight:800; font-size:clamp(1.3rem,4vw,1.9rem);
+  line-height:1; letter-spacing:-.03em; white-space:nowrap; transition:color .3s;
+}
+.spec .ev{font-family:"Kanit",sans-serif; font-weight:500; font-size:1.02rem; line-height:1.36; text-transform:none}
+.spec .dt{margin-top:7px; color:rgba(241,247,243,.66); font-size:.89rem; line-height:1.66}
+.spec .tag{
+  display:inline-block; padding:3px 9px; border:1px solid var(--hair-inv);
+  font-family:var(--mono); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--orange);
+}
+@media (max-width:700px){
+  .spec thead{display:none}
+  /* the caption must become a block too, or it collapses to one word per line */
+  .spec caption{display:block; width:100%}
+  .spec,.spec tbody,.spec tr,.spec td{display:block; width:100%}
+  .spec tr{border-bottom:1px solid var(--hair-inv); padding-block:6px}
+  .spec td{border-bottom:0; padding:8px 14px}
+}
+
+.hist-prose{
+  margin-top:clamp(26px,4vw,46px); display:grid; gap:clamp(22px,3.4vw,40px);
+  padding-top:clamp(26px,4vw,44px); border-top:1px solid var(--hair-inv);
+}
+@media (min-width:940px){.hist-prose{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}}
+.hist-prose .body{color:rgba(241,247,243,.78); font-size:.95rem; line-height:1.94}
+.hist-prose .body span{display:block}
+.hist-fig{position:relative; border:1px solid var(--hair-inv)}
+.hist-fig img{width:100%; aspect-ratio:16/10; object-fit:cover; filter:saturate(.7); transition:filter .55s, transform 1s var(--ease)}
+.hist-fig:hover img{filter:saturate(1); transform:scale(1.03)}
+.hist-fig figcaption{
+  padding:11px 14px; border-top:1px solid var(--hair-inv);
+  font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(241,247,243,.55);
+}
+.hist-fig a:hover{color:var(--orange)}
+
+/* ============================================================
+   GALLERY — bento, hard borders, invert overlay
+   ============================================================ */
+.chips{display:flex; flex-wrap:wrap; gap:0; border:1px solid var(--hair); width:fit-content; max-width:100%; margin-bottom:clamp(20px,3vw,34px)}
+.chip{
+  padding:11px 20px; border-right:1px solid var(--hair);
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.13em; text-transform:uppercase; color:var(--steel);
+  transition:background .3s var(--ease), color .3s var(--ease);
+}
+.chip:last-child{border-right:0}
+.chip sup{font-size:.78em; opacity:.6; margin-left:.45em}
+.chip:hover{background:var(--navy); color:var(--paper)}
+.chip[aria-pressed="true"]{background:var(--orange); color:var(--navy); font-weight:500}
+
+.bento{display:grid; gap:0; border:1px solid var(--hair); grid-template-columns:repeat(2,1fr)}
+@media (min-width:900px){.bento{grid-template-columns:repeat(4,1fr)}}
+.cell{
+  position:relative; overflow:hidden; padding:0; width:100%;
+  border-right:1px solid var(--hair); border-bottom:1px solid var(--hair);
+  background:var(--navy); cursor:zoom-in; display:block;
+  animation:cellIn .5s var(--ease) both;
+}
+@keyframes cellIn{from{opacity:0; clip-path:inset(0 0 100% 0)} to{opacity:1; clip-path:inset(0 0 0 0)}}
+.cell img{
+  width:100%; height:100%; object-fit:cover; aspect-ratio:1/1;
+  filter:saturate(.62) contrast(1.04);
+  transition:transform .8s var(--ease), filter .45s var(--ease), opacity .45s;
+}
+.cell:hover img{transform:scale(1.07); filter:saturate(1) contrast(1); opacity:.42}
+.cell:focus-visible{outline:2px solid var(--orange); outline-offset:-4px}
+@media (min-width:900px){
+  .cell.w2{grid-column:span 2}
+  .cell.w2 img{aspect-ratio:2/1}
+}
+.cell-ov{
+  position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; justify-content:flex-end;
+  padding:14px; text-align:left; color:var(--paper);
+  background:linear-gradient(transparent 40%, rgba(14,56,38,.9));
+  opacity:0; transition:opacity .4s var(--ease);
+}
+.cell:hover .cell-ov,.cell:focus-visible .cell-ov{opacity:1}
+.cell-ov b{font-family:"Kanit",sans-serif; font-weight:600; font-size:.82rem; text-transform:uppercase; letter-spacing:.02em}
+.cell-ov span{display:block; font-family:var(--mono); font-size:.58rem; letter-spacing:.1em; text-transform:uppercase; color:var(--orange); margin-top:4px}
+.cell-idx{
+  position:absolute; top:0; left:0; z-index:3;
+  padding:5px 9px; background:var(--orange); color:var(--navy);
+  font-family:var(--mono); font-size:.58rem; letter-spacing:.1em;
+  transform:translateY(-100%); transition:transform .38s var(--ease);
+}
+.cell:hover .cell-idx{transform:none}
+.cell.hide{display:none}
+
+/* ============================================================
+   SERVICES — numbered rows
+   ============================================================ */
+.rows{border-top:1px solid var(--hair)}
+.row{
+  display:grid; gap:6px 24px; align-items:baseline;
+  padding:clamp(22px,3.2vw,34px) 0; border-bottom:1px solid var(--hair);
+  position:relative; transition:padding-left .4s var(--ease), color .3s;
+}
+@media (min-width:860px){.row{grid-template-columns:84px minmax(0,20ch) minmax(0,1fr) auto; gap:24px}}
+.row::before{
+  content:""; position:absolute; inset:0; z-index:-1; background:var(--navy);
+  transform:scaleY(0); transform-origin:bottom; transition:transform .42s var(--ease);
+}
+.row:hover{padding-left:18px; color:var(--paper)}
+.row:hover::before{transform:scaleY(1)}
+.row:hover .mono-s{color:rgba(241,247,243,.6)}
+.row-n{font-family:"Kanit",sans-serif; font-weight:800; font-size:clamp(1.5rem,4.4vw,2.2rem); line-height:.9; letter-spacing:-.04em; color:var(--orange-ink)}
+.row h3{font-size:clamp(1.15rem,3.4vw,1.6rem); letter-spacing:-.015em}
+.row p{color:var(--steel); font-size:.94rem; transition:color .3s}
+.row:hover p{color:rgba(241,247,243,.72)}
+.row-go{
+  display:inline-flex; align-items:center; gap:.6rem; white-space:nowrap;
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--orange-ink);
+}
+.row:hover .row-n,.row:hover .row-go{color:var(--orange)}
+.row-go svg{width:14px; height:14px; transition:transform .36s var(--ease)}
+.row:hover .row-go svg{transform:translateX(6px)}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.ct-grid{display:grid; gap:0; border:1px solid var(--hair-inv)}
+@media (min-width:940px){.ct-grid{grid-template-columns:minmax(0,1fr) minmax(0,.92fr)}}
+.ct-form{padding:clamp(24px,4vw,44px); border-bottom:1px solid var(--hair-inv)}
+@media (min-width:940px){.ct-form{border-bottom:0; border-right:1px solid var(--hair-inv)}}
+.ct-form h3{font-size:1.2rem; letter-spacing:-.01em}
+.ct-form>.mono-s{display:block; margin-top:8px}
+.field{margin-top:20px}
+.field label{display:flex; align-items:baseline; gap:.4rem; font-family:var(--mono); font-size:.64rem; letter-spacing:.16em; text-transform:uppercase; color:rgba(241,247,243,.6); margin-bottom:8px}
+.field label i{color:var(--orange); font-style:normal}
+.field input{
+  width:100%; padding:13px 14px; border:1px solid var(--hair-inv); border-radius:0;
+  background:rgba(241,247,243,.05); color:var(--paper);
+  font-family:inherit; font-size:.95rem;
+  transition:border-color .3s var(--ease), background .3s var(--ease);
+}
+.field input::placeholder{color:rgba(241,247,243,.38)}
+.field input:focus{outline:0; border-color:var(--orange); background:rgba(241,247,243,.09)}
+.ct-form .btn{margin-top:24px; width:100%; justify-content:space-between; border:1px solid var(--orange)}
+.form-note{margin-top:12px; font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(241,247,243,.5)}
+
+.ct-facts{display:grid}
+.fact{
+  padding:clamp(20px,3.2vw,30px) clamp(24px,4vw,36px);
+  border-bottom:1px solid var(--hair-inv);
+  transition:background .32s var(--ease);
+}
+.fact:last-child{border-bottom:0}
+.fact:hover{background:rgba(47,191,110,.1)}
+.fact dt{font-family:var(--mono); font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:rgba(241,247,243,.55)}
+.fact dd{margin:9px 0 0; line-height:1.6; font-size:.98rem}
+.fact dd.big{font-family:"Kanit",sans-serif; font-weight:600; font-size:clamp(1.3rem,4vw,1.7rem); letter-spacing:-.01em}
+.fact dd.big a:hover{color:var(--orange)}
+.fact dd.coord{font-family:var(--mono); font-size:.86rem; letter-spacing:.04em}
+.maps{display:flex; flex-wrap:wrap; gap:0; margin-top:14px; border:1px solid var(--hair-inv); width:fit-content}
+.maps a{
+  padding:9px 15px; border-right:1px solid var(--hair-inv);
+  font-family:var(--mono); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase;
+  transition:background .3s, color .3s;
+}
+.maps a:last-child{border-right:0}
+.maps a:hover{background:var(--orange); color:var(--navy)}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.ftr{background:var(--navy); color:rgba(241,247,243,.6); font-size:.86rem; border-top:1px solid var(--hair-inv)}
+.ftr-top{display:grid; gap:0; border-bottom:1px solid var(--hair-inv)}
+@media (min-width:860px){.ftr-top{grid-template-columns:1.5fr 1fr 1fr}}
+.fcol{padding:clamp(24px,3.6vw,40px) var(--pad); border-bottom:1px solid var(--hair-inv)}
+@media (min-width:860px){
+  .fcol{border-bottom:0; border-right:1px solid var(--hair-inv)}
+  .fcol:last-child{border-right:0}
+}
+.fcol:last-child{border-bottom:0}
+.fcol h5{font-family:var(--mono); font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); font-weight:400; margin:0 0 14px}
+.fcol ul{list-style:none; margin:0; padding:0; display:grid; gap:9px}
+.fcol ul a{font-family:var(--mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; transition:color .28s, padding-left .28s var(--ease)}
+.fcol ul a:hover{color:var(--orange); padding-left:6px}
+.fcol .me{margin-top:14px; max-width:40ch; line-height:1.74; font-size:.88rem}
+.ftr .brand-name{color:var(--paper)}
+.credits{padding:clamp(22px,3.2vw,32px) var(--pad); border-bottom:1px solid var(--hair-inv)}
+.credits p{font-family:var(--mono); font-size:.62rem; letter-spacing:.06em; line-height:2; color:rgba(241,247,243,.45); text-transform:uppercase}
+.credits a:hover{color:var(--orange)}
+.ftr-bot{
+  padding:16px var(--pad); display:flex; flex-wrap:wrap; gap:8px 22px; justify-content:space-between;
+  font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(241,247,243,.42);
+}
+
+
+/* ============================================================
+   SECTION INDEX (hero)
+   ============================================================ */
+.ix{margin-top:clamp(24px,4vw,40px); border-top:1px solid var(--hair-inv)}
+.ix-h{
+  padding:12px 0 10px; display:flex; align-items:baseline; gap:14px;
+  border-bottom:1px solid var(--hair-inv);
+}
+.ix-list{display:grid; gap:0; list-style:none; margin:0; padding:0}
+@media (min-width:700px){.ix-list{grid-template-columns:1fr 1fr}}
+@media (min-width:1100px){.ix-list{grid-template-columns:repeat(4,1fr)}}
+.ix-list li{border-bottom:1px solid var(--hair-inv)}
+@media (min-width:700px){
+  .ix-list li{border-right:1px solid var(--hair-inv)}
+  .ix-list li:nth-child(2n){border-right:0}
+}
+@media (min-width:1100px){
+  .ix-list li:nth-child(2n){border-right:1px solid var(--hair-inv)}
+  .ix-list li:nth-child(4n){border-right:0}
+}
+.ix-list a{
+  display:flex; align-items:baseline; gap:11px; padding:12px 14px 12px 0;
+  transition:background .28s var(--ease), padding-left .3s var(--ease), color .28s;
+}
+@media (min-width:700px){.ix-list a{padding-left:14px}}
+.ix-list a b{font-family:var(--mono); font-weight:400; font-size:.64rem; letter-spacing:.1em; color:var(--orange); flex:none}
+.ix-list a span{font-family:"Kanit",sans-serif; font-weight:500; font-size:.9rem; line-height:1.3; text-transform:none}
+.ix-list a:hover{background:var(--orange); color:var(--navy); padding-left:20px}
+.ix-list a:hover b{color:var(--navy)}
+/* 7 items never fill the last row cleanly - trim the dangling rules */
+.ix-list li:last-child{border-right:0; border-bottom:0}
+@media (min-width:1100px){.ix-list li:nth-child(n+5){border-bottom:0}}
+
+/* ============================================================
+   ORG FLOW (sec.01)
+   ============================================================ */
+.org{margin-top:clamp(26px,4vw,44px); padding-top:clamp(22px,3.4vw,36px); border-top:1px solid var(--hair-inv)}
+.org-h{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:clamp(18px,2.6vw,26px)}
+.org-flow{display:grid; gap:0; border:1px solid var(--hair-inv)}
+@media (min-width:900px){.org-flow{grid-template-columns:repeat(3,1fr)}}
+.org-step{
+  position:relative; padding:clamp(20px,3vw,30px);
+  border-bottom:1px solid var(--hair-inv);
+  transition:background .32s var(--ease);
+}
+.org-step:last-child{border-bottom:0}
+@media (min-width:900px){
+  .org-step{border-bottom:0; border-right:1px solid var(--hair-inv)}
+  .org-step:last-child{border-right:0}
+}
+.org-step:hover{background:rgba(47,191,110,.1)}
+.org-step dt{font-family:var(--mono); font-size:.62rem; letter-spacing:.15em; text-transform:uppercase; color:var(--orange)}
+.org-step .nm{margin-top:11px; font-family:"Kanit",sans-serif; font-weight:600; font-size:1.02rem; line-height:1.36}
+.org-step .ds{margin-top:7px; font-size:.89rem; color:rgba(241,247,243,.66); line-height:1.6}
+/* connector arrow */
+.org-step:not(:last-child)::after{
+  content:""; position:absolute; z-index:2;
+  width:9px; height:9px; border-right:1.5px solid var(--orange); border-bottom:1.5px solid var(--orange);
+  left:50%; bottom:-5px; transform:translateX(-50%) rotate(45deg);
+  background:var(--navy);
+}
+@media (min-width:900px){
+  .org-step:not(:last-child)::after{
+    left:auto; right:-5px; bottom:auto; top:50%;
+    transform:translateY(-50%) rotate(-45deg);
+  }
+}
+
+/* ============================================================
+   GLOSSARY (sec.05)
+   ============================================================ */
+.gloss{margin-top:clamp(26px,4vw,44px); border-top:1px solid var(--hair)}
+.gloss-h{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; padding:14px 0}
+.gloss-list{display:grid; gap:0; border-top:1px solid var(--hair)}
+@media (min-width:880px){.gloss-list{grid-template-columns:repeat(3,1fr)}}
+.gloss-item{
+  padding:clamp(20px,3vw,30px) 0; border-bottom:1px solid var(--hair);
+  transition:background .3s var(--ease), padding-left .3s var(--ease);
+}
+@media (min-width:880px){
+  .gloss-item{padding:clamp(20px,3vw,30px) clamp(18px,2.4vw,26px); border-bottom:0; border-right:1px solid var(--hair)}
+  .gloss-item:first-child{padding-left:0}
+  .gloss-item:last-child{border-right:0; padding-right:0}
+}
+.gloss-item:hover{background:rgba(14,56,38,.045)}
+.gloss-item dt{
+  font-family:"Kanit",sans-serif; font-weight:600; font-size:1.06rem; line-height:1.3;
+  display:flex; align-items:baseline; gap:10px;
+}
+.gloss-item dt i{font-family:var(--mono); font-style:normal; font-weight:400; font-size:.62rem; letter-spacing:.1em; color:var(--orange-ink); flex:none}
+.gloss-item dd{margin:10px 0 0; font-size:.91rem; line-height:1.74; color:var(--steel)}
+.gloss-note{padding:14px 0 0; border-top:1px solid var(--hair)}
+
+/* ============================================================
+   SERVICES — mono meta line
+   ============================================================ */
+.row-body{min-width:0}
+.row-body p{margin:0}
+.row-m{display:block; margin-top:9px}
+
+/* ============================================================
+   ADDRESS BREAKDOWN (contact)
+   ============================================================ */
+.mini{width:100%; border-collapse:collapse; margin-top:12px; font-size:.9rem}
+.mini th,.mini td{padding:8px 0; border-bottom:1px solid var(--hair-inv); text-align:left; vertical-align:top}
+.mini tr:last-child th,.mini tr:last-child td{border-bottom:0}
+.mini th{
+  width:42%; font-family:var(--mono); font-weight:400; font-size:.62rem;
+  letter-spacing:.14em; text-transform:uppercase; color:rgba(241,247,243,.55);
+}
+.mini td{font-family:"Kanit",sans-serif; font-weight:500}
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+dialog.lb{border:1px solid var(--orange); padding:0; background:var(--navy); color:var(--paper); max-width:min(95vw,1200px); width:100%}
+dialog.lb::backdrop{background:rgba(14,56,38,.95)}
+dialog.lb[open]{animation:lbIn .34s var(--ease)}
+@keyframes lbIn{from{opacity:0; clip-path:inset(0 0 100% 0)} to{opacity:1; clip-path:inset(0 0 0 0)}}
+.lb-img{width:100%; max-height:76svh; object-fit:contain; background:#072115; display:block}
+.lb-bar{display:flex; align-items:stretch; border-top:1px solid var(--hair-inv)}
+.lb-meta{flex:1; min-width:0; padding:13px 16px}
+.lb-meta b{display:block; font-family:"Kanit",sans-serif; font-weight:600; font-size:.86rem; text-transform:uppercase}
+.lb-meta span{display:block; font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(241,247,243,.55); margin-top:5px}
+.lb-meta span a:hover{color:var(--orange)}
+.lb-x{width:52px; flex:none; border-left:1px solid var(--hair-inv); display:grid; place-items:center; transition:background .3s, color .3s}
+.lb-x svg{width:15px; height:15px}
+.lb-x:hover{background:var(--orange); color:var(--navy)}
+
+/* ============================================================
+   REVEAL
+   ============================================================ */
+/* Reveals only apply when JS is live, so the page can never render blank.
+   The hidden state uses opacity ONLY - never clip-path. IntersectionObserver
+   measures the clipped box, so hiding with clip-path:inset(0 0 100%) makes the
+   element report intersectionRatio 0 and it never crosses a non-zero threshold:
+   it stays hidden forever. The wipe is therefore an animation on .in instead. */
+.js [data-reveal]{opacity:0}
+.js [data-reveal].in{
+  opacity:1;
+  animation:wipeIn .78s var(--ease) both;
+  animation-delay:calc(var(--i,0)*70ms);
+}
+@keyframes wipeIn{
+  from{opacity:0; clip-path:inset(0 0 100% 0)}
+  to{opacity:1; clip-path:inset(0 0 0 0)}
+}
+@media (prefers-reduced-motion:reduce){
+  .js [data-reveal],.js [data-reveal].in{opacity:1; clip-path:none; transition:none; animation:none}
+  *{animation-duration:.01ms !important; animation-iteration-count:1 !important}
+}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+:focus-visible{outline:2px solid var(--orange-ink); outline-offset:2px}
+.hero :focus-visible,.sec-dark :focus-visible,.ftr :focus-visible,.drawer :focus-visible,.lb :focus-visible{outline-color:var(--orange)}
+</style>
+</head>
+<body>
+
+<a href="#about" class="sr">ข้ามไปยังเนื้อหา</a>
+<div class="gridlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+<!-- ===================== HEADER ===================== -->
+<header class="hdr" id="hdr">
+  <div class="wrap hdr-in">
+    <a href="#top" class="brand" aria-label="V Group Development">
+      <span class="brand-mark">V</span>
+      <span class="brand-txt">
+        <span class="brand-name">V GROUP DEVELOPMENT</span>
+        <span class="brand-sub">CO.,LTD. · EST. 2553</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="เมนูหลัก">
+      <a href="#about"><b>01</b><span data-i18n="nav1">เกี่ยวกับวีกรุ๊ป</span></a>
+      <a href="#products"><b>04</b><span data-i18n="nav2">ผลิตภัณฑ์และบริการ</span></a>
+      <a href="#knowledge"><b>05</b><span data-i18n="nav3">เกร็ดความรู้</span></a>
+      <a href="#services"><b>06</b><span data-i18n="nav4">Services</span></a>
+      <a href="#contact"><b>07</b><span data-i18n="nav5">Contact</span></a>
+    </nav>
+
+    <div class="lang" role="group" aria-label="เลือกภาษา / Language">
+      <button type="button" data-lang="th" aria-pressed="true">TH</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="drawer" aria-label="เมนู">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="drawer" id="drawer" aria-label="เมนูมือถือ">
+  <a href="#about"><b>01</b><span data-i18n="nav1">เกี่ยวกับวีกรุ๊ป</span></a>
+  <a href="#products"><b>04</b><span data-i18n="nav2">ผลิตภัณฑ์และบริการ</span></a>
+  <a href="#knowledge"><b>05</b><span data-i18n="nav3">เกร็ดความรู้</span></a>
+  <a href="#services"><b>06</b><span data-i18n="nav4">Services</span></a>
+  <a href="#contact"><b>07</b><span data-i18n="nav5">Contact</span></a>
+</nav>
+
+<!-- ===================== TICKER ===================== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="tick"><span>น้ำมันเชื้อเพลิงทดแทน</span><span>ตัวแทนจำหน่าย</span><span>โรงงานผลิต · ประจวบคีรีขันธ์</span><span>เราจะพัฒนาอย่างไม่หยุดยั้ง</span><span>ก่อตั้งปี 2553</span><span>+66 085-295-5005</span><span>น้ำมันเชื้อเพลิงทดแทน</span><span>ตัวแทนจำหน่าย</span><span>โรงงานผลิต · ประจวบคีรีขันธ์</span><span>เราจะพัฒนาอย่างไม่หยุดยั้ง</span><span>ก่อตั้งปี 2553</span><span>+66 085-295-5005</span></div>
+</div>
+
+<main>
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1588011930968-eadac80e6a5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000"
+         alt="โรงกลั่นน้ำมันสว่างไฟในเวลากลางคืน"
+         title="Photo by Maksym Kaharlytskyi on Unsplash" fetchpriority="high">
+  </div>
+
+  <div class="wrap hero-in">
+    <div class="hero-top">
+      <span class="mono mono-o">SEC.00 — INDEX</span>
+      <span class="mono mono-s" data-i18n="heroLoc">ต.เกาะหลัก อ.เมือง จ.ประจวบคีรีขันธ์</span>
+      <span class="mono mono-s">11.8304°N / 99.7059°E</span>
+    </div>
+
+    <h1>
+      <span class="ln"><i data-i18n="heroLine1">เราจะพัฒนา</i></span>
+      <span class="ln"><i><em data-i18n="heroLine2">อย่างไม่หยุดยั้ง</em></i></span>
+    </h1>
+
+    <dl class="hero-meta">
+      <div class="hm">
+        <dt data-i18n="hmBiz">ประเภทธุรกิจ</dt>
+        <dd data-i18n="hmBizV">น้ำมันเชื้อเพลิงทดแทน</dd>
+      </div>
+      <div class="hm">
+        <dt data-i18n="hmEst">ก่อตั้ง</dt>
+        <dd><b>2553</b> <span data-i18n="hmEstV">ตัวแทนจำหน่าย</span></dd>
+      </div>
+      <div class="hm">
+        <dt data-i18n="hmPlant">โรงงานผลิต</dt>
+        <dd data-i18n="hmPlantV">22 หมู่ที่ 7 ตำบลเกาะหลัก</dd>
+      </div>
+    </dl>
+
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-o">
+        <span data-i18n="ctaContact">ติดต่อเรา</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#about" class="btn btn-l"><span data-i18n="nav1">เกี่ยวกับวีกรุ๊ป</span></a>
+    </div>
+
+    <nav class="ix" aria-label="สารบัญ">
+      <div class="ix-h">
+        <span class="mono mono-o" data-i18n="ixH">สารบัญ</span>
+        <span class="mono mono-s" data-i18n="ixC">07 หัวข้อ</span>
+      </div>
+      <ul class="ix-list">
+        <li><a href="#about"><b>01</b><span data-i18n="aboutH">วัฒนธรรม</span></a></li>
+        <li><a href="#data"><b>02</b><span data-i18n="dataH">ข้อมูลบริษัท</span></a></li>
+        <li><a href="#history"><b>03</b><span data-i18n="histH">ประวัติความเป็นมา</span></a></li>
+        <li><a href="#products"><b>04</b><span data-i18n="nav2">ผลิตภัณฑ์และบริการ</span></a></li>
+        <li><a href="#knowledge"><b>05</b><span data-i18n="nav3">เกร็ดความรู้</span></a></li>
+        <li><a href="#services"><b>06</b><span data-i18n="nav4">Services</span></a></li>
+        <li><a href="#contact"><b>07</b><span data-i18n="nav5">Contact</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<!-- ===================== ABOUT / CULTURE ===================== -->
+<section class="sec sec-dark" id="about">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-n">01</div>
+      <h2 data-i18n="aboutH">วัฒนธรรม</h2>
+      <p class="lede" data-i18n="aboutP">สองสิ่งที่บริษัทยึดถือ ทั้งในระดับองค์กรและระดับพนักงานทุกคน</p>
+    </div>
+
+    <div class="cult-grid" data-reveal>
+      <article class="cult">
+        <div class="cult-id"><span class="mono mono-o">01/02</span><span class="mono mono-s">ORG</span></div>
+        <h3 data-i18n="cult1L">วัฒนธรรมองค์กร</h3>
+        <p class="big" data-i18n="cult1V">เราจะพัฒนาอย่างไม่หยุดยั้ง</p>
+        <div class="cult-rule"></div>
+      </article>
+      <article class="cult">
+        <div class="cult-id"><span class="mono mono-o">02/02</span><span class="mono mono-s">STAFF</span></div>
+        <h3 data-i18n="cult2L">วัฒนธรรมพนักงาน</h3>
+        <p class="big" data-i18n="cult2V">มีจิตสำนึกที่ดี พร้อมเรียนรู้สิ่งใหม่</p>
+        <div class="cult-rule"></div>
+      </article>
+    </div>
+
+    <div class="org" data-reveal>
+      <div class="org-h">
+        <span class="mono mono-o">SEC.01.2 — STRUCTURE</span>
+        <span class="mono mono-s" data-i18n="orgH">โครงสร้างการดำเนินงาน</span>
+      </div>
+      <dl class="org-flow">
+        <div class="org-step">
+          <dt data-i18n="org1L">บริษัทหลัก</dt>
+          <div class="nm" data-i18n="m1T">บริษัท สรวีย์คอนสตรัคชั่น(1999) จำกัด</div>
+          <p class="ds" data-i18n="org1D">รับเหมาก่อสร้างให้กับทั้งทางภาครัฐ และเอกชน</p>
+        </div>
+        <div class="org-step">
+          <dt data-i18n="org2L">ตัวแทนจำหน่าย · 2553</dt>
+          <div class="nm" data-i18n="m3T">บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด</div>
+          <p class="ds" data-i18n="org2D">จำหน่ายน้ำมันเชื้อเพลิงทดแทน</p>
+        </div>
+        <div class="org-step">
+          <dt data-i18n="org3L">โรงงานผลิต</dt>
+          <div class="nm" data-i18n="org3V">ตำบลเกาะหลัก อำเภอเมือง</div>
+          <p class="ds" data-i18n="org3D">จังหวัดประจวบคีรีขันธ์</p>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COMPANY DATA ===================== -->
+<section class="sec sec-dark" id="data">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-n">02</div>
+      <h2 data-i18n="dataH">ข้อมูลบริษัท</h2>
+      <p class="lede" data-i18n="dataP">ข้อมูลอ้างอิงของบริษัทและโรงงานผลิต</p>
+    </div>
+
+    <table class="spec" data-reveal>
+      <caption data-i18n="dCap">SEC.02 — COMPANY RECORD / บันทึกข้อมูลบริษัท</caption>
+      <thead>
+        <tr>
+          <th scope="col" style="width:30%" data-i18n="thField">รายการ</th>
+          <th scope="col" data-i18n="thValue">ข้อมูล</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="mono mono-s" data-i18n="dName">ชื่อบริษัท</span></td>
+            <td><div class="ev" data-i18n="dNameV">บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด</div>
+                <p class="dt">V GROUP  DEVELOPMENT CO.,LTD.</p></td></tr>
+        <tr><td><span class="mono mono-s" data-i18n="dParent">บริษัทหลัก</span></td>
+            <td><div class="ev" data-i18n="m1T">บริษัท สรวีย์คอนสตรัคชั่น(1999) จำกัด</div>
+                <p class="dt" data-i18n="org1D">รับเหมาก่อสร้างให้กับทั้งทางภาครัฐ และเอกชน</p></td></tr>
+        <tr><td><span class="mono mono-s" data-i18n="hmBiz">ประเภทธุรกิจ</span></td>
+            <td><div class="ev" data-i18n="hmBizV">น้ำมันเชื้อเพลิงทดแทน</div></td></tr>
+        <tr><td><span class="mono mono-s" data-i18n="dRole">บทบาท</span></td>
+            <td><div class="ev" data-i18n="dRoleV">ตัวแทนจำหน่าย และผู้ผลิต</div></td></tr>
+        <tr><td><span class="mono mono-s" data-i18n="dFounded">ปีก่อตั้ง</span></td>
+            <td><div class="ev">2553 <span style="color:var(--steel)">(2010)</span></div></td></tr>
+        <tr><td><span class="mono mono-s" data-i18n="dPrev">เชื้อเพลิงเดิมที่ใช้</span></td>
+            <td><div class="ev" data-i18n="dPrevV">น้ำมันเตา A</div>
+                <p class="dt" data-i18n="dPrevD">ใช้ในกิจการของบริษัทหลักก่อนเปลี่ยนมาใช้เชื้อเพลิงทดแทนในปี 2551</p></td></tr>
+        <tr><td><span class="mono mono-s" data-i18n="hmPlant">โรงงานผลิต</span></td>
+            <td><div class="ev" data-i18n="m4P">22 หมู่ที่ 7 ตำบลเกาะหลัก อำเภอเมือง จังหวัดประจวบคีรีขันธ์</div></td></tr>
+        <tr><td><span class="mono mono-s" data-i18n="dCoord">พิกัด</span></td>
+            <td><div class="ev" style="font-family:var(--mono);font-weight:400;font-size:.9rem">11.830389909644671, 99.70590749109954</div></td></tr>
+        <tr><td><span class="mono mono-s" data-i18n="iTel">โทรศัพท์</span></td>
+            <td><div class="ev"><a href="tel:+66852955005" style="border-bottom:1px solid var(--hair-inv)">+66-085-295-5005</a></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== HISTORY — SPEC TABLE ===================== -->
+<section class="sec sec-dark" id="history">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-n">03</div>
+      <h2 data-i18n="histH">ประวัติความเป็นมา</h2>
+      <p class="lede" data-i18n="histLede2">ลำดับเหตุการณ์ตั้งแต่บริษัทหลักจนถึงโรงงานผลิตในปัจจุบัน</p>
+    </div>
+
+    <table class="spec" data-reveal>
+      <caption data-i18n="specCap">SEC.03 — TIMELINE / บันทึกลำดับเหตุการณ์</caption>
+      <thead>
+        <tr>
+          <th scope="col" style="width:22%" data-i18n="thYear">ปี</th>
+          <th scope="col" data-i18n="thEvent">เหตุการณ์</th>
+          <th scope="col" style="width:16%" data-i18n="thStage">ขั้น</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="yr">1999</span></td>
+          <td>
+            <div class="ev" data-i18n="m1T">บริษัท สรวีย์คอนสตรัคชั่น(1999) จำกัด</div>
+            <p class="dt" data-i18n="m1P">บริษัทหลัก ประกอบกิจการรับเหมาก่อสร้างให้กับทั้งทางภาครัฐ และเอกชน</p>
+          </td>
+          <td><span class="tag" data-i18n="m1S">จุดเริ่มต้น</span></td>
+        </tr>
+        <tr>
+          <td><span class="yr">2551</span></td>
+          <td>
+            <div class="ev" data-i18n="m2T">เปลี่ยนมาใช้น้ำมันเชื้อเพลิงทดแทน</div>
+            <p class="dt" data-i18n="m2P">จากนโยบายลดต้นทุนการผลิต เปลี่ยนจากน้ำมันเตา A มาเป็นน้ำมันเชื้อเพลิงทดแทน — และต้นทุนลดต่ำลงจริง</p>
+          </td>
+          <td><span class="tag" data-i18n="m2S">จุดเปลี่ยน</span></td>
+        </tr>
+        <tr>
+          <td><span class="yr">2553</span></td>
+          <td>
+            <div class="ev" data-i18n="m3T">บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด</div>
+            <p class="dt" data-i18n="m3P">จัดตั้งขึ้นเพื่อเป็นตัวแทนจำหน่าย ผลตอบรับที่ได้คือผู้ใช้มีความพึ่งพอใจ</p>
+          </td>
+          <td><span class="tag" data-i18n="m3S">ก่อตั้ง</span></td>
+        </tr>
+        <tr>
+          <td><span class="yr" style="font-size:clamp(1rem,3vw,1.3rem)" data-i18n="yrPlant">โรงงาน</span></td>
+          <td>
+            <div class="ev" data-i18n="m4T">ก่อตั้งโรงงานผลิต</div>
+            <p class="dt" data-i18n="m4P">22 หมู่ที่ 7 ตำบลเกาะหลัก อำเภอเมือง จังหวัดประจวบคีรีขันธ์</p>
+          </td>
+          <td><span class="tag" data-i18n="m4S">ปัจจุบัน</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="hist-prose">
+      <div data-reveal>
+        <p class="mono mono-o" style="margin-bottom:12px" data-i18n="fullRec">FULL RECORD / ฉบับเต็ม</p>
+        <div class="body" data-i18n="histFull">
+          <span>ก้าวแรกสู่ธุรกิจน้ำมันเชื้อเพลิงทดแทนของบริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด เกิดขึ้นจาก</span>
+          <span>บริษัท สรวีย์คอนสตรัคชั่น(1999) จำกัด ซึ่งเป็นบริษัทหลัก ประกอบกิจการรับเหมาก่อสร้างก่อสร้าง</span>
+          <span>ให้กับทั้งทางภาครัฐ และเอกชน ได้มีการนำน้ำมันเตา A มาใช้ในกิจการเพิ่มมากขึ้นทุกปื จนกระทั่งปี 2551</span>
+          <span>ทางบริษัทมีนโยบายที่จะลดต้นทุนการผลิต จึงได้มีเปลี่ยนแปลงจากการใช้น้ำมันเตา A มาเป็นน้ำมัน</span>
+          <span>เชื้อเพลิงทดแทน และผลที่ได้รับคือ ต้นทุนในการผลิตลดต่ำลง ทำให้บริษัทเล็งเห็นถึงโอกาสทางธุรกิจ</span>
+          <span>จึงเริ่มต้นจัดตั้ง บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด ขึ้นในปี 2553 เพื่อเป็นตัวแทนจำหน่าย</span>
+          <span>ซึ่งผลตอบรับที่ได้คือ ผู้ใช้มีความพึ่งพอใจ เนื่องจากยอดขายที่เพิ่มมากขึ้นอย่างต่อเนื่อง ทางบริษัทฯ</span>
+          <span>จึงได้ก่อตั้งโรงงานผลิตขึ้นโดยตั้งอยู่ที่ 22 หมู่ที่ 7 ตำบลเกาะหลัก อำเภอเมือง จังหวัดประจวบคีรีขันธ์</span>
+        </div>
+      </div>
+      <figure class="hist-fig" style="margin:0;--i:1" data-reveal>
+        <img src="https://images.unsplash.com/photo-1580561346873-4a76a13dce92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200"
+             alt="โรงกลั่นน้ำมันในเวลากลางคืนมองข้ามผืนน้ำ" loading="lazy" decoding="async"
+             title="Photo by Timothy Newman on Unsplash">
+        <figcaption>
+          <span data-i18n="photoBy">ภาพโดย</span>
+          <a href="https://unsplash.com/@newmanphotog?utm_source=vgroup&utm_medium=referral" target="_blank" rel="noopener">Timothy Newman</a>
+          /
+          <a href="https://unsplash.com/photos/iTZ_guCHHt0?utm_source=vgroup&utm_medium=referral" target="_blank" rel="noopener">Unsplash</a>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRODUCTS & SERVICES ===================== -->
+<section class="sec" id="products">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-n">04</div>
+      <h2 data-i18n="nav2">ผลิตภัณฑ์และบริการ</h2>
+      <p class="lede" data-i18n="galP">คลังภาพการดำเนินงานและกิจกรรมของบริษัท</p>
+    </div>
+
+    <div class="chips" role="group" aria-label="กรองแกลเลอรี" data-filter-group="p">
+      <button class="chip" type="button" data-cat="all"      aria-pressed="true"><span data-i18n="fAll">all</span><sup>8</sup></button>
+      <button class="chip" type="button" data-cat="service"  aria-pressed="false"><span data-i18n="fService">บริการของเรา</span><sup>5</sup></button>
+      <button class="chip" type="button" data-cat="activity" aria-pressed="false"><span data-i18n="fActivity">กิจกรรม</span><sup>3</sup></button>
+    </div>
+
+    <div class="bento" id="grid-p" data-reveal>
+      <button class="cell w2" data-cat="service"
+        data-full="https://images.unsplash.com/photo-1642285709726-f9eb035b034b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1800"
+        data-ph="Chris LeBoutillier" data-user="chrisleboutillier" data-id="H1hgLWyEX6g" data-t="fService">
+        <span class="cell-idx">IMG.01</span>
+        <img src="https://images.unsplash.com/photo-1642285709726-f9eb035b034b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400" alt="โรงงานอุตสาหกรรมขนาดใหญ่สว่างไฟยามค่ำคืน" loading="lazy" decoding="async">
+        <span class="cell-ov"><b data-i18n="fService">บริการของเรา</b><span>Chris LeBoutillier / Unsplash</span></span>
+      </button>
+
+      <button class="cell" data-cat="service"
+        data-full="https://images.unsplash.com/photo-1704130092069-30ae33e2def0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1800"
+        data-ph="mos design" data-user="mosdesign" data-id="n7lhAQWAfTU" data-t="fService">
+        <span class="cell-idx">IMG.02</span>
+        <img src="https://images.unsplash.com/photo-1704130092069-30ae33e2def0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="กลุ่มอาคารโรงงานอุตสาหกรรมในเวลากลางคืน" loading="lazy" decoding="async">
+        <span class="cell-ov"><b data-i18n="fService">บริการของเรา</b><span>mos design / Unsplash</span></span>
+      </button>
+
+      <button class="cell" data-cat="service"
+        data-full="https://images.unsplash.com/photo-1538474705339-e87de81450e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1800"
+        data-ph="Samuel Sianipar" data-user="samthewam24" data-id="scUBcasSvbE" data-t="fService">
+        <span class="cell-idx">IMG.03</span>
+        <img src="https://images.unsplash.com/photo-1538474705339-e87de81450e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="ระบบท่อลำเลียงโลหะภาพขาวดำ" loading="lazy" decoding="async">
+        <span class="cell-ov"><b data-i18n="fService">บริการของเรา</b><span>Samuel Sianipar / Unsplash</span></span>
+      </button>
+
+      <button class="cell w2" data-cat="service"
+        data-full="https://images.unsplash.com/photo-1543674892-7d64d45df18b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1800"
+        data-ph="T K" data-user="realaxer" data-id="9AxFJaNySB8" data-t="fService">
+        <span class="cell-idx">IMG.04</span>
+        <img src="https://images.unsplash.com/photo-1543674892-7d64d45df18b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="แนวท่อและวาล์วในงานอุตสาหกรรม" loading="lazy" decoding="async">
+        <span class="cell-ov"><b data-i18n="fService">บริการของเรา</b><span>T K / Unsplash</span></span>
+      </button>
+
+      <button class="cell w2" data-cat="service"
+        data-full="https://images.unsplash.com/photo-1785234395765-4a82ba26c769?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1800"
+        data-ph="Leon Jacobs" data-user="leonlikethewind" data-id="hvQeqS1Nj3c" data-t="fService">
+        <span class="cell-idx">IMG.05</span>
+        <img src="https://images.unsplash.com/photo-1785234395765-4a82ba26c769?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400" alt="ถังเก็บสีขาวและโครงท่อเหนือพื้นคอนกรีต" loading="lazy" decoding="async">
+        <span class="cell-ov"><b data-i18n="fService">บริการของเรา</b><span>Leon Jacobs / Unsplash</span></span>
+      </button>
+
+      <button class="cell" data-cat="activity"
+        data-full="https://images.unsplash.com/photo-1742163962826-6326bcba4181?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1800"
+        data-ph="Diogo Cardoso" data-user="diogocardoso28" data-id="LKr5Smmj2SU" data-t="fActivity">
+        <span class="cell-idx">IMG.06</span>
+        <img src="https://images.unsplash.com/photo-1742163962826-6326bcba4181?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="แผงควบคุมที่เต็มไปด้วยปุ่มและหน้าปัด" loading="lazy" decoding="async">
+        <span class="cell-ov"><b data-i18n="fActivity">กิจกรรม</b><span>Diogo Cardoso / Unsplash</span></span>
+      </button>
+
+      <button class="cell" data-cat="activity"
+        data-full="https://images.unsplash.com/photo-1655204903983-73007f15cb3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1800"
+        data-ph="iSawRed" data-user="isawred" data-id="AGQZprOABgQ" data-t="fActivity">
+        <span class="cell-idx">IMG.07</span>
+        <img src="https://images.unsplash.com/photo-1655204903983-73007f15cb3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="ภาพใกล้แผงควบคุมการเดินระบบ" loading="lazy" decoding="async">
+        <span class="cell-ov"><b data-i18n="fActivity">กิจกรรม</b><span>iSawRed / Unsplash</span></span>
+      </button>
+
+      <button class="cell w2" data-cat="activity"
+        data-full="https://images.unsplash.com/photo-1661545621129-0fc86efa2ea1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1800"
+        data-ph="Maxim Tolchinskiy" data-user="shaikhulud" data-id="w9fjPbFOpD4" data-t="fActivity">
+        <span class="cell-idx">IMG.08</span>
+        <img src="https://images.unsplash.com/photo-1661545621129-0fc86efa2ea1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="ช่างเทคนิคสวมหมวกนิรภัยในพื้นที่ปฏิบัติงาน" loading="lazy" decoding="async">
+        <span class="cell-ov"><b data-i18n="fActivity">กิจกรรม</b><span>Maxim Tolchinskiy / Unsplash</span></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== KNOWLEDGE ===================== -->
+<section class="sec" id="knowledge">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-n">05</div>
+      <h2 data-i18n="nav3">เกร็ดความรู้</h2>
+      <p class="lede" data-i18n="knP">รายละเอียดทางเทคนิคและอุปกรณ์ที่เกี่ยวข้องกับงานของเรา</p>
+    </div>
+
+    <div class="chips" role="group" aria-label="กรองเกร็ดความรู้" data-filter-group="k">
+      <button class="chip" type="button" data-cat="all" aria-pressed="true"><span data-i18n="fAll">all</span><sup>3</sup></button>
+    </div>
+
+    <div class="bento" id="grid-k" data-reveal>
+      <button class="cell w2" data-cat="all"
+        data-full="https://images.unsplash.com/photo-1563062067-6d3e3add387d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1800"
+        data-ph="Jay Heike" data-user="jayrheike" data-id="M6xNMyYi4H8" data-t="nav3">
+        <span class="cell-idx">DOC.01</span>
+        <img src="https://images.unsplash.com/photo-1563062067-6d3e3add387d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400" alt="แถวเกจวัดแรงดันแบบเข็ม" loading="lazy" decoding="async">
+        <span class="cell-ov"><b data-i18n="nav3">เกร็ดความรู้</b><span>Jay Heike / Unsplash</span></span>
+      </button>
+      <button class="cell" data-cat="all"
+        data-full="https://images.unsplash.com/photo-1622534376374-fe4480328daa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1800"
+        data-ph="the blowup" data-user="theblowup" data-id="qafbp6O0Rr0" data-t="nav3">
+        <span class="cell-idx">DOC.02</span>
+        <img src="https://images.unsplash.com/photo-1622534376374-fe4480328daa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="ปั๊มและระบบท่อในโรงงาน" loading="lazy" decoding="async">
+        <span class="cell-ov"><b data-i18n="nav3">เกร็ดความรู้</b><span>the blowup / Unsplash</span></span>
+      </button>
+      <button class="cell" data-cat="all"
+        data-full="https://images.unsplash.com/photo-1676624775964-10bc144cbeba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=85&w=1800"
+        data-ph="He Junhui" data-user="he_junhui" data-id="rIC6LLOn4v4" data-t="nav3">
+        <span class="cell-idx">DOC.03</span>
+        <img src="https://images.unsplash.com/photo-1676624775964-10bc144cbeba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="ปล่องโรงงานภาพขาวดำ" loading="lazy" decoding="async">
+        <span class="cell-ov"><b data-i18n="nav3">เกร็ดความรู้</b><span>He Junhui / Unsplash</span></span>
+      </button>
+    </div>
+
+    <div class="gloss" data-reveal>
+      <div class="gloss-h">
+        <span class="mono mono-o">SEC.05.2 — GLOSSARY</span>
+        <span class="mono mono-s" data-i18n="glossH">คำศัพท์ในหน้านี้</span>
+      </div>
+      <dl class="gloss-list">
+        <div class="gloss-item">
+          <dt><i>01</i><span data-i18n="g1T">น้ำมันเตา A</span></dt>
+          <dd data-i18n="g1D">น้ำมันเตาเกรดหนึ่งที่ใช้เป็นเชื้อเพลิงในหม้อไอน้ำและเตาเผาของโรงงานอุตสาหกรรม เป็นเชื้อเพลิงที่บริษัทหลักใช้อยู่ก่อนเปลี่ยนมาใช้เชื้อเพลิงทดแทน</dd>
+        </div>
+        <div class="gloss-item">
+          <dt><i>02</i><span data-i18n="g2T">น้ำมันเชื้อเพลิงทดแทน</span></dt>
+          <dd data-i18n="g2D">เชื้อเพลิงเหลวที่นำมาใช้แทนน้ำมันเตาในกระบวนการผลิต เหตุผลที่บริษัทระบุไว้ในการเปลี่ยนมาใช้คือการลดต้นทุนการผลิต</dd>
+        </div>
+        <div class="gloss-item">
+          <dt><i>03</i><span data-i18n="g3T">ตัวแทนจำหน่าย</span></dt>
+          <dd data-i18n="g3D">ผู้ที่รับสินค้าจากผู้ผลิตไปจำหน่ายต่อให้ผู้ใช้ เป็นบทบาทแรกของบริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด เมื่อก่อตั้งขึ้นในปี 2553</dd>
+        </div>
+      </dl>
+      <p class="gloss-note mono mono-s" data-i18n="glossNote">คำอธิบายทั่วไปของคำที่ปรากฏในเนื้อหาหน้านี้ ไม่ใช่ข้อมูลจำเพาะของผลิตภัณฑ์</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICES ===================== -->
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-n">06</div>
+      <h2 data-i18n="nav4">Services</h2>
+      <p class="lede" data-i18n="svcP">ช่องทางที่ติดต่อทีมงานของเราได้</p>
+    </div>
+
+    <div class="rows">
+      <article class="row" data-reveal style="--i:0">
+        <div class="row-n">01</div>
+        <h3>Ad Line</h3>
+        <div class="row-body">
+          <p data-i18n="svc1P">ช่องทางไลน์สำหรับสอบถามข้อมูลผลิตภัณฑ์และบริการ</p>
+          <span class="mono mono-s row-m" data-i18n="sv1M">ช่องทาง / LINE</span>
+        </div>
+        <a href="#contact" class="row-go"><span data-i18n="knowMore">Know more</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+      <article class="row" data-reveal style="--i:1">
+        <div class="row-n">02</div>
+        <h3 data-i18n="svc2T">ติดต่อเรา</h3>
+        <div class="row-body">
+          <p data-i18n="svc2P">โทรหรือส่งข้อความถึงทีมงานของเราได้โดยตรง</p>
+          <span class="mono mono-s row-m">+66-085-295-5005</span>
+        </div>
+        <a href="tel:+66852955005" class="row-go"><span data-i18n="callNow">โทรเลย</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+      <article class="row" data-reveal style="--i:2">
+        <div class="row-n">03</div>
+        <h3>OF MARKETING</h3>
+        <div class="row-body">
+          <p data-i18n="svc3P">ติดตามข่าวสารและกิจกรรมของวีกรุ๊ป</p>
+          <span class="mono mono-s row-m" data-i18n="sv3M">ข่าวสารและกิจกรรม</span>
+        </div>
+        <a href="#products" class="row-go"><span data-i18n="knowMore">Know more</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section class="sec sec-dark" id="contact">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-n">07</div>
+      <h2 data-i18n="nav5">Contact</h2>
+      <p class="lede" data-i18n="ctP">กรอกแบบฟอร์มหรือโทรถึงเราได้เลย ทีมงานพร้อมให้ข้อมูล</p>
+    </div>
+
+    <div class="ct-grid" data-reveal>
+      <form class="ct-form" id="cform" novalidate>
+        <h3 data-i18n="formH">ส่งข้อมูลถึงเรา</h3>
+        <span class="mono mono-s" data-i18n="formP">ช่องที่มีเครื่องหมาย * จำเป็นต้องกรอก</span>
+
+        <div class="field">
+          <label for="f-name">Name <i>*</i></label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required data-i18n-attr="placeholder" data-i18n-ph="phName" placeholder="ชื่อ-นามสกุล">
+        </div>
+        <div class="field">
+          <label for="f-tel">Telephone</label>
+          <input id="f-tel" name="tel" type="tel" autocomplete="tel" data-i18n-attr="placeholder" data-i18n-ph="phTel" placeholder="เบอร์โทรศัพท์">
+        </div>
+        <div class="field">
+          <label for="f-mail">Email address <i>*</i></label>
+          <input id="f-mail" name="email" type="email" autocomplete="email" required data-i18n-attr="placeholder" data-i18n-ph="phMail" placeholder="อีเมล">
+        </div>
+
+        <button class="btn btn-o" type="submit">
+          <span data-i18n="submit">ติดต่อ</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <p class="form-note" id="fnote" role="status" aria-live="polite" data-i18n="formNote">แบบฟอร์มนี้เป็นตัวอย่างในการออกแบบ ยังไม่ได้เชื่อมต่อระบบส่งข้อมูล</p>
+      </form>
+
+      <dl class="ct-facts">
+        <div class="fact">
+          <dt data-i18n="iAddr">ที่ตั้ง</dt>
+          <dd data-i18n="addr">22 หมู่7 ต.เกาะหลัก อ.เมือง จ.ประจวบคีรีขันธ์, Prachuap Khiri Khan, Changwat Prachuap Khiri Khan, Thailand - ไทย</dd>
+          <dd class="maps">
+            <a href="https://maps.google.com/?q=11.830389909644671,99.70590749109954" target="_blank" rel="noopener">Google Maps</a>
+            <a href="https://waze.com/ul?ll=11.830389909644671,99.70590749109954&navigate=yes" target="_blank" rel="noopener">Waze</a>
+            <a href="https://moovit.com/?to=11.830389909644671,99.70590749109954" target="_blank" rel="noopener">Moovit</a>
+          </dd>
+        </div>
+        <div class="fact">
+          <dt data-i18n="iTel">โทรศัพท์</dt>
+          <dd class="big"><a href="tel:+66852955005">+66-085-295-5005</a></dd>
+        </div>
+        <div class="fact">
+          <dt data-i18n="iCoord">พิกัดโรงงาน</dt>
+          <dd class="coord">11.830389909644671, 99.70590749109954</dd>
+        </div>
+        <div class="fact">
+          <dt data-i18n="iBreak">ที่ตั้งแยกตามเขตปกครอง</dt>
+          <dd>
+            <table class="mini">
+              <tbody>
+                <tr><th scope="row" data-i18n="aNo">เลขที่ / หมู่ที่</th><td>22 / 7</td></tr>
+                <tr><th scope="row" data-i18n="aSub">ตำบล</th><td data-i18n="aSubV">เกาะหลัก</td></tr>
+                <tr><th scope="row" data-i18n="aDist">อำเภอ</th><td data-i18n="aDistV">เมือง</td></tr>
+                <tr><th scope="row" data-i18n="aProv">จังหวัด</th><td data-i18n="aProvV">ประจวบคีรีขันธ์</td></tr>
+                <tr><th scope="row" data-i18n="aCountry">ประเทศ</th><td data-i18n="aCountryV">ไทย</td></tr>
+              </tbody>
+            </table>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="ftr">
+  <div class="ftr-top">
+    <div class="fcol">
+      <div class="brand" style="border:0;padding:0">
+        <span class="brand-mark">V</span>
+        <span class="brand-txt"><span class="brand-name">V GROUP DEVELOPMENT CO.,LTD.</span></span>
+      </div>
+      <p class="me" data-i18n="ftrMe">บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด — ธุรกิจน้ำมันเชื้อเพลิงทดแทน โรงงานผลิตตั้งอยู่ที่ตำบลเกาะหลัก อำเภอเมือง จังหวัดประจวบคีรีขันธ์</p>
+    </div>
+    <div class="fcol">
+      <h5 data-i18n="ftrNav">INDEX / เมนู</h5>
+      <ul>
+        <li><a href="#about"     data-i18n="nav1">เกี่ยวกับวีกรุ๊ป</a></li>
+        <li><a href="#products"  data-i18n="nav2">ผลิตภัณฑ์และบริการ</a></li>
+        <li><a href="#knowledge" data-i18n="nav3">เกร็ดความรู้</a></li>
+        <li><a href="#services"  data-i18n="nav4">Services</a></li>
+        <li><a href="#contact"   data-i18n="nav5">Contact</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h5 data-i18n="ftrReach">CONTACT / ติดต่อ</h5>
+      <ul>
+        <li><a href="tel:+66852955005">+66 085-295-5005</a></li>
+        <li><a href="https://maps.google.com/?q=11.830389909644671,99.70590749109954" target="_blank" rel="noopener" data-i18n="addrShort">22 หมู่7 ต.เกาะหลัก อ.เมือง จ.ประจวบคีรีขันธ์</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="credits">
+    <h5 class="mono mono-o" style="margin:0 0 10px" data-i18n="credH">PHOTO CREDITS / เครดิตภาพถ่าย</h5>
+    <p id="credits-list"></p>
+  </div>
+
+  <div class="ftr-bot">
+    <span>Copyright © 2026 All rights reserved - V GROUP  DEVELOPMENT CO.,LTD.</span>
+    <span>Developed by AmaWebs</span>
+  </div>
+</footer>
+
+<!-- ===================== LIGHTBOX ===================== -->
+<dialog class="lb" id="lb" aria-label="ภาพขยาย">
+  <img class="lb-img" id="lb-img" alt="">
+  <div class="lb-bar">
+    <div class="lb-meta"><b id="lb-t"></b><span id="lb-c"></span></div>
+    <button class="lb-x" id="lb-x" aria-label="ปิด">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+</dialog>
+
+<script>
+/* ============================================================
+   I18N — Thai default, in-memory only (nothing persisted)
+   ============================================================ */
+var I18N = {
+  th:{
+    nav1:"เกี่ยวกับวีกรุ๊ป", nav2:"ผลิตภัณฑ์และบริการ", nav3:"เกร็ดความรู้", nav4:"Services", nav5:"Contact",
+    ixH:"สารบัญ", ixC:"07 หัวข้อ",
+    orgH:"โครงสร้างการดำเนินงาน",
+    org1L:"บริษัทหลัก", org1D:"รับเหมาก่อสร้างให้กับทั้งทางภาครัฐ และเอกชน",
+    org2L:"ตัวแทนจำหน่าย · 2553", org2D:"จำหน่ายน้ำมันเชื้อเพลิงทดแทน",
+    org3L:"โรงงานผลิต", org3V:"ตำบลเกาะหลัก อำเภอเมือง", org3D:"จังหวัดประจวบคีรีขันธ์",
+    dataH:"ข้อมูลบริษัท", dataP:"ข้อมูลอ้างอิงของบริษัทและโรงงานผลิต",
+    dCap:"SEC.02 — COMPANY RECORD / บันทึกข้อมูลบริษัท",
+    thField:"รายการ", thValue:"ข้อมูล",
+    dName:"ชื่อบริษัท", dNameV:"บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด",
+    dParent:"บริษัทหลัก", dRole:"บทบาท", dRoleV:"ตัวแทนจำหน่าย และผู้ผลิต",
+    dFounded:"ปีก่อตั้ง", dCoord:"พิกัด",
+    dPrev:"เชื้อเพลิงเดิมที่ใช้", dPrevV:"น้ำมันเตา A",
+    dPrevD:"ใช้ในกิจการของบริษัทหลักก่อนเปลี่ยนมาใช้เชื้อเพลิงทดแทนในปี 2551",
+    glossH:"คำศัพท์ในหน้านี้",
+    g1T:"น้ำมันเตา A",
+    g1D:"น้ำมันเตาเกรดหนึ่งที่ใช้เป็นเชื้อเพลิงในหม้อไอน้ำและเตาเผาของโรงงานอุตสาหกรรม เป็นเชื้อเพลิงที่บริษัทหลักใช้อยู่ก่อนเปลี่ยนมาใช้เชื้อเพลิงทดแทน",
+    g2T:"น้ำมันเชื้อเพลิงทดแทน",
+    g2D:"เชื้อเพลิงเหลวที่นำมาใช้แทนน้ำมันเตาในกระบวนการผลิต เหตุผลที่บริษัทระบุไว้ในการเปลี่ยนมาใช้คือการลดต้นทุนการผลิต",
+    g3T:"ตัวแทนจำหน่าย",
+    g3D:"ผู้ที่รับสินค้าจากผู้ผลิตไปจำหน่ายต่อให้ผู้ใช้ เป็นบทบาทแรกของบริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด เมื่อก่อตั้งขึ้นในปี 2553",
+    glossNote:"คำอธิบายทั่วไปของคำที่ปรากฏในเนื้อหาหน้านี้ ไม่ใช่ข้อมูลจำเพาะของผลิตภัณฑ์",
+    sv1M:"ช่องทาง / LINE", sv3M:"ข่าวสารและกิจกรรม", callNow:"โทรเลย",
+    iBreak:"ที่ตั้งแยกตามเขตปกครอง",
+    aNo:"เลขที่ / หมู่ที่", aSub:"ตำบล", aSubV:"เกาะหลัก", aDist:"อำเภอ", aDistV:"เมือง",
+    aProv:"จังหวัด", aProvV:"ประจวบคีรีขันธ์", aCountry:"ประเทศ", aCountryV:"ไทย",
+    heroLoc:"ต.เกาะหลัก อ.เมือง จ.ประจวบคีรีขันธ์",
+    heroLine1:"เราจะพัฒนา", heroLine2:"อย่างไม่หยุดยั้ง",
+    hmBiz:"ประเภทธุรกิจ", hmBizV:"น้ำมันเชื้อเพลิงทดแทน",
+    hmEst:"ก่อตั้ง", hmEstV:"ตัวแทนจำหน่าย",
+    hmPlant:"โรงงานผลิต", hmPlantV:"22 หมู่ที่ 7 ตำบลเกาะหลัก",
+    ctaContact:"ติดต่อเรา",
+    aboutH:"วัฒนธรรม",
+    aboutP:"สองสิ่งที่บริษัทยึดถือ ทั้งในระดับองค์กรและระดับพนักงานทุกคน",
+    cult1L:"วัฒนธรรมองค์กร", cult1V:"เราจะพัฒนาอย่างไม่หยุดยั้ง",
+    cult2L:"วัฒนธรรมพนักงาน", cult2V:"มีจิตสำนึกที่ดี พร้อมเรียนรู้สิ่งใหม่",
+    histH:"ประวัติความเป็นมา",
+    histLede2:"ลำดับเหตุการณ์ตั้งแต่บริษัทหลักจนถึงโรงงานผลิตในปัจจุบัน",
+    specCap:"SEC.03 — TIMELINE / บันทึกลำดับเหตุการณ์",
+    thYear:"ปี", thEvent:"เหตุการณ์", thStage:"ขั้น", yrPlant:"โรงงาน",
+    m1S:"จุดเริ่มต้น", m1T:"บริษัท สรวีย์คอนสตรัคชั่น(1999) จำกัด",
+    m1P:"บริษัทหลัก ประกอบกิจการรับเหมาก่อสร้างให้กับทั้งทางภาครัฐ และเอกชน",
+    m2S:"จุดเปลี่ยน", m2T:"เปลี่ยนมาใช้น้ำมันเชื้อเพลิงทดแทน",
+    m2P:"จากนโยบายลดต้นทุนการผลิต เปลี่ยนจากน้ำมันเตา A มาเป็นน้ำมันเชื้อเพลิงทดแทน — และต้นทุนลดต่ำลงจริง",
+    m3S:"ก่อตั้ง", m3T:"บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด",
+    m3P:"จัดตั้งขึ้นเพื่อเป็นตัวแทนจำหน่าย ผลตอบรับที่ได้คือผู้ใช้มีความพึ่งพอใจ",
+    m4S:"ปัจจุบัน", m4T:"ก่อตั้งโรงงานผลิต",
+    m4P:"22 หมู่ที่ 7 ตำบลเกาะหลัก อำเภอเมือง จังหวัดประจวบคีรีขันธ์",
+    fullRec:"FULL RECORD / ฉบับเต็ม",
+    histFull:"<span>ก้าวแรกสู่ธุรกิจน้ำมันเชื้อเพลิงทดแทนของบริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด เกิดขึ้นจาก</span><span>บริษัท สรวีย์คอนสตรัคชั่น(1999) จำกัด ซึ่งเป็นบริษัทหลัก ประกอบกิจการรับเหมาก่อสร้างก่อสร้าง</span><span>ให้กับทั้งทางภาครัฐ และเอกชน ได้มีการนำน้ำมันเตา A มาใช้ในกิจการเพิ่มมากขึ้นทุกปื จนกระทั่งปี 2551</span><span>ทางบริษัทมีนโยบายที่จะลดต้นทุนการผลิต จึงได้มีเปลี่ยนแปลงจากการใช้น้ำมันเตา A มาเป็นน้ำมัน</span><span>เชื้อเพลิงทดแทน และผลที่ได้รับคือ ต้นทุนในการผลิตลดต่ำลง ทำให้บริษัทเล็งเห็นถึงโอกาสทางธุรกิจ</span><span>จึงเริ่มต้นจัดตั้ง บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด ขึ้นในปี 2553 เพื่อเป็นตัวแทนจำหน่าย</span><span>ซึ่งผลตอบรับที่ได้คือ ผู้ใช้มีความพึ่งพอใจ เนื่องจากยอดขายที่เพิ่มมากขึ้นอย่างต่อเนื่อง ทางบริษัทฯ</span><span>จึงได้ก่อตั้งโรงงานผลิตขึ้นโดยตั้งอยู่ที่ 22 หมู่ที่ 7 ตำบลเกาะหลัก อำเภอเมือง จังหวัดประจวบคีรีขันธ์</span>",
+    photoBy:"ภาพโดย",
+    galP:"คลังภาพการดำเนินงานและกิจกรรมของบริษัท",
+    knP:"รายละเอียดทางเทคนิคและอุปกรณ์ที่เกี่ยวข้องกับงานของเรา",
+    svcP:"ช่องทางที่ติดต่อทีมงานของเราได้",
+    fAll:"all", fService:"บริการของเรา", fActivity:"กิจกรรม",
+    svc1P:"ช่องทางไลน์สำหรับสอบถามข้อมูลผลิตภัณฑ์และบริการ",
+    svc2T:"ติดต่อเรา", svc2P:"โทรหรือส่งข้อความถึงทีมงานของเราได้โดยตรง",
+    svc3P:"ติดตามข่าวสารและกิจกรรมของวีกรุ๊ป",
+    knowMore:"Know more",
+    ctP:"กรอกแบบฟอร์มหรือโทรถึงเราได้เลย ทีมงานพร้อมให้ข้อมูล",
+    formH:"ส่งข้อมูลถึงเรา", formP:"ช่องที่มีเครื่องหมาย * จำเป็นต้องกรอก",
+    phName:"ชื่อ-นามสกุล", phTel:"เบอร์โทรศัพท์", phMail:"อีเมล",
+    submit:"ติดต่อ",
+    formNote:"แบบฟอร์มนี้เป็นตัวอย่างในการออกแบบ ยังไม่ได้เชื่อมต่อระบบส่งข้อมูล",
+    errName:"กรุณากรอกชื่อ-นามสกุล",
+    errMail:"กรุณากรอกอีเมลให้ถูกต้อง",
+    iAddr:"ที่ตั้ง", iTel:"โทรศัพท์", iCoord:"พิกัดโรงงาน",
+    addr:"22 หมู่7 ต.เกาะหลัก อ.เมือง จ.ประจวบคีรีขันธ์, Prachuap Khiri Khan, Changwat Prachuap Khiri Khan, Thailand - ไทย",
+    addrShort:"22 หมู่7 ต.เกาะหลัก อ.เมือง จ.ประจวบคีรีขันธ์",
+    ftrMe:"บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด — ธุรกิจน้ำมันเชื้อเพลิงทดแทน โรงงานผลิตตั้งอยู่ที่ตำบลเกาะหลัก อำเภอเมือง จังหวัดประจวบคีรีขันธ์",
+    ftrNav:"INDEX / เมนู", ftrReach:"CONTACT / ติดต่อ",
+    credH:"PHOTO CREDITS / เครดิตภาพถ่าย",
+    tick:["น้ำมันเชื้อเพลิงทดแทน","ตัวแทนจำหน่าย","โรงงานผลิต · ประจวบคีรีขันธ์","เราจะพัฒนาอย่างไม่หยุดยั้ง","ก่อตั้งปี 2553","+66 085-295-5005"]
+  },
+  en:{
+    nav1:"About V Group", nav2:"Products & Services", nav3:"Knowledge", nav4:"Services", nav5:"Contact",
+    ixH:"Contents", ixC:"07 sections",
+    orgH:"How the operation is structured",
+    org1L:"Parent company", org1D:"Construction contracts for both government and private clients",
+    org2L:"Distributor · 2010", org2D:"Distributing alternative fuel oil",
+    org3L:"Production plant", org3V:"Ko Lak, Mueang District", org3D:"Prachuap Khiri Khan",
+    dataH:"Company data", dataP:"Reference details for the company and its production plant",
+    dCap:"SEC.02 — COMPANY RECORD",
+    thField:"Field", thValue:"Value",
+    dName:"Company name", dNameV:"V Group Development Co., Ltd.",
+    dParent:"Parent company", dRole:"Role", dRoleV:"Distributor and producer",
+    dFounded:"Year founded", dCoord:"Coordinates",
+    dPrev:"Fuel used previously", dPrevV:"Type A fuel oil",
+    dPrevD:"Used across the parent company's operations before the 2551 (2008) switch to alternative fuel oil",
+    glossH:"Terms used on this page",
+    g1T:"Type A fuel oil",
+    g1D:"A grade of heavy fuel oil burned in industrial boilers and furnaces. It is the fuel the parent company was using before it moved to alternative fuel oil.",
+    g2T:"Alternative fuel oil",
+    g2D:"A liquid fuel used in place of heavy fuel oil in production. The reason the company gives for switching to it was to bring production costs down.",
+    g3T:"Distributor",
+    g3D:"A party that takes product from a producer and sells it on to end users — V Group Development's first role when it was founded in 2553 (2010).",
+    glossNote:"General explanations of terms appearing on this page — not product specifications.",
+    sv1M:"Channel / LINE", sv3M:"News & activities", callNow:"Call now",
+    iBreak:"Address by administrative division",
+    aNo:"No. / Moo", aSub:"Sub-district", aSubV:"Ko Lak", aDist:"District", aDistV:"Mueang",
+    aProv:"Province", aProvV:"Prachuap Khiri Khan", aCountry:"Country", aCountryV:"Thailand",
+    heroLoc:"Ko Lak, Mueang District, Prachuap Khiri Khan",
+    heroLine1:"We never stop", heroLine2:"developing",
+    hmBiz:"Line of business", hmBizV:"Alternative fuel oil",
+    hmEst:"Established", hmEstV:"as a distributor",
+    hmPlant:"Production plant", hmPlantV:"22 Moo 7, Ko Lak Sub-district",
+    ctaContact:"Contact us",
+    aboutH:"Culture",
+    aboutP:"Two things this company holds to — one for the organisation, one for every person in it.",
+    cult1L:"Organisational culture", cult1V:"We will never stop developing",
+    cult2L:"Employee culture", cult2V:"A good conscience, always ready to learn something new",
+    histH:"Our history",
+    histLede2:"The sequence of events from the parent company through to today's production plant.",
+    specCap:"SEC.03 — TIMELINE / RECORD OF EVENTS",
+    thYear:"Year", thEvent:"Event", thStage:"Stage", yrPlant:"Plant",
+    m1S:"Where it began", m1T:"Sorravee Construction (1999) Co., Ltd.",
+    m1P:"The parent company — a contractor delivering construction work for both government and private clients.",
+    m2S:"Turning point", m2T:"Switching to alternative fuel oil",
+    m2P:"Under a policy to cut production costs, Type A fuel oil gave way to alternative fuel oil — and costs genuinely came down.",
+    m3S:"Founded", m3T:"V Group Development Co., Ltd.",
+    m3P:"Established as a distributor. The response was clear: customers were satisfied.",
+    m4S:"Today", m4T:"Our production plant",
+    m4P:"22 Moo 7, Ko Lak Sub-district, Mueang District, Prachuap Khiri Khan",
+    fullRec:"FULL RECORD",
+    histFull:"<span>V Group Development Co., Ltd. took its first step into the alternative fuel oil business through Sorravee Construction (1999) Co., Ltd., the parent company, which carried out construction contracts for both government and private clients.</span><span>Year after year it used more and more Type A fuel oil, until in 2551 (2008) management adopted a policy of reducing production costs and moved from Type A fuel oil to alternative fuel oil.</span><span>The result was exactly what they hoped for: production costs came down. Seeing a real business opportunity in that, the company went on to establish V Group Development Co., Ltd. in 2553 (2010) to act as a distributor.</span><span>The response was clear — customers were satisfied. And because sales kept growing steadily, the company built its own production plant, located at 22 Moo 7, Ko Lak Sub-district, Mueang District, Prachuap Khiri Khan.</span>",
+    photoBy:"Photo by",
+    galP:"An image record of the company's operations and activities.",
+    knP:"Technical detail and the equipment behind the work we do.",
+    svcP:"Ways to reach our team.",
+    fAll:"all", fService:"Our services", fActivity:"Activities",
+    svc1P:"Our LINE channel for questions about products and services.",
+    svc2T:"Contact us", svc2P:"Call or message our team directly.",
+    svc3P:"Follow V Group news and activities.",
+    knowMore:"Know more",
+    ctP:"Fill in the form or simply call us — our team is ready to help.",
+    formH:"Send us your details", formP:"Fields marked * are required.",
+    phName:"Full name", phTel:"Phone number", phMail:"Email address",
+    submit:"Contact",
+    formNote:"This form is a design demonstration and is not yet connected to a mail service.",
+    errName:"Please enter your name.",
+    errMail:"Please enter a valid email address.",
+    iAddr:"Location", iTel:"Telephone", iCoord:"Plant coordinates",
+    addr:"22 Moo 7, Ko Lak, Mueang District, Prachuap Khiri Khan, Thailand",
+    addrShort:"22 Moo 7, Ko Lak, Mueang, Prachuap Khiri Khan",
+    ftrMe:"V Group Development Co., Ltd. — alternative fuel oil. Our production plant is in Ko Lak, Mueang District, Prachuap Khiri Khan.",
+    ftrNav:"INDEX", ftrReach:"CONTACT",
+    credH:"PHOTO CREDITS",
+    tick:["Alternative fuel oil","Distributor","Production plant · Prachuap Khiri Khan","We never stop developing","Established 2010","+66 085-295-5005"]
+  }
+};
+
+var LANG = "th";   /* default Thai · in-memory only, nothing stored */
+
+function buildTicker(){
+  var items = I18N[LANG].tick, half = "";
+  items.forEach(function(t){ half += "<span>" + t + "</span>"; });
+  document.getElementById("tick").innerHTML = half + half;
+}
+
+function setLang(l){
+  if(!I18N[l]) return;
+  LANG = l;
+  document.documentElement.lang = l;
+  var d = I18N[l];
+
+  document.querySelectorAll("[data-i18n]").forEach(function(el){
+    var v = d[el.getAttribute("data-i18n")];
+    if(v == null) return;
+    if(/[<&]/.test(v)) el.innerHTML = v; else el.textContent = v;
+  });
+  document.querySelectorAll("[data-i18n-attr]").forEach(function(el){
+    var v = d[el.getAttribute("data-i18n-ph")];
+    if(v != null) el.setAttribute(el.getAttribute("data-i18n-attr"), v);
+  });
+  document.querySelectorAll(".lang button").forEach(function(b){
+    b.setAttribute("aria-pressed", String(b.dataset.lang === l));
+  });
+  buildTicker();
+}
+
+document.querySelectorAll(".lang button").forEach(function(b){
+  b.addEventListener("click", function(){ setLang(b.dataset.lang); });
+});
+buildTicker();
+
+/* ============================================================
+   HEADER + DRAWER
+   ============================================================ */
+var hdr = document.getElementById("hdr");
+
+/* keep the ticker + drawer flush under the header whatever height it ends up */
+function measureHdr(){
+  document.documentElement.style.setProperty("--hdr-h", Math.ceil(hdr.getBoundingClientRect().height) + "px");
+}
+measureHdr();
+addEventListener("resize", measureHdr);
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(measureHdr);
+
+var onScroll = function(){ hdr.classList.toggle("stuck", window.scrollY > 30); };
+onScroll();
+addEventListener("scroll", onScroll, {passive:true});
+
+var burger = document.getElementById("burger");
+var drawer = document.getElementById("drawer");
+burger.addEventListener("click", function(){
+  var open = burger.getAttribute("aria-expanded") === "true";
+  burger.setAttribute("aria-expanded", String(!open));
+  drawer.classList.toggle("open", !open);
+  document.body.style.overflow = !open ? "hidden" : "";
+});
+drawer.querySelectorAll("a").forEach(function(a){
+  a.addEventListener("click", function(){
+    burger.setAttribute("aria-expanded","false");
+    drawer.classList.remove("open");
+    document.body.style.overflow = "";
+  });
+});
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+function revealAll(){
+  document.querySelectorAll("[data-reveal]").forEach(function(el){ el.classList.add("in"); });
+}
+if(typeof IntersectionObserver === "undefined"){
+  revealAll();                                  /* no observer support: just show everything */
+}else{
+  var delivered = 0;
+  var io = new IntersectionObserver(function(es){
+    delivered += es.length;
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, {threshold:0, rootMargin:"0px 0px -6% 0px"});
+  document.querySelectorAll("[data-reveal]").forEach(function(el){ io.observe(el); });
+  /* Failsafe: a working observer always delivers an initial entry per target.
+     If nothing is ever delivered the content would stay invisible, so show it.
+     Content must never be gated on an animation firing. */
+  setTimeout(function(){ if(delivered === 0) revealAll(); }, 1500);
+}
+
+/* ============================================================
+   GALLERY FILTERS
+   ============================================================ */
+document.querySelectorAll("[data-filter-group]").forEach(function(group){
+  var grid = document.getElementById("grid-" + group.getAttribute("data-filter-group"));
+  if(!grid) return;
+  group.querySelectorAll(".chip").forEach(function(chip){
+    chip.addEventListener("click", function(){
+      group.querySelectorAll(".chip").forEach(function(c){ c.setAttribute("aria-pressed","false"); });
+      chip.setAttribute("aria-pressed","true");
+      var cat = chip.dataset.cat;
+      grid.querySelectorAll(".cell").forEach(function(t){
+        var show = cat === "all" || t.dataset.cat === cat;
+        t.classList.toggle("hide", !show);
+        if(show){ t.style.animation = "none"; void t.offsetWidth; t.style.animation = ""; }
+      });
+    });
+  });
+});
+
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+var lb = document.getElementById("lb"),
+    lbImg = document.getElementById("lb-img"),
+    lbT = document.getElementById("lb-t"),
+    lbC = document.getElementById("lb-c"),
+    lastFocus = null;
+
+document.querySelectorAll(".cell").forEach(function(t){
+  t.addEventListener("click", function(){
+    lastFocus = t;
+    lbImg.src = t.dataset.full;
+    lbImg.alt = t.querySelector("img").alt;
+    lbT.textContent = I18N[LANG][t.dataset.t] || "";
+    lbC.innerHTML = I18N[LANG].photoBy + ' <a href="https://unsplash.com/@' + t.dataset.user +
+      '?utm_source=vgroup&utm_medium=referral" target="_blank" rel="noopener">' + t.dataset.ph +
+      '</a> / <a href="https://unsplash.com/photos/' + t.dataset.id +
+      '?utm_source=vgroup&utm_medium=referral" target="_blank" rel="noopener">Unsplash</a>';
+    if(typeof lb.showModal === "function") lb.showModal();
+  });
+});
+document.getElementById("lb-x").addEventListener("click", function(){ lb.close(); });
+lb.addEventListener("click", function(e){ if(e.target === lb) lb.close(); });
+lb.addEventListener("close", function(){ lbImg.removeAttribute("src"); if(lastFocus) lastFocus.focus(); });
+
+/* ============================================================
+   PHOTO CREDITS
+   ============================================================ */
+(function(){
+  var fixed = [
+    {ph:"Maksym Kaharlytskyi", user:"qwitka",       id:"u13zBF4r56A"},
+    {ph:"Timothy Newman",      user:"newmanphotog", id:"iTZ_guCHHt0"}
+  ];
+  var seen = {}, out = [];
+  fixed.concat(Array.prototype.map.call(document.querySelectorAll(".cell"), function(t){
+    return {ph:t.dataset.ph, user:t.dataset.user, id:t.dataset.id};
+  })).forEach(function(p){
+    if(seen[p.id]) return; seen[p.id] = 1;
+    out.push('<a href="https://unsplash.com/@' + p.user + '?utm_source=vgroup&utm_medium=referral" target="_blank" rel="noopener">' +
+             p.ph + '</a> (<a href="https://unsplash.com/photos/' + p.id +
+             '?utm_source=vgroup&utm_medium=referral" target="_blank" rel="noopener">Unsplash</a>)');
+  });
+  document.getElementById("credits-list").innerHTML = out.join(" · ");
+})();
+
+/* ============================================================
+   FORM — design demo, no backend
+   ============================================================ */
+(function(){
+  var form = document.getElementById("cform"),
+      note = document.getElementById("fnote"),
+      name = document.getElementById("f-name"),
+      mail = document.getElementById("f-mail"),
+      MAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function mark(el, bad){
+    el.setAttribute("aria-invalid", bad ? "true" : "false");
+    el.style.borderColor = bad ? "var(--err)" : "";
+  }
+  [name, mail].forEach(function(el){
+    el.addEventListener("input", function(){ mark(el, false); });
+  });
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();               /* no backend yet - validate, then report */
+    var nameBad = name.value.trim() === "",
+        mailBad = !MAIL.test(mail.value.trim());
+    mark(name, nameBad);
+    mark(mail, mailBad);
+    if(nameBad || mailBad){
+      note.textContent = nameBad ? I18N[LANG].errName : I18N[LANG].errMail;
+      note.style.color = "var(--err)";
+      (nameBad ? name : mail).focus();
+      return;
+    }
+    note.textContent = I18N[LANG].formNote;
+    note.style.color = "var(--orange)";
+  });
+})();
+</script>
+</body>
+</html>

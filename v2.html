@@ -2,6 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
+<script>document.documentElement.classList.add("js")</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>วี กรุ๊ป ดีเวลลอปเมนท์ | โซลูชันพลังงานและเคมีภัณฑ์แบบครบวงจร</title>
 <meta name="description" content="วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด ผู้ให้บริการครบวงจรด้านการจัดหาเชื้อเพลิง เคมีภัณฑ์อุตสาหกรรม และบริการเฉพาะทางด้านอุตสาหกรรม-สิ่งแวดล้อม เฝ้าระวังตลอด 24 ชั่วโมง">
@@ -11,15 +12,15 @@
 <script src="https://unpkg.com/lucide@0.460.0"></script>
 <style>
 :root{
-  --background:#0A0D0C;
-  --card:#121613;
-  --bg-accent:#0E1712;
-  --foreground:#EAF2EC;
-  --muted:#8B9992;
-  --border:#212B25;
-  --primary:#B6FF3C;
-  --secondary:#151B17;
-  --accent:#7FDB4E;
+  --background:#FFFFFF;
+  --card:#F4F9F6;
+  --bg-accent:#E9F4EE;
+  --foreground:#0F2E20;
+  --muted:#4E6F60;
+  --border:#D2E4D9;
+  --primary:#157A46;
+  --secondary:#E3F0E8;
+  --accent:#2A9D5F;
   --font-heading:'Prompt', sans-serif;
   --font-body:'IBM Plex Sans Thai', sans-serif;
 }
@@ -71,8 +72,9 @@ h2.section-title{font-size:clamp(1.6rem,4.2vw,2.6rem);margin-bottom:20px;}
 p.lead{color:var(--muted);font-size:1.05rem;}
 
 /* reveal */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,.8,.3,1),transform .7s cubic-bezier(.16,.8,.3,1);}
-.reveal.in-view{opacity:1;transform:translateY(0);}
+/* reveals only apply when JS is live, so the page can never render blank */
+.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,.8,.3,1),transform .7s cubic-bezier(.16,.8,.3,1);}
+.js .reveal.in-view{opacity:1;transform:translateY(0);}
 
 /* buttons */
 .btn{
@@ -85,14 +87,14 @@ p.lead{color:var(--muted);font-size:1.05rem;}
 }
 html[lang="en"] .btn{letter-spacing:0.04em;}
 .btn-primary{background:var(--primary);color:var(--background);}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px -6px rgba(182,255,60,0.45);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px -6px rgba(21,122,70,0.45);}
 .btn-outline{background:transparent;border-color:var(--border);color:var(--foreground);}
 .btn-outline:hover{border-color:var(--primary);color:var(--primary);}
 .btn-sm{padding:0.65em 1.2em;font-size:0.82rem;}
 
 /* ===== HEADER (verbatim structure) ===== */
-#siteHeader{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,13,12,0.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,0.06);transition:background .35s ease,border-color .35s ease,padding .35s ease;}
-#siteHeader.scrolled{background:rgba(10,13,12,0.92);border-bottom-color:var(--border);}
+#siteHeader{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(15,46,32,0.06);transition:background .35s ease,border-color .35s ease,padding .35s ease;}
+#siteHeader.scrolled{background:rgba(255,255,255,0.92);border-bottom-color:var(--border);}
 #siteHeader .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 #siteHeader .logo{font-family:var(--font-heading);font-size:clamp(1.05rem,3.4vw,1.35rem);font-weight:700;color:var(--foreground);text-decoration:none;white-space:nowrap;flex-shrink:0;letter-spacing:0.01em;}
 #siteHeader .logo em{font-style:normal;color:var(--primary);}
@@ -105,7 +107,7 @@ html[lang="en"] .btn{letter-spacing:0.04em;}
 #siteHeader .lang-sw__label{font-family:var(--font-heading);}
 #siteHeader .hamburger{display:inline-flex;align-items:center;justify-content:center;background:none;border:1px solid var(--border);color:var(--foreground);width:44px;height:44px;border-radius:6px;cursor:pointer;flex-shrink:0;}
 @media (max-width:767px){
-  #siteHeader .site-nav{position:fixed;top:65px;left:0;right:0;bottom:auto;background:rgba(10,13,12,0.98);border-bottom:1px solid var(--border);flex-direction:column;align-items:stretch;gap:0;max-height:0;overflow:hidden;transition:max-height .4s ease;}
+  #siteHeader .site-nav{position:fixed;top:65px;left:0;right:0;bottom:auto;background:rgba(255,255,255,0.98);border-bottom:1px solid var(--border);flex-direction:column;align-items:stretch;gap:0;max-height:0;overflow:hidden;transition:max-height .4s ease;}
   #siteHeader .site-nav.open{max-height:70vh;overflow-y:auto;}
   #siteHeader .site-nav .nav-link{padding:18px 24px;border-bottom:1px solid var(--border);width:100%;}
 }
@@ -140,8 +142,8 @@ html[lang="en"] .scroll-cue span{letter-spacing:0.18em;}
 .stat-item{flex:1 1 45%;min-width:0;display:flex;align-items:center;gap:12px;padding:24px 24px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
 .stat-item:nth-child(2n){border-right:none;}
 @media (min-width:768px){.stat-item{flex:1 1 25%;border-bottom:none;}.stat-item:nth-child(2n){border-right:1px solid var(--border);}.stat-item:last-child{border-right:none;}}
-.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0;box-shadow:0 0 0 0 rgba(182,255,60,0.6);animation:pulse 2.2s ease-out infinite;}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(182,255,60,0.55);}70%{box-shadow:0 0 0 9px rgba(182,255,60,0);}100%{box-shadow:0 0 0 0 rgba(182,255,60,0);}}
+.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0;box-shadow:0 0 0 0 rgba(21,122,70,0.6);animation:pulse 2.2s ease-out infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(21,122,70,0.55);}70%{box-shadow:0 0 0 9px rgba(21,122,70,0);}100%{box-shadow:0 0 0 0 rgba(21,122,70,0);}}
 .stat-text{min-width:0;}
 .stat-value{font-family:var(--font-heading);font-size:1.3rem;font-weight:700;color:var(--foreground);}
 .stat-label{color:var(--muted);font-size:0.82rem;}
@@ -178,13 +180,13 @@ html[lang="en"] .scroll-cue span{letter-spacing:0.18em;}
 
 /* ops desk full-bleed */
 .opsdesk{position:relative;min-height:560px;display:flex;align-items:center;overflow:hidden;}
-.opsdesk img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:grayscale(0.25) brightness(0.5);}
-.opsdesk::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg, rgba(10,13,12,0.96) 10%, rgba(10,13,12,0.55) 65%, rgba(10,13,12,0.2) 100%);z-index:1;}
+.opsdesk img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:grayscale(0.2) brightness(1.06);}
+.opsdesk::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg, rgba(255,255,255,0.96) 10%, rgba(255,255,255,0.55) 65%, rgba(255,255,255,0.2) 100%);z-index:1;}
 .opsdesk-content{position:relative;z-index:2;max-width:560px;padding:80px 0;}
 .opsdesk h2{font-size:clamp(1.6rem,3.6vw,2.4rem);margin-bottom:20px;}
-.opsdesk p{color:#C9D4CD;margin-bottom:28px;}
+.opsdesk p{color:#33564A;margin-bottom:28px;}
 .hud-tags{display:flex;flex-wrap:wrap;gap:12px;}
-.hud-tag{display:flex;align-items:center;gap:8px;border:1px solid rgba(182,255,60,0.35);background:rgba(182,255,60,0.06);color:var(--primary);font-family:var(--font-heading);font-size:0.72rem;padding:0.6em 1em;border-radius:5px;}
+.hud-tag{display:flex;align-items:center;gap:8px;border:1px solid rgba(21,122,70,0.35);background:rgba(21,122,70,0.06);color:var(--primary);font-family:var(--font-heading);font-size:0.72rem;padding:0.6em 1em;border-radius:5px;}
 html[lang="en"] .hud-tag{letter-spacing:0.08em;}
 
 /* trust grid */
@@ -338,7 +340,7 @@ html[lang="en"] .footer-col h5{letter-spacing:0.1em;}
     <div class="op-row reveal">
       <div class="op-media">
         <div class="op-index">01</div>
-        <img src="https://images.unsplash.com/photo-1787648790471-a29911fca1fa?w=800&h=560&fit=crop" alt="Large industrial storage tanks at the Buckeye Rensselaer Terminal along a riverbank">
+        <img src="https://images.unsplash.com/photo-1787648790471-a29911fca1fa?w=800&h=560&fit=crop" alt="Large industrial storage tanks at the Buckeye Rensselaer Terminal along a riverbank" loading="lazy" decoding="async">
       </div>
       <div class="op-text">
         <h3 data-lang-th="การจัดหาและจัดจำหน่ายเชื้อเพลิงและเคมีภัณฑ์" data-lang-en="Fuel &amp; Chemical Products Trading">การจัดหาและจัดจำหน่ายเชื้อเพลิงและเคมีภัณฑ์</h3>
@@ -356,7 +358,7 @@ html[lang="en"] .footer-col h5{letter-spacing:0.1em;}
     <div class="op-row reverse reveal">
       <div class="op-media">
         <div class="op-index">02</div>
-        <img src="https://images.unsplash.com/photo-1698031610493-c19fa20dfeab?w=800&h=560&fit=crop" alt="Close up of pipes and valves in a factory">
+        <img src="https://images.unsplash.com/photo-1698031610493-c19fa20dfeab?w=800&h=560&fit=crop" alt="Close up of pipes and valves in a factory" loading="lazy" decoding="async">
       </div>
       <div class="op-text">
         <h3 data-lang-th="บริการเฉพาะทางด้านอุตสาหกรรมและสิ่งแวดล้อม" data-lang-en="Specialized Industrial &amp; Environmental Services">บริการเฉพาะทางด้านอุตสาหกรรมและสิ่งแวดล้อม</h3>
@@ -422,7 +424,7 @@ html[lang="en"] .footer-col h5{letter-spacing:0.1em;}
 
 <!-- OPS DESK -->
 <section class="opsdesk" id="ops-desk">
-  <img src="https://images.unsplash.com/photo-1764195287345-2086f504cb0b?w=1600&h=900&fit=crop" alt="Control room with monitors and chairs">
+  <img src="https://images.unsplash.com/photo-1764195287345-2086f504cb0b?w=1600&h=900&fit=crop" alt="Control room with monitors and chairs" loading="lazy" decoding="async">
   <div class="container">
     <div class="opsdesk-content reveal">
       <div class="eyebrow" data-lang-th="ศูนย์ปฏิบัติการ" data-lang-en="Operations Desk">ศูนย์ปฏิบัติการ</div>
@@ -596,14 +598,14 @@ html[lang="en"] .footer-col h5{letter-spacing:0.1em;}
     var open=nav.classList.toggle('open');
     btn.setAttribute('aria-expanded',open?'true':'false');
     btn.innerHTML = open ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
-    lucide.createIcons();
+    if(window.lucide && lucide.createIcons) lucide.createIcons();  /* CDN may be blocked */
   });
   nav.querySelectorAll('a').forEach(function(a){
     a.addEventListener('click',function(){
       nav.classList.remove('open');
       btn.setAttribute('aria-expanded','false');
       btn.innerHTML='<i data-lucide="menu"></i>';
-      lucide.createIcons();
+      if(window.lucide && lucide.createIcons) lucide.createIcons();  /* CDN may be blocked */
     });
   });
 })();
@@ -611,15 +613,22 @@ html[lang="en"] .footer-col h5{letter-spacing:0.1em;}
 // reveal on scroll
 (function(){
   var els=document.querySelectorAll('.reveal');
+  function showAll(){els.forEach(function(el){el.classList.add('in-view');});}
+  if(typeof IntersectionObserver==='undefined'){showAll();return;}
+  var delivered=0;
   var io=new IntersectionObserver(function(entries){
+    delivered+=entries.length;
     entries.forEach(function(entry){
       if(entry.isIntersecting){entry.target.classList.add('in-view');io.unobserve(entry.target);}
     });
   },{threshold:0.15});
   els.forEach(function(el){io.observe(el);});
+  /* a working observer always delivers an initial entry per target; if none
+     arrives the content would stay invisible, so reveal it unconditionally */
+  setTimeout(function(){if(delivered===0)showAll();},1500);
 })();
 
-lucide.createIcons();
+if(window.lucide && lucide.createIcons) lucide.createIcons();  /* CDN may be blocked */
 </script>
 </body>
 </html>
