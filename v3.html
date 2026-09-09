@@ -2,6 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
+<script>document.documentElement.classList.add("js")</script>
 <link rel="icon" type="image/png" href="assets/logo/logo-mark.png">
 <link rel="apple-touch-icon" href="assets/logo/logo-mark.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -307,8 +308,12 @@
   }
 
   /* ===== REVEAL ANIMATION ===== */
-  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s ease;}
-  .reveal.in-view{opacity:1;transform:translateY(0);}
+  /* reveals only apply when JS is live, so the page can never render blank */
+  .js .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s ease;}
+  .js .reveal.in-view{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion:reduce){
+    .js .reveal,.js .reveal.in-view{opacity:1;transform:none;transition:none;}
+  }
 
   /* ===== SECTION LABEL BAR ===== */
   .sig-bar{background:var(--foreground);color:#F4F6F2;padding:10px 0;overflow:hidden;}
@@ -730,29 +735,40 @@
     var isOpen = mainNav.classList.toggle('open');
     navToggle.setAttribute('aria-expanded', isOpen);
     navToggle.innerHTML = isOpen ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
-    lucide.createIcons();
+    if(window.lucide && lucide.createIcons) lucide.createIcons();  /* CDN may be blocked */
   });
   mainNav.querySelectorAll('a').forEach(function(a){
     a.addEventListener('click', function(){
       mainNav.classList.remove('open');
       navToggle.setAttribute('aria-expanded', 'false');
       navToggle.innerHTML = '<i data-lucide="menu"></i>';
-      lucide.createIcons();
+      if(window.lucide && lucide.createIcons) lucide.createIcons();  /* CDN may be blocked */
     });
   });
 
   // Scroll reveal
-  var observer = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        entry.target.classList.add('in-view');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {threshold: 0.15});
-  document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+  var revealEls = document.querySelectorAll('.reveal');
+  function showAllReveals(){ revealEls.forEach(function(el){ el.classList.add('in-view'); }); }
+  if(typeof IntersectionObserver === 'undefined'){
+    showAllReveals();
+  } else {
+    var obsDelivered = 0;
+    var observer = new IntersectionObserver(function(entries){
+      obsDelivered += entries.length;
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.15});
+    revealEls.forEach(function(el){ observer.observe(el); });
+    /* a working observer always delivers an initial entry per target; if none
+       arrives the content would stay invisible, so reveal it unconditionally */
+    setTimeout(function(){ if(obsDelivered === 0) showAllReveals(); }, 1500);
+  }
 
-  lucide.createIcons();
+  if(window.lucide && lucide.createIcons) lucide.createIcons();  /* CDN may be blocked */
 </script>
 
 <script>

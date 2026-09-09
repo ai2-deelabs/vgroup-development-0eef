@@ -578,7 +578,7 @@ dialog.lb[open]{animation:lbIn .4s var(--ease)}
 .js [data-reveal]{opacity:0; transform:translateY(26px); transition:opacity .85s var(--ease), transform .85s var(--ease); transition-delay:calc(var(--i,0)*85ms)}
 .js [data-reveal].in{opacity:1; transform:none}
 @media (prefers-reduced-motion:reduce){
-  [data-reveal]{opacity:1; transform:none; transition:none}
+  .js [data-reveal],.js [data-reveal].in{opacity:1; transform:none; transition:none}
   *{animation-duration:.01ms !important; animation-iteration-count:1 !important}
 }
 .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}

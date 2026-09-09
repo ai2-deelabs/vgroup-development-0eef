@@ -77,6 +77,9 @@ p.lead{color:var(--muted);font-size:1.05rem;}
 /* reveals only apply when JS is live, so the page can never render blank */
 .js .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,.8,.3,1),transform .7s cubic-bezier(.16,.8,.3,1);}
 .js .reveal.in-view{opacity:1;transform:translateY(0);}
+@media (prefers-reduced-motion:reduce){
+  .js .reveal,.js .reveal.in-view{opacity:1;transform:none;transition:none;}
+}
 
 /* buttons */
 .btn{

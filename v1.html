@@ -2,6 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
+<script>document.documentElement.classList.add("js")</script>
 <link rel="icon" type="image/png" href="assets/logo/logo-mark.png">
 <link rel="apple-touch-icon" href="assets/logo/logo-mark.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,8 +80,12 @@
   .btn-on-dark:hover{background:#F7F5F0;color:var(--primary);}
 
   /* ===== reveal animation ===== */
-  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease-out, transform .7s ease-out;}
-  .reveal.in-view{opacity:1;transform:translateY(0);}
+  /* reveals only apply when JS is live, so the page can never render blank */
+  .js .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease-out, transform .7s ease-out;}
+  .js .reveal.in-view{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion:reduce){
+    .js .reveal,.js .reveal.in-view{opacity:1;transform:none;transition:none;}
+  }
 
   /* ===== HEADER ===== */
   #siteHeader{
@@ -825,13 +830,13 @@
     siteNav.classList.remove('open');
     backdrop.classList.remove('open');
     navToggle.innerHTML = '<i data-lucide="menu"></i>';
-    lucide.createIcons();
+    if(window.lucide && lucide.createIcons) lucide.createIcons();  /* CDN may be blocked */
   }
   navToggle.addEventListener('click', function(){
     var isOpen = siteNav.classList.toggle('open');
     backdrop.classList.toggle('open', isOpen);
     navToggle.innerHTML = isOpen ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
-    lucide.createIcons();
+    if(window.lucide && lucide.createIcons) lucide.createIcons();  /* CDN may be blocked */
   });
   backdrop.addEventListener('click', closeNav);
   siteNav.querySelectorAll('a').forEach(function(a){
@@ -840,17 +845,27 @@
 
   // scroll reveal
   var revealEls = document.querySelectorAll('.reveal');
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        entry.target.classList.add('in-view');
-        io.unobserve(entry.target);
-      }
-    });
-  },{threshold:0.15});
-  revealEls.forEach(function(el){ io.observe(el); });
+  function showAllReveals(){ revealEls.forEach(function(el){ el.classList.add('in-view'); }); }
+  if(typeof IntersectionObserver === 'undefined'){
+    showAllReveals();
+  } else {
+    var ioDelivered = 0;
+    var io = new IntersectionObserver(function(entries){
+      ioDelivered += entries.length;
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.15});
+    revealEls.forEach(function(el){ io.observe(el); });
+    /* a working observer always delivers an initial entry per target; if none
+       arrives the content would stay invisible, so reveal it unconditionally */
+    setTimeout(function(){ if(ioDelivered === 0) showAllReveals(); }, 1500);
+  }
 
-  lucide.createIcons();
+  if(window.lucide && lucide.createIcons) lucide.createIcons();  /* CDN may be blocked */
 </script>
 
 <script>
