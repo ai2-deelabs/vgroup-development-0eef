@@ -2,6 +2,8 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="assets/logo/logo-mark.png">
+<link rel="apple-touch-icon" href="assets/logo/logo-mark.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>วี กรุ๊ป ดีเวลลอปเมนท์ — โซลูชันพลังงานและเคมีภัณฑ์ครบวงจร</title>
 <meta name="description" content="บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด ผู้ให้บริการครบวงจรด้านการค้าผลิตภัณฑ์เชื้อเพลิง เคมีภัณฑ์ และบริการเฉพาะทางด้านอุตสาหกรรมและสิ่งแวดล้อม">
@@ -57,7 +59,6 @@
     padding-top:2px;
   }
   .eyebrow .num{color:var(--accent);font-weight:800;letter-spacing:0.02em;}
-  .rule{height:1px;background:var(--border);width:100%;border:none;margin:0;}
   .btn{
     display:inline-flex;align-items:center;justify-content:center;gap:8px;
     padding:0.9em 1.6em;
@@ -81,12 +82,15 @@
     grid-template-columns:repeat(12, minmax(0,1fr));
     gap:20px;
   }
-  .grid-lines{position:relative;}
 
   /* ===== HEADER ===== */
   #siteHeader{position:sticky;top:0;z-index:1000;background:rgba(244,246,242,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--border);transition:box-shadow .3s ease, padding .3s ease;}
   #siteHeader .header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;gap:14px;}
   #siteHeader.scrolled .header-inner{padding:10px 20px;box-shadow:0 6px 24px rgba(21,36,32,.08);}
+  /* brand logo assets */
+  #siteHeader .logo .brand-logo{height:32px;width:auto;flex:none;align-self:center;}
+  /* the wordmark is dark green artwork, so it is inverted to white on the dark footer */
+  .foot-brand .foot-logo-img{display:block;width:190px;max-width:100%;height:auto;filter:brightness(0) invert(1);}
   #siteHeader .logo{font-family:var(--font-heading);font-weight:800;font-size:clamp(1rem,3.6vw,1.35rem);white-space:nowrap;color:var(--foreground);display:flex;align-items:baseline;gap:6px;letter-spacing:.01em;}
   #siteHeader .logo span{color:var(--primary);font-weight:600;font-size:.5em;text-transform:uppercase;letter-spacing:.1em;}
   #siteHeader .main-nav{display:none;}
@@ -284,18 +288,18 @@
   footer{background:var(--secondary);color:#EDEFEA;padding:56px 0 26px;}
   .foot-grid{display:grid;grid-template-columns:1fr;gap:36px;}
   .foot-brand{grid-column:1/-1;}
-  .foot-brand .logo-f{font-family:var(--font-heading);font-weight:800;font-size:1.5rem;color:#fff;display:flex;gap:6px;align-items:baseline;}
-  .foot-brand .logo-f span{color:var(--accent);font-size:.5em;text-transform:uppercase;font-weight:600;}
   .foot-brand p{color:#B9C7BE;margin-top:16px;max-width:44ch;font-size:.95rem;}
   .foot-col h5{font-family:var(--font-heading);font-weight:700;font-size:.85rem;text-transform:uppercase;color:#fff;margin-bottom:16px;padding-top:2px;}
   .foot-col ul li{margin-bottom:10px;}
   .foot-col a{color:#C9D8CE;font-size:.94rem;transition:color .2s ease;}
   .foot-col a:hover{color:var(--accent);}
-  .foot-bottom{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.15);margin-top:20px;padding-top:24px;display:flex;flex-direction:column;gap:12px;}
+  .foot-bottom{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.15);margin-top:20px;padding-top:24px;display:flex;flex-direction:column;gap:12px;font-size:.72rem;color:#93A69B;}  /* set here so .credits and the badge inherit the same pair */
   .credits{font-size:.72rem;color:#93A69B;line-height:1.8;}
   .credits a{color:#B9C7BE;text-decoration:underline;}
-  .deelabs-badge{color:#93A69B;font-size:.75rem;font-weight:400;font-family:var(--font-body);}
-  .deelabs-badge:hover{color:#C9D8CE;}
+  /* Powered by DeeLabs badge - inherits the footer's own typography */
+  .deelabs-badge{font:inherit; color:inherit; text-decoration:none; opacity:.7; transition:opacity .2s ease;}
+  .deelabs-badge:hover{opacity:1;}
+  .deelabs-badge b{font-weight:700;}
   @media(min-width:768px){
     .foot-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
     .foot-brand{grid-column:1/2;}
@@ -318,7 +322,7 @@
 
 <header id="siteHeader">
   <div class="header-inner">
-    <a href="#home" class="logo">V GROUP<span>DEVELOPMENT</span></a>
+    <a href="#home" class="logo"><img class="brand-logo" src="assets/logo/logo-mark.png" alt="" width="197" height="176" decoding="async">V GROUP<span>DEVELOPMENT</span></a>
     <nav class="main-nav" id="mainNav">
       <a href="#about" data-lang-th="เกี่ยวกับเรา" data-lang-en="About">เกี่ยวกับเรา</a>
       <a href="#services" data-lang-th="บริการ" data-lang-en="Services">บริการ</a>
@@ -669,7 +673,7 @@
 <footer>
   <div class="container foot-grid">
     <div class="foot-brand">
-      <div class="logo-f">V GROUP<span>DEVELOPMENT</span></div>
+      <img class="foot-logo-img" src="assets/logo/logotext_nobg.png" alt="V Group Development Co., Ltd." width="610" height="227" loading="lazy" decoding="async">
       <p data-lang-th="ผู้ให้บริการครบวงจรด้านพลังงาน เชื้อเพลิง เคมีภัณฑ์ และบริการเฉพาะทางด้านอุตสาหกรรมและสิ่งแวดล้อม" data-lang-en="A one-stop provider for energy, fuel, chemicals, and specialized industrial &amp; environmental services.">ผู้ให้บริการครบวงจรด้านพลังงาน เชื้อเพลิง เคมีภัณฑ์ และบริการเฉพาะทางด้านอุตสาหกรรมและสิ่งแวดล้อม</p>
     </div>
     <div class="foot-col">
@@ -707,7 +711,7 @@
         <a href="https://www.pexels.com/@delot" target="_blank" rel="noopener nofollow">Ludovic Delot</a> —
         <a href="https://unsplash.com/?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Unsplash</a>
       </div>
-      <a class="deelabs-badge" href="https://deelabs.co/?utm_source=client-site&utm_medium=badge" target="_blank" rel="noopener">Powered by DeeLabs</a>
+      <a class="deelabs-badge" href="https://deelabs.co/?utm_source=badge&utm_medium=referral&utm_campaign=vgroup" target="_blank" rel="noopener noreferrer">Powered by <b>DeeLabs</b></a>
     </div>
   </div>
 </footer>

@@ -2,6 +2,8 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
+<link rel="icon" type="image/png" href="assets/logo/logo-mark.png">
+<link rel="apple-touch-icon" href="assets/logo/logo-mark.png">
 <script>document.documentElement.classList.add("js")</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>V GROUP DEVELOPMENT CO.,LTD. — วี กรุ๊ป ดีเวลลอปเมนท์</title>
@@ -103,15 +105,13 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
 
 .brand{display:flex; align-items:center; gap:12px; margin-right:auto; min-width:0; max-width:min(46vw,340px)}
 @media (min-width:1000px){.brand{max-width:340px}}
-.brand-mark{
-  width:44px; height:44px; flex:none; border-radius:50%;
-  background:var(--terra); color:var(--cream);
-  display:grid; place-items:center;
-  font-family:"Mitr",sans-serif; font-weight:600; font-size:1.2rem;
-  box-shadow:0 6px 18px -6px rgba(30,122,77,.7);
+.brand-logo{
+  width:auto; height:42px; flex:none; display:block;
   transition:transform .5s var(--ease);
 }
-.brand:hover .brand-mark{transform:rotate(-12deg) scale(1.06)}
+.brand:hover .brand-logo{transform:rotate(-8deg) scale(1.06)}
+/* the wordmark is dark-green artwork, so it is inverted to white on the dark footer */
+.ftr-logo{display:block; width:196px; max-width:100%; height:auto; filter:brightness(0) invert(1)}
 .brand-txt{min-width:0}
 .brand-name{
   display:block;                        /* ellipsis needs a block box */
@@ -541,6 +541,11 @@ section[id]{scroll-margin-top:92px}
   font-size:.76rem; color:rgba(248,252,249,.45);
 }
 
+/* Powered by DeeLabs badge - inherits the footer's own typography */
+.deelabs-badge{font:inherit; color:inherit; text-decoration:none; opacity:.7; transition:opacity .2s ease;}
+.deelabs-badge:hover{opacity:1;}
+.deelabs-badge b{font-weight:700;}
+
 /* ============================================================
    LIGHTBOX
    ============================================================ */
@@ -588,7 +593,7 @@ dialog.lb[open]{animation:lbIn .4s var(--ease)}
 <header class="hdr" id="hdr">
   <div class="wrap hdr-in">
     <a href="#top" class="brand" aria-label="V Group Development">
-      <span class="brand-mark">V</span>
+      <img class="brand-logo" src="assets/logo/logo-mark.png" alt="" width="197" height="176" decoding="async">
       <span class="brand-txt">
         <span class="brand-name">V GROUP DEVELOPMENT CO.,LTD.</span>
         <span class="brand-sub" data-i18n="brandsub">น้ำมันเชื้อเพลิงทดแทน</span>
@@ -977,10 +982,7 @@ dialog.lb[open]{animation:lbIn .4s var(--ease)}
   <div class="wrap">
     <div class="ftr-top">
       <div>
-        <div class="brand">
-          <span class="brand-mark">V</span>
-          <span class="brand-txt"><span class="brand-name">V GROUP DEVELOPMENT CO.,LTD.</span></span>
-        </div>
+        <img class="ftr-logo" src="assets/logo/logotext_nobg.png" alt="V Group Development Co., Ltd." width="610" height="227" loading="lazy" decoding="async">
         <p class="ftr-me" data-i18n="ftrMe">บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด — ธุรกิจน้ำมันเชื้อเพลิงทดแทน โรงงานผลิตตั้งอยู่ที่ตำบลเกาะหลัก อำเภอเมือง จังหวัดประจวบคีรีขันธ์</p>
       </div>
       <div>
@@ -1010,7 +1012,7 @@ dialog.lb[open]{animation:lbIn .4s var(--ease)}
 
     <div class="ftr-bot">
       <span>Copyright © 2026 All rights reserved - V GROUP  DEVELOPMENT CO.,LTD.</span>
-      <span>Developed by AmaWebs</span>
+      <a class="deelabs-badge" href="https://deelabs.co/?utm_source=badge&utm_medium=referral&utm_campaign=vgroup" target="_blank" rel="noopener noreferrer">Powered by <b>DeeLabs</b></a>
     </div>
   </div>
 </footer>
