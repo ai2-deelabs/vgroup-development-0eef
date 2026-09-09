@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <script>document.documentElement.classList.add("js")</script>
-<link rel="icon" type="image/png" href="../assets/logo/logo-mark.png">
-<link rel="apple-touch-icon" href="../assets/logo/logo-mark.png">
+<link rel="icon" type="image/png" href="assets/logo/logo-mark.png">
+<link rel="apple-touch-icon" href="assets/logo/logo-mark.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>วี กรุ๊ป ดีเวลลอปเมนท์ | โซลูชันพลังงานและเคมีภัณฑ์ครบวงจร</title>
 <meta name="description" content="วี กรุ๊ป ดีเวลลอปเมนท์ ผู้ให้บริการครบวงจรด้านพลังงาน เชื้อเพลิง และเคมีภัณฑ์ ครอบคลุมการซื้อขายผลิตภัณฑ์และบริการอุตสาหกรรมเฉพาะทางเพื่อสิ่งแวดล้อม">
@@ -467,7 +467,7 @@
 <header id="siteHeader">
   <div class="backdrop" id="navBackdrop"></div>
   <div class="header-inner">
-    <a href="#home" class="logo"><img class="brand-logo" src="../assets/logo/logo-mark.png" alt="" width="197" height="176" decoding="async">V<span>GROUP</span> DEVELOPMENT</a>
+    <a href="#home" class="logo"><img class="brand-logo" src="assets/logo/logo-mark.png" alt="" width="197" height="176" decoding="async">V<span>GROUP</span> DEVELOPMENT</a>
     <div class="head-controls">
       <div class="lang-sw"><i data-lucide="globe" width="14" height="14"></i><span class="lang-sw__label">TH</span></div>
       <button class="nav-toggle" id="navToggle" aria-label="Menu"><i data-lucide="menu" id="navToggleIcon"></i></button>
@@ -768,7 +768,7 @@
     <div class="container">
       <div class="foot-grid">
         <div class="foot-col">
-          <div class="foot-logo"><img class="foot-logo-img" src="../assets/logo/logotext_nobg.png" alt="V Group Development Co., Ltd." width="610" height="227" loading="lazy" decoding="async"></div>
+          <div class="foot-logo"><img class="foot-logo-img" src="assets/logo/logotext_nobg.png" alt="V Group Development Co., Ltd." width="610" height="227" loading="lazy" decoding="async"></div>
           <p data-lang-th="ผู้ให้บริการครบวงจรด้านพลังงาน เชื้อเพลิง และเคมีภัณฑ์" data-lang-en="A one-stop provider in energy, fuel, and chemical management.">ผู้ให้บริการครบวงจรด้านพลังงาน เชื้อเพลิง และเคมีภัณฑ์</p>
         </div>
         <div class="foot-col">
@@ -878,7 +878,7 @@
   });
 })();
 
-(function(){var K='site-lang',L=localStorage.getItem(K)||'th';function S(l){L=l;localStorage.setItem(K,l);document.documentElement.lang=l;document.querySelectorAll('[data-lang-th]').forEach(function(e){var t=e.getAttribute('data-lang-'+l);if(t!==null){if(/[<&]/.test(t)){e.innerHTML=t}else{e.textContent=t}}});var lb=document.querySelector('.lang-sw__label');if(lb){lb.textContent=l.toUpperCase()}}var sw=document.querySelector('.lang-sw');if(sw){sw.addEventListener('click',function(){S(L==='th'?'en':'th')});sw.style.cursor='pointer'}if(L!=='th'){S(L)}})();
+(function(){var K='site-lang',L=(function(){try{return localStorage.getItem(K)}catch(e){return null}})()||'th';function S(l){L=l;try{localStorage.setItem(K,l)}catch(e){}document.documentElement.lang=l;document.querySelectorAll('[data-lang-th]').forEach(function(e){var t=e.getAttribute('data-lang-'+l);if(t!==null){if(/[<&]/.test(t)){e.innerHTML=t}else{e.textContent=t}}});var lb=document.querySelector('.lang-sw__label');if(lb){lb.textContent=l.toUpperCase()}}var sw=document.querySelector('.lang-sw');if(sw){sw.addEventListener('click',function(){S(L==='th'?'en':'th')});sw.style.cursor='pointer'}if(L!=='th'){S(L)}})();
 </script>
 
 </body>

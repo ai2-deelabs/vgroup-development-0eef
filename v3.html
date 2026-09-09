@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <script>document.documentElement.classList.add("js")</script>
-<link rel="icon" type="image/png" href="../assets/logo/logo-mark.png">
-<link rel="apple-touch-icon" href="../assets/logo/logo-mark.png">
+<link rel="icon" type="image/png" href="assets/logo/logo-mark.png">
+<link rel="apple-touch-icon" href="assets/logo/logo-mark.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>วี กรุ๊ป ดีเวลลอปเมนท์ — โซลูชันพลังงานและเคมีภัณฑ์ครบวงจร</title>
 <meta name="description" content="บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด ผู้ให้บริการครบวงจรด้านการค้าผลิตภัณฑ์เชื้อเพลิง เคมีภัณฑ์ และบริการเฉพาะทางด้านอุตสาหกรรมและสิ่งแวดล้อม">
@@ -110,6 +110,11 @@
     transition:background .25s ease, transform .25s ease;
   }
   #siteHeader .btn-header-cta:hover{background:var(--secondary);transform:translateY(-1px);}
+  /* Below the nav breakpoint the row is logo + CTA + language + hamburger, which
+     does not fit a 390px viewport - it overflowed by 10px and the page scrolled
+     sideways. Contact is already the last item in the mobile nav. */
+  #siteHeader .btn-header-cta{display:none;}
+  @media(min-width:768px){#siteHeader .btn-header-cta{display:inline-flex;}}
   .lang-sw{display:flex;align-items:center;gap:4px;font-size:.78em;font-family:var(--font-heading);font-weight:600;color:var(--foreground);padding:8px;border-radius:2px;user-select:none;min-height:40px;}
   .lang-sw:hover{color:var(--primary);}
   #navToggle{
@@ -327,7 +332,7 @@
 
 <header id="siteHeader">
   <div class="header-inner">
-    <a href="#home" class="logo"><img class="brand-logo" src="../assets/logo/logo-mark.png" alt="" width="197" height="176" decoding="async">V GROUP<span>DEVELOPMENT</span></a>
+    <a href="#home" class="logo"><img class="brand-logo" src="assets/logo/logo-mark.png" alt="" width="197" height="176" decoding="async">V GROUP<span>DEVELOPMENT</span></a>
     <nav class="main-nav" id="mainNav">
       <a href="#about" data-lang-th="เกี่ยวกับเรา" data-lang-en="About">เกี่ยวกับเรา</a>
       <a href="#services" data-lang-th="บริการ" data-lang-en="Services">บริการ</a>
@@ -678,7 +683,7 @@
 <footer>
   <div class="container foot-grid">
     <div class="foot-brand">
-      <img class="foot-logo-img" src="../assets/logo/logotext_nobg.png" alt="V Group Development Co., Ltd." width="610" height="227" loading="lazy" decoding="async">
+      <img class="foot-logo-img" src="assets/logo/logotext_nobg.png" alt="V Group Development Co., Ltd." width="610" height="227" loading="lazy" decoding="async">
       <p data-lang-th="ผู้ให้บริการครบวงจรด้านพลังงาน เชื้อเพลิง เคมีภัณฑ์ และบริการเฉพาะทางด้านอุตสาหกรรมและสิ่งแวดล้อม" data-lang-en="A one-stop provider for energy, fuel, chemicals, and specialized industrial &amp; environmental services.">ผู้ให้บริการครบวงจรด้านพลังงาน เชื้อเพลิง เคมีภัณฑ์ และบริการเฉพาะทางด้านอุตสาหกรรมและสิ่งแวดล้อม</p>
     </div>
     <div class="foot-col">
@@ -772,7 +777,7 @@
 </script>
 
 <script>
-(function(){var K='site-lang',L=localStorage.getItem(K)||'th';function S(l){L=l;localStorage.setItem(K,l);document.documentElement.lang=l;document.querySelectorAll('[data-lang-th]').forEach(function(e){var t=e.getAttribute('data-lang-'+l);if(t!==null){if(/[<&]/.test(t)){e.innerHTML=t}else{e.textContent=t}}});var lb=document.querySelector('.lang-sw__label');if(lb){lb.textContent=l.toUpperCase()}}var sw=document.querySelector('.lang-sw');if(sw){sw.addEventListener('click',function(){S(L==='th'?'en':'th')});sw.style.cursor='pointer'}if(L!=='th'){S(L)}})();
+(function(){var K='site-lang',L=(function(){try{return localStorage.getItem(K)}catch(e){return null}})()||'th';function S(l){L=l;try{localStorage.setItem(K,l)}catch(e){}document.documentElement.lang=l;document.querySelectorAll('[data-lang-th]').forEach(function(e){var t=e.getAttribute('data-lang-'+l);if(t!==null){if(/[<&]/.test(t)){e.innerHTML=t}else{e.textContent=t}}});var lb=document.querySelector('.lang-sw__label');if(lb){lb.textContent=l.toUpperCase()}}var sw=document.querySelector('.lang-sw');if(sw){sw.addEventListener('click',function(){S(L==='th'?'en':'th')});sw.style.cursor='pointer'}if(L!=='th'){S(L)}})();
 </script>
 
 </body>
