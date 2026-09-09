@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<script>document.documentElement.classList.add("js")</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ติดต่อ | วี กรุ๊ป ดีเวลลอปเมนท์</title>
+<meta name="description" content="วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด ผู้ให้บริการครบวงจรด้านการจัดหาเชื้อเพลิง เคมีภัณฑ์อุตสาหกรรม และบริการเฉพาะทางด้านอุตสาหกรรม-สิ่งแวดล้อม เฝ้าระวังตลอด 24 ชั่วโมง">
+<link rel="icon" type="image/png" href="assets/logo/logo-mark.png">
+<link rel="apple-touch-icon" href="assets/logo/logo-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --background:#FFFFFF;
+  --card:#F4F9F6;
+  --bg-accent:#E9F4EE;
+  --foreground:#0F2E20;
+  --muted:#4E6F60;
+  --border:#D2E4D9;
+  --primary:#157A46;
+  --secondary:#E3F0E8;
+  --accent:#2A9D5F;
+  --font-heading:'Prompt', sans-serif;
+  --font-body:'IBM Plex Sans Thai', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;scroll-padding-top:76px;}
+body{
+  background:var(--background);
+  color:var(--foreground);
+  font-family:var(--font-body);
+  line-height:1.85;
+  font-size:16px;
+  word-break:break-word;
+  overflow-wrap:break-word;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{
+  font-family:var(--font-heading);
+  line-height:1.5;
+  font-weight:600;
+  padding-top:0.1em;
+}
+a{color:inherit;}
+img{max-width:100%;height:auto;display:block;}
+.container{max-width:1160px;margin:0 auto;padding:0 24px;}
+.narrow{max-width:680px;margin:0 auto;}
+.center{text-align:center;}
+
+/* utility */
+.eyebrow{
+  font-family:var(--font-heading);
+  font-size:0.78rem;
+  color:var(--primary);
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:18px;
+  text-transform:uppercase;
+}
+html[lang="en"] .eyebrow{letter-spacing:0.14em;}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--primary);box-shadow:0 0 8px 2px var(--primary);flex-shrink:0;}
+
+.section{padding:96px 0;position:relative;}
+.section-accent{background:var(--bg-accent);}
+.section-tight{padding:64px 0;}
+
+h2.section-title{font-size:clamp(1.6rem,4.2vw,2.6rem);margin-bottom:20px;}
+p.lead{color:var(--muted);font-size:1.05rem;}
+
+/* reveal */
+/* reveals only apply when JS is live, so the page can never render blank */
+.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,.8,.3,1),transform .7s cubic-bezier(.16,.8,.3,1);}
+.js .reveal.in-view{opacity:1;transform:translateY(0);}
+@media (prefers-reduced-motion:reduce){
+  .js .reveal,.js .reveal.in-view{opacity:1;transform:none;transition:none;}
+}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--font-heading);font-weight:500;font-size:0.92rem;
+  padding:0.95em 1.7em;border-radius:6px;text-decoration:none;
+  border:1px solid transparent;cursor:pointer;min-height:44px;
+  transition:transform .3s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease;
+  white-space:nowrap;
+}
+html[lang="en"] .btn{letter-spacing:0.04em;}
+.btn-primary{background:var(--primary);color:var(--background);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px -6px rgba(21,122,70,0.45);}
+.btn-outline{background:transparent;border-color:var(--border);color:var(--foreground);}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary);}
+.btn-sm{padding:0.65em 1.2em;font-size:0.82rem;}
+
+/* ===== HEADER (verbatim structure) ===== */
+#siteHeader{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(15,46,32,0.06);transition:background .35s ease,border-color .35s ease,padding .35s ease;}
+#siteHeader.scrolled{background:rgba(255,255,255,0.92);border-bottom-color:var(--border);}
+#siteHeader .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+/* brand logo assets */
+#siteHeader .logo{display:flex;align-items:center;gap:10px;}
+#siteHeader .logo .brand-logo{height:32px;width:auto;flex:none;}
+.footer-brand .foot-logo-img{display:block;width:186px;max-width:100%;height:auto;margin-bottom:14px;}
+#siteHeader .logo{font-family:var(--font-heading);font-size:clamp(1.05rem,3.4vw,1.35rem);font-weight:700;color:var(--foreground);text-decoration:none;white-space:nowrap;flex-shrink:0;letter-spacing:0.01em;}
+#siteHeader .logo em{font-style:normal;color:var(--primary);}
+#siteHeader .site-nav{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;}
+#siteHeader .nav-link{color:var(--muted);text-decoration:none;font-size:0.92rem;padding:14px 16px;white-space:nowrap;transition:color .25s ease;}
+#siteHeader .nav-link:hover{color:var(--foreground);}
+#siteHeader .header-actions{display:flex;align-items:center;gap:14px;flex-shrink:0;}
+#siteHeader .lang-sw{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:0.78em;padding:8px;border-radius:6px;flex-shrink:0;}
+#siteHeader .lang-sw:hover{color:var(--foreground);}
+#siteHeader .lang-sw__label{font-family:var(--font-heading);}
+#siteHeader .hamburger{display:inline-flex;align-items:center;justify-content:center;background:none;border:1px solid var(--border);color:var(--foreground);width:44px;height:44px;border-radius:6px;cursor:pointer;flex-shrink:0;}
+@media (max-width:767px){
+  #siteHeader .site-nav{position:fixed;top:var(--hdr-h,65px);left:0;right:0;bottom:auto;background:rgba(255,255,255,0.98);border-bottom:1px solid var(--border);flex-direction:column;align-items:stretch;gap:0;max-height:0;overflow:hidden;transition:max-height .4s ease;}
+  #siteHeader .site-nav.open{max-height:70vh;overflow-y:auto;}
+  #siteHeader .site-nav .nav-link{padding:18px 24px;border-bottom:1px solid var(--border);width:100%;}
+}
+@media (min-width:768px){
+  #siteHeader .hamburger{display:none;}
+  #siteHeader .site-nav{position:static;max-height:none;background:none;border:none;flex-direction:row;overflow:visible;}
+}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:140px 24px 60px;overflow:hidden;
+  background:radial-gradient(ellipse at 50% -10%, var(--bg-accent) 0%, var(--background) 62%);
+}
+.hero-schema{position:absolute;inset:0;width:100%;height:100%;opacity:0.55;pointer-events:none;}
+.hero-schema path{fill:none;stroke:var(--border);stroke-width:1.2;}
+.hero-schema .flow{stroke:var(--accent);stroke-width:1.4;stroke-dasharray:6 14;opacity:0.5;animation:dashflow 3.2s linear infinite;}
+@keyframes dashflow{to{stroke-dashoffset:-200;}}
+.hero-schema circle.node{fill:var(--background);stroke:var(--border);stroke-width:1.2;}
+.hero-content{position:relative;z-index:2;max-width:720px;}
+.hero h1{font-size:clamp(2rem,6vw,3.6rem);font-weight:700;margin-bottom:26px;letter-spacing:-0.01em;}
+.hero p.lead{max-width:600px;margin:0 auto 40px;font-size:clamp(1rem,1.6vw,1.12rem);}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:64px;}
+.scroll-cue{display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--muted);font-size:0.72rem;font-family:var(--font-heading);position:relative;z-index:2;}
+html[lang="en"] .scroll-cue span{letter-spacing:0.18em;}
+.scroll-cue .line{width:1px;height:34px;background:linear-gradient(var(--primary),transparent);animation:scrolldrop 1.8s ease-in-out infinite;}
+@keyframes scrolldrop{0%{opacity:0;transform:translateY(-6px);}50%{opacity:1;}100%{opacity:0;transform:translateY(10px);}}
+
+/* stats ticker */
+.stats-bar{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--card);}
+.stats-row{display:flex;flex-wrap:wrap;}
+.stat-item{flex:1 1 45%;min-width:0;display:flex;align-items:center;gap:12px;padding:24px 24px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+.stat-item:nth-child(2n){border-right:none;}
+@media (min-width:768px){.stat-item{flex:1 1 25%;border-bottom:none;}.stat-item:nth-child(2n){border-right:1px solid var(--border);}.stat-item:last-child{border-right:none;}}
+.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0;box-shadow:0 0 0 0 rgba(21,122,70,0.6);animation:pulse 2.2s ease-out infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(21,122,70,0.55);}70%{box-shadow:0 0 0 9px rgba(21,122,70,0);}100%{box-shadow:0 0 0 0 rgba(21,122,70,0);}}
+.stat-text{min-width:0;}
+.stat-value{font-family:var(--font-heading);font-size:1.3rem;font-weight:700;color:var(--foreground);}
+.stat-label{color:var(--muted);font-size:0.82rem;}
+
+/* about */
+.about-inner{text-align:center;}
+.about-inner p{color:var(--muted);margin-top:8px;}
+
+/* operations rows */
+.op-row{display:flex;flex-direction:column;gap:36px;align-items:center;padding:48px 0;border-bottom:1px solid var(--border);}
+.op-row:last-child{border-bottom:none;}
+@media (min-width:900px){
+  .op-row{flex-direction:row;gap:64px;}
+  .op-row.reverse{flex-direction:row-reverse;}
+}
+.op-media{flex:1 1 100%;min-width:0;width:100%;position:relative;}
+.op-media img{border-radius:16px;border:1px solid var(--border);width:100%;height:280px;object-fit:cover;}
+.op-index{position:absolute;top:-14px;left:-14px;background:var(--background);border:1px solid var(--primary);color:var(--primary);font-family:var(--font-heading);font-weight:700;font-size:0.85rem;width:46px;height:46px;border-radius:8px;display:flex;align-items:center;justify-content:center;z-index:2;}
+.op-text{flex:1 1 100%;min-width:0;}
+.op-text h3{font-size:clamp(1.3rem,2.6vw,1.7rem);margin-bottom:16px;}
+.op-text p{color:var(--muted);margin-bottom:22px;}
+.tag-row{display:flex;flex-wrap:wrap;gap:10px;}
+.tag{border:1px solid var(--border);color:var(--foreground);font-size:0.8rem;padding:0.55em 1em;border-radius:5px;background:var(--card);white-space:nowrap;}
+
+/* process timeline */
+.timeline{max-width:760px;margin:0 auto;position:relative;}
+.timeline::before{content:"";position:absolute;left:23px;top:8px;bottom:8px;width:1px;background:linear-gradient(var(--primary),var(--border));}
+.tstep{display:flex;gap:24px;padding-bottom:44px;position:relative;}
+.tstep:last-child{padding-bottom:0;}
+.tnum{flex-shrink:0;width:48px;height:48px;border-radius:8px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:700;color:var(--primary);position:relative;z-index:2;}
+.tcontent{min-width:0;padding-top:6px;}
+.tcontent h4{font-size:1.08rem;margin-bottom:8px;}
+.tcontent p{color:var(--muted);font-size:0.95rem;}
+
+/* ops desk full-bleed */
+.opsdesk{position:relative;min-height:560px;display:flex;align-items:center;overflow:hidden;}
+.opsdesk img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:grayscale(0.2) brightness(1.06);}
+.opsdesk::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg, rgba(255,255,255,0.96) 10%, rgba(255,255,255,0.55) 65%, rgba(255,255,255,0.2) 100%);z-index:1;}
+.opsdesk-content{position:relative;z-index:2;max-width:560px;padding:80px 0;}
+.opsdesk h2{font-size:clamp(1.6rem,3.6vw,2.4rem);margin-bottom:20px;}
+.opsdesk p{color:#33564A;margin-bottom:28px;}
+.hud-tags{display:flex;flex-wrap:wrap;gap:12px;}
+.hud-tag{display:flex;align-items:center;gap:8px;border:1px solid rgba(21,122,70,0.35);background:rgba(21,122,70,0.06);color:var(--primary);font-family:var(--font-heading);font-size:0.72rem;padding:0.6em 1em;border-radius:5px;}
+html[lang="en"] .hud-tag{letter-spacing:0.08em;}
+
+/* trust grid */
+.trust-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;}
+@media (min-width:768px){.trust-grid{grid-template-columns:repeat(4,minmax(0,1fr));}}
+.trust-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 20px;min-width:0;transition:border-color .3s ease, transform .3s ease;}
+.trust-card:hover{border-color:var(--primary);transform:translateY(-4px);}
+.trust-card i{color:var(--primary);margin-bottom:14px;}
+.trust-card h4{font-size:0.98rem;margin-bottom:8px;}
+.trust-card p{color:var(--muted);font-size:0.85rem;}
+
+/* sectors marquee */
+.marquee-wrap{overflow:hidden;position:relative;padding:12px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+.marquee-track{display:flex;gap:16px;width:max-content;animation:marquee 26s linear infinite;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.sector-pill{display:flex;align-items:center;gap:10px;border:1px solid var(--border);background:var(--card);color:var(--foreground);padding:0.85em 1.4em;border-radius:999px;font-size:0.9rem;white-space:nowrap;flex-shrink:0;}
+.sector-pill i{color:var(--accent);flex-shrink:0;}
+
+/* contact */
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:48px 32px;position:relative;overflow:visible;}
+@media (min-width:768px){.contact-card{padding:64px;}}
+.contact-grid{display:flex;flex-direction:column;gap:40px;}
+@media (min-width:860px){.contact-grid{flex-direction:row;gap:64px;}}
+.contact-left{flex:1 1 100%;min-width:0;}
+.contact-right{flex:1 1 100%;min-width:0;display:flex;flex-direction:column;gap:18px;}
+.contact-item{display:flex;gap:16px;align-items:flex-start;border-top:1px solid var(--border);padding-top:18px;min-width:0;}
+.contact-item:first-child{border-top:none;padding-top:0;}
+.contact-item i{color:var(--primary);flex-shrink:0;margin-top:4px;}
+.contact-item .clabel{font-size:0.78rem;color:var(--muted);text-transform:uppercase;margin-bottom:4px;}
+html[lang="en"] .contact-item .clabel{letter-spacing:0.1em;}
+.contact-item .cvalue{min-width:0;word-break:break-word;}
+.contact-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px;}
+
+/* footer */
+footer{border-top:1px solid var(--border);padding:56px 0 32px;background:var(--bg-accent);}
+.footer-top{display:flex;flex-direction:column;gap:32px;margin-bottom:40px;}
+@media (min-width:768px){.footer-top{flex-direction:row;justify-content:space-between;}}
+.footer-brand{max-width:340px;min-width:0;}
+.footer-brand p{color:var(--muted);font-size:0.9rem;}
+.footer-links{display:flex;gap:56px;flex-wrap:wrap;}
+.footer-col{min-width:140px;}
+.footer-col h5{font-family:var(--font-heading);font-size:0.82rem;color:var(--muted);margin-bottom:14px;text-transform:uppercase;}
+html[lang="en"] .footer-col h5{letter-spacing:0.1em;}
+.footer-col a{display:block;color:var(--foreground);text-decoration:none;font-size:0.92rem;margin-bottom:12px;}
+.footer-col a:hover{color:var(--primary);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;flex-direction:column;gap:14px;font-size:0.82rem;color:var(--muted);}  /* set here so the copyright and the badge inherit the same pair */
+@media (min-width:768px){.footer-bottom{flex-direction:row;justify-content:space-between;align-items:center;}}
+.footer-bottom p{color:var(--muted);font-size:0.82rem;}
+.credits{color:var(--muted);font-size:0.75rem;line-height:1.9;}
+.credits a{color:var(--muted);text-decoration:underline;}
+/* Powered by DeeLabs badge - inherits the footer's own typography */
+.deelabs-badge{font:inherit; color:inherit; text-decoration:none; opacity:.7; transition:opacity .2s ease;}
+.deelabs-badge:hover{opacity:1;}
+.deelabs-badge b{font-weight:700;}
+
+/* ============================================================
+   MULTI-PAGE ADDITIONS
+   Sub-pages have no hero, so the fixed header would otherwise
+   overlap the first section. Pad the main container instead of
+   touching each section's own spacing.
+   ============================================================ */
+body.subpage main{padding-top:0;}
+/* Put the header clearance inside the first section, not on <main>: the section
+   has its own background (some are mint), so padding on <main> showed as a
+   white band between the fixed header and the section. --hdr-h is measured in
+   app.js so this stays correct at every breakpoint. */
+body.subpage main > .section:first-child{padding-top:calc(var(--hdr-h, 88px) + 72px);}
+[aria-current="page"]{color:var(--foreground) !important; font-weight:600;}
+
+</style>
+<script src="https://unpkg.com/lucide@0.460.0"></script>
+</head>
+<body class="subpage">
+
+
+<header id="siteHeader">
+  <div class="header-inner">
+    <a href="v2-home.html" class="logo"><img class="brand-logo" src="assets/logo/logo-mark.png" alt="" width="197" height="176" decoding="async"><span>V<em>GROUP</em></span></a>
+    <nav class="site-nav" id="siteNav">
+      <a href="v2-about.html" class="nav-link" data-lang-th="เกี่ยวกับเรา" data-lang-en="About">เกี่ยวกับเรา</a>
+      <a href="v2-operations.html" class="nav-link" data-lang-th="ธุรกิจหลัก" data-lang-en="Operations">ธุรกิจหลัก</a>
+      <a href="v2-process.html" class="nav-link" data-lang-th="กระบวนการ" data-lang-en="Process">กระบวนการ</a>
+      <a href="v2-standards.html" class="nav-link" data-lang-th="มาตรฐาน" data-lang-en="Compliance">มาตรฐาน</a>
+      <a href="v2-contact.html" aria-current="page" class="nav-link" data-lang-th="ติดต่อ" data-lang-en="Contact">ติดต่อ</a>
+      <div class="lang-sw"><i data-lucide="globe" width="14" height="14"></i><span class="lang-sw__label">TH</span></div>
+    </nav>
+    <div class="header-actions">
+      <a href="v2-contact.html" aria-current="page" class="btn btn-primary btn-sm" data-lang-th="ขอคำปรึกษา" data-lang-en="Get in Touch">ขอคำปรึกษา</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-controls="siteNav" aria-expanded="false">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<section class="section" id="contact">
+  <div class="container">
+    <div class="contact-card reveal">
+      <div class="contact-grid">
+        <div class="contact-left">
+          <div class="eyebrow" data-lang-th="ติดต่อเรา" data-lang-en="Get in Touch">ติดต่อเรา</div>
+          <h2 class="section-title" style="font-size:clamp(1.5rem,3.4vw,2.1rem);" data-lang-th="เริ่มต้นวางแผนพลังงานของคุณ กับทีมของเรา" data-lang-en="Start planning your energy operations with us">เริ่มต้นวางแผนพลังงานของคุณ กับทีมของเรา</h2>
+          <p class="lead" data-lang-th="ทีมงานของเราพร้อมให้คำปรึกษาด้านการจัดหาผลิตภัณฑ์และบริการอุตสาหกรรม-สิ่งแวดล้อม ตอบกลับภายใน 24 ชั่วโมงทำการ" data-lang-en="Our team is ready to advise on product sourcing and industrial-environmental services — we respond within 24 business hours.">ทีมงานของเราพร้อมให้คำปรึกษาด้านการจัดหาผลิตภัณฑ์และบริการอุตสาหกรรม-สิ่งแวดล้อม ตอบกลับภายใน 24 ชั่วโมงทำการ</p>
+          <div class="contact-ctas">
+            <a href="mailto:contact@vgroupdevelopment.co.th" class="btn btn-primary" data-lang-th="ส่งข้อความถึงเรา" data-lang-en="Send a Message">ส่งข้อความถึงเรา</a>
+            <a href="tel:+6621234567" class="btn btn-outline" data-lang-th="โทรหาเรา" data-lang-en="Call Us">โทรหาเรา</a>
+          </div>
+        </div>
+        <div class="contact-right">
+          <div class="contact-item">
+            <i data-lucide="map-pin" size="20"></i>
+            <div class="cvalue">
+              <div class="clabel" data-lang-th="ที่อยู่" data-lang-en="Address">ที่อยู่</div>
+              <div data-lang-th="123 อาคารวี กรุ๊ป ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110" data-lang-en="123 V Group Building, Sukhumvit Road, Khlong Toei, Bangkok 10110">123 อาคารวี กรุ๊ป ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i data-lucide="phone" size="20"></i>
+            <div class="cvalue">
+              <div class="clabel" data-lang-th="โทรศัพท์" data-lang-en="Phone">โทรศัพท์</div>
+              <div>+66 2 123 4567</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i data-lucide="mail" size="20"></i>
+            <div class="cvalue">
+              <div class="clabel">Email</div>
+              <div>contact@vgroupdevelopment.co.th</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i data-lucide="clock" size="20"></i>
+            <div class="cvalue">
+              <div class="clabel" data-lang-th="เวลาทำการศูนย์ปฏิบัติการ" data-lang-en="Operations Desk Hours">เวลาทำการศูนย์ปฏิบัติการ</div>
+              <div data-lang-th="ตลอด 24 ชั่วโมง ทุกวัน" data-lang-en="24 hours a day, every day">ตลอด 24 ชั่วโมง ทุกวัน</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="foot-logo-img" src="assets/logo/logotext_nobg.png" alt="V Group Development Co., Ltd." width="610" height="227" loading="lazy" decoding="async">
+        <p data-lang-th="ผู้ให้บริการครบวงจรด้านพลังงาน เชื้อเพลิง และเคมีภัณฑ์ สำหรับภาคอุตสาหกรรมทั่วประเทศไทย" data-lang-en="A one-stop provider for energy, fuel and chemical management, serving industrial clients across Thailand.">ผู้ให้บริการครบวงจรด้านพลังงาน เชื้อเพลิง และเคมีภัณฑ์ สำหรับภาคอุตสาหกรรมทั่วประเทศไทย</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5 data-lang-th="เมนู" data-lang-en="Menu">เมนู</h5>
+          <a href="v2-about.html" data-lang-th="เกี่ยวกับเรา" data-lang-en="About">เกี่ยวกับเรา</a>
+          <a href="v2-operations.html" data-lang-th="ธุรกิจหลัก" data-lang-en="Operations">ธุรกิจหลัก</a>
+          <a href="v2-process.html" data-lang-th="กระบวนการ" data-lang-en="Process">กระบวนการ</a>
+          <a href="v2-standards.html" data-lang-th="มาตรฐาน" data-lang-en="Compliance">มาตรฐาน</a>
+        </div>
+        <div class="footer-col">
+          <h5 data-lang-th="ติดต่อ" data-lang-en="Contact">ติดต่อ</h5>
+          <a href="tel:+6621234567">+66 2 123 4567</a>
+          <a href="mailto:contact@vgroupdevelopment.co.th">contact@vgroupdevelopment.co.th</a>
+          <a href="v2-contact.html" data-lang-th="ขอคำปรึกษา" data-lang-en="Get in Touch">ขอคำปรึกษา</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-lang-th="© 2569 วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด สงวนลิขสิทธิ์" data-lang-en="© 2026 V Group Development Co., Ltd. All rights reserved.">© 2569 วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด สงวนลิขสิทธิ์</p>
+      <a class="deelabs-badge" href="https://deelabs.co/?utm_source=badge&utm_medium=referral&utm_campaign=vgroup" target="_blank" rel="noopener noreferrer">Powered by <b>DeeLabs</b></a>
+    </div>
+    <div class="credits" style="margin-top:20px;">
+      Photos: <a href="https://unsplash.com/@haseebm?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Haseeb Modi</a>,
+      <a href="https://unsplash.com/@jafsyah14?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Jahhid Fitrah Alamsyah</a>,
+      <a href="https://unsplash.com/@alteredpoint?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Igor Saikin</a> on
+      <a href="https://unsplash.com/?utm_source=deelabs&utm_medium=referral" target="_blank" rel="noopener nofollow">Unsplash</a>.
+    </div>
+  </div>
+</footer>
+
+<script>
+
+(function(){var K='site-lang',L=localStorage.getItem(K)||'th';function S(l){L=l;localStorage.setItem(K,l);document.documentElement.lang=l;document.querySelectorAll('[data-lang-th]').forEach(function(e){var t=e.getAttribute('data-lang-'+l);if(t!==null){if(/[<&]/.test(t)){e.innerHTML=t}else{e.textContent=t}}});var lb=document.querySelector('.lang-sw__label');if(lb){lb.textContent=l.toUpperCase()}}var sw=document.querySelector('.lang-sw');if(sw){sw.addEventListener('click',function(){S(L==='th'?'en':'th')});sw.style.cursor='pointer'}if(L!=='th'){S(L)}})();
+
+// header scroll + hamburger
+(function(){
+  var header=document.getElementById('siteHeader');
+  /* sub-pages have no hero, so the first section needs to clear this header */
+  function measureHeader(){
+    document.documentElement.style.setProperty('--hdr-h', Math.ceil(header.getBoundingClientRect().height)+'px');
+  }
+  measureHeader();
+  window.addEventListener('resize', measureHeader);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(measureHeader);
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>10){header.classList.add('scrolled');}else{header.classList.remove('scrolled');}
+  });
+  var btn=document.getElementById('hamburgerBtn');
+  var nav=document.getElementById('siteNav');
+  btn.addEventListener('click',function(){
+    var open=nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded',open?'true':'false');
+    btn.innerHTML = open ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
+    if(window.lucide && lucide.createIcons) lucide.createIcons();  /* CDN may be blocked */
+  });
+  nav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){
+      nav.classList.remove('open');
+      btn.setAttribute('aria-expanded','false');
+      btn.innerHTML='<i data-lucide="menu"></i>';
+      if(window.lucide && lucide.createIcons) lucide.createIcons();  /* CDN may be blocked */
+    });
+  });
+})();
+
+// reveal on scroll
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  function showAll(){els.forEach(function(el){el.classList.add('in-view');});}
+  if(typeof IntersectionObserver==='undefined'){showAll();return;}
+  var delivered=0;
+  var io=new IntersectionObserver(function(entries){
+    delivered+=entries.length;
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){entry.target.classList.add('in-view');io.unobserve(entry.target);}
+    });
+  },{threshold:0.15});
+  els.forEach(function(el){io.observe(el);});
+  /* a working observer always delivers an initial entry per target; if none
+     arrives the content would stay invisible, so reveal it unconditionally */
+  setTimeout(function(){if(delivered===0)showAll();},1500);
+})();
+
+if(window.lucide && lucide.createIcons) lucide.createIcons();  /* CDN may be blocked */
+
+</script>
+</body>
+</html>
