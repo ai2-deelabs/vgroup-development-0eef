@@ -238,11 +238,11 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
 section[id]{scroll-margin-top:96px}
 @media (min-width:1040px){section[id]{scroll-margin-top:104px}}
 .sec-head{text-align:center; max-width:62ch; margin:0 auto clamp(38px,5.5vw,64px)}
-.sec-head h2{
+.sec-head h1,.sec-head h2{
   margin-top:18px; font-size:clamp(1.85rem,5.4vw,3.3rem); font-weight:200;
   letter-spacing:-.028em; text-wrap:balance;
 }
-.sec-head h2 em{font-style:normal; font-weight:500; color:var(--forest)}
+.sec-head h1 em,.sec-head h2 em{font-style:normal; font-weight:500; color:var(--forest)}
 .sec-head p{margin-top:16px; color:var(--muted); font-size:clamp(.98rem,2.2vw,1.08rem)}
 
 /* ---------- glass card base ---------- */
@@ -269,7 +269,7 @@ section[id]{scroll-margin-top:96px}
 }
 .cult-ico svg{width:23px; height:23px}
 .cult:hover .cult-ico{transform:scale(1.1) rotate(8deg); background:var(--sage); color:var(--white)}
-.cult h3{
+.cult h2,.cult h3{
   margin-top:22px; font-size:.76rem; font-weight:500; letter-spacing:.16em;
   text-transform:uppercase; color:var(--sage);
 }
@@ -310,7 +310,7 @@ section[id]{scroll-margin-top:96px}
   line-height:1; letter-spacing:-.028em; color:var(--forest);
 }
 .step-yr small{font-size:.66rem; font-weight:400; letter-spacing:.14em; text-transform:uppercase; color:var(--sage)}
-.step h4{margin-top:14px; font-family:"Prompt",sans-serif; font-weight:500; font-size:1.1rem; line-height:1.44}
+.step h3,.step h4{margin-top:14px; font-family:"Prompt",sans-serif; font-weight:500; font-size:1.1rem; line-height:1.44}
 .step p{margin-top:9px; color:var(--muted); font-size:.94rem; line-height:1.76}
 
 .story-full{
@@ -398,7 +398,7 @@ section[id]{scroll-margin-top:96px}
 }
 .svc-ico svg{width:25px; height:25px}
 .svc:hover .svc-ico{background:var(--forest); color:var(--mist); transform:scale(1.1)}
-.svc h3{margin-top:22px; font-family:"Prompt",sans-serif; font-weight:500; font-size:1.16rem}
+.svc h2,.svc h3{margin-top:22px; font-family:"Prompt",sans-serif; font-weight:500; font-size:1.16rem}
 .svc p{margin-top:11px; color:var(--muted); font-size:.94rem; flex:1}
 .svc-link{
   margin-top:22px; display:inline-flex; align-items:center; gap:.5rem;
@@ -416,7 +416,7 @@ section[id]{scroll-margin-top:96px}
 .ct-grid{display:grid; gap:18px}
 @media (min-width:940px){.ct-grid{grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr); gap:22px; align-items:start}}
 .ct-form{padding:clamp(26px,4vw,44px)}
-.ct-form h3{font-family:"Prompt",sans-serif; font-weight:500; font-size:1.24rem}
+.ct-form h2,.ct-form h3{font-family:"Prompt",sans-serif; font-weight:500; font-size:1.24rem}
 .ct-form>p{margin-top:8px; color:var(--muted); font-size:.92rem}
 .field{margin-top:20px}
 .field label{
@@ -470,7 +470,7 @@ section[id]{scroll-margin-top:96px}
 @media (min-width:860px){.ftr-top{grid-template-columns:1.5fr 1fr 1fr; gap:40px}}
 .ftr .brand-name{color:var(--mist)}
 .ftr .brand-sub{color:rgba(246,250,247,.55)}
-.ftr h5{font-family:"Prompt",sans-serif; font-size:.72rem; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--euc); margin:0 0 14px}
+.ftr h2,.ftr h5{font-family:"Prompt",sans-serif; font-size:.72rem; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--euc); margin:0 0 14px; line-height:1.82}
 .ftr ul{list-style:none; margin:0; padding:0; display:grid; gap:9px}
 .ftr ul a{transition:color .32s, padding-left .32s var(--ease)}
 .ftr ul a:hover{color:var(--mist); padding-left:5px}
@@ -592,19 +592,19 @@ body.subpage main{padding-top:clamp(104px,14vw,132px);}
   <div class="wrap">
     <div class="sec-head" data-reveal>
       <span class="pill" data-i18n="nav1">เกี่ยวกับวีกรุ๊ป</span>
-      <h2 data-i18n="aboutH">วัฒนธรรมที่ทำให้เรา<em>เดินหน้าทุกวัน</em></h2>
+      <h1 data-i18n="aboutH">วัฒนธรรมที่ทำให้เรา<em>เดินหน้าทุกวัน</em></h1>
       <p data-i18n="aboutP">สองสิ่งที่บริษัทยึดถือ ทั้งในระดับองค์กรและระดับพนักงานทุกคน</p>
     </div>
 
     <div class="culture">
       <article class="glass cult" data-reveal style="--i:0">
         <span class="cult-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 17l5-5 4 3 5-6 4 4"/><path d="M3 21h18"/></svg></span>
-        <h3 data-i18n="cult1L">วัฒนธรรมองค์กร</h3>
+        <h2 data-i18n="cult1L">วัฒนธรรมองค์กร</h2>
         <p class="big" data-i18n="cult1V">เราจะพัฒนาอย่างไม่หยุดยั้ง</p>
       </article>
       <article class="glass cult" data-reveal style="--i:1">
         <span class="cult-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
-        <h3 data-i18n="cult2L">วัฒนธรรมพนักงาน</h3>
+        <h2 data-i18n="cult2L">วัฒนธรรมพนักงาน</h2>
         <p class="big" data-i18n="cult2V">มีจิตสำนึกที่ดี พร้อมเรียนรู้สิ่งใหม่</p>
       </article>
     </div>
@@ -622,22 +622,22 @@ body.subpage main{padding-top:clamp(104px,14vw,132px);}
     <div class="story">
       <article class="glass step" data-reveal style="--i:0">
         <div class="step-yr">1999 <small data-i18n="m1S">จุดเริ่มต้น</small></div>
-        <h4 data-i18n="m1T">บริษัท สรวีย์คอนสตรัคชั่น(1999) จำกัด</h4>
+        <h3 data-i18n="m1T">บริษัท สรวีย์คอนสตรัคชั่น(1999) จำกัด</h3>
         <p data-i18n="m1P">บริษัทหลัก ประกอบกิจการรับเหมาก่อสร้างให้กับทั้งทางภาครัฐ และเอกชน</p>
       </article>
       <article class="glass step" data-reveal style="--i:1">
         <div class="step-yr">2551 <small data-i18n="m2S">จุดเปลี่ยน</small></div>
-        <h4 data-i18n="m2T">เปลี่ยนมาใช้น้ำมันเชื้อเพลิงทดแทน</h4>
+        <h3 data-i18n="m2T">เปลี่ยนมาใช้น้ำมันเชื้อเพลิงทดแทน</h3>
         <p data-i18n="m2P">จากนโยบายลดต้นทุนการผลิต เปลี่ยนจากน้ำมันเตา A มาเป็นน้ำมันเชื้อเพลิงทดแทน — และต้นทุนลดต่ำลงจริง</p>
       </article>
       <article class="glass step" data-reveal style="--i:2">
         <div class="step-yr">2553 <small data-i18n="m3S">ก่อตั้ง</small></div>
-        <h4 data-i18n="m3T">บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด</h4>
+        <h3 data-i18n="m3T">บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด</h3>
         <p data-i18n="m3P">จัดตั้งขึ้นเพื่อเป็นตัวแทนจำหน่าย ผลตอบรับที่ได้คือผู้ใช้มีความพึ่งพอใจ</p>
       </article>
       <article class="glass step" data-reveal style="--i:3">
         <div class="step-yr" style="font-size:clamp(1.3rem,4vw,1.8rem)"><span data-i18n="m4Y">โรงงานผลิต</span> <small data-i18n="m4S">ปัจจุบัน</small></div>
-        <h4 data-i18n="m4T">ก่อตั้งโรงงานผลิต</h4>
+        <h3 data-i18n="m4T">ก่อตั้งโรงงานผลิต</h3>
         <p data-i18n="m4P">22 หมู่ที่ 7 ตำบลเกาะหลัก อำเภอเมือง จังหวัดประจวบคีรีขันธ์</p>
       </article>
     </div>
@@ -682,7 +682,7 @@ body.subpage main{padding-top:clamp(104px,14vw,132px);}
         <p class="me" data-i18n="ftrMe">บริษัท วี กรุ๊ป ดีเวลลอปเมนท์ จำกัด — ธุรกิจน้ำมันเชื้อเพลิงทดแทน โรงงานผลิตตั้งอยู่ที่ตำบลเกาะหลัก อำเภอเมือง จังหวัดประจวบคีรีขันธ์</p>
       </div>
       <div>
-        <h5 data-i18n="ftrNav">เมนู</h5>
+        <h2 data-i18n="ftrNav">เมนู</h2>
         <ul>
           <li><a href="v6-about.html"     data-i18n="nav1">เกี่ยวกับวีกรุ๊ป</a></li>
           <li><a href="v6-products.html"  data-i18n="nav2">ผลิตภัณฑ์และบริการ</a></li>
@@ -692,7 +692,7 @@ body.subpage main{padding-top:clamp(104px,14vw,132px);}
         </ul>
       </div>
       <div>
-        <h5 data-i18n="ftrReach">ติดต่อ</h5>
+        <h2 data-i18n="ftrReach">ติดต่อ</h2>
         <ul>
           <li><a href="tel:+66852955005">+66 085-295-5005</a></li>
           <li><a href="https://maps.google.com/?q=11.830389909644671,99.70590749109954" target="_blank" rel="noopener" data-i18n="addrShort">22 หมู่7 ต.เกาะหลัก อ.เมือง จ.ประจวบคีรีขันธ์</a></li>
@@ -701,7 +701,7 @@ body.subpage main{padding-top:clamp(104px,14vw,132px);}
     </div>
 
     <div class="credits">
-      <h5 data-i18n="credH">เครดิตภาพถ่าย</h5>
+      <h2 data-i18n="credH">เครดิตภาพถ่าย</h2>
       <p data-i18n="credP">ภาพถ่ายทั้งหมดในหน้านี้มาจาก Unsplash</p>
       <p id="credits-list"></p>
     </div>
